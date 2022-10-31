@@ -15,7 +15,7 @@ export const Layout = ({ children }: Props) => {
     })
         .then(async r => {
             if (r.status !== 200) return window.alert(await r.text());
-            const username = (await r.json()).name;
+            const { username, password, isLoggedIn } = (await r.json());
             setUser(username);
         });
 

@@ -1,15 +1,25 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
+import { withIronSessionApiRoute } from "iron-session/next";
 
-/** cookie ID, username */
-const sessions = new Map<string, string>();
+export default withIronSessionApiRoute(
+  async function (req: NextApiRequest, res: NextApiResponse) {
+    const { username, password } = JSON.parse(req.body);
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const cookie = req.cookies._ga || Math.random().toString();
-  const fromSession = sessions.get(cookie || "");
-  if (fromSession) return fromSession;
-  const { username, password } = JSON.parse(req.body);
-  if (username == "askyous" && password == "printery")
-    sessions.set(cookie, "Yousef Shanawany");
-  return res.status(200).json({ name: sessions.get(cookie) });
-}
+    if (username != "askyous" || password != "password")
+      return res.status(401).send("Wrong username or password");
+
+    const user = { username, password, isLoggedIn: true };
+    req.session.user = user;
+    await req.session.save();
+
+    res.json(user);
+  },
+  {
+    cookieName: "idb-cookie",
+    password: "yousef-is-coolyousef-is-coolyousef-is-coolyousef-is-cool",
+    cookieOptions: {
+      secure: process.env.NODE_ENV === "production",
+    },
+  }
+);

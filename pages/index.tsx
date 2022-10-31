@@ -9,9 +9,9 @@ export default function ({ posts, dateTime }: Props) {
   return <>
     <h1>Posts ({posts.length}) ({dateTime})</h1>
     <hr />
-    {posts.map(p => <Post post={p} />)}
-    {posts.map(p => <Post post={p} />)}
-    {posts.map(p => <Post post={p} />)}
+    {posts.map(p => <Post key={p.id} post={p} />)}
+    {posts.map(p => <Post key={p.id} post={p} />)}
+    {posts.map(p => <Post key={p.id} post={p} />)}
   </>;
 }
 

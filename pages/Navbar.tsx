@@ -12,8 +12,8 @@ export const Navbar = ({ onLogin }: Props) => {
         {isOpen ? "open" : "closed"}
         <h1>Navbar</h1>
         {user ? user : <button onClick={() => onLogin(
-            window.prompt("Username") || "",
-            window.prompt("Password") || "",
+            window.prompt("Username", "askyous") || "",
+            window.prompt("Password", "password") || "",
         )}>Login</button>}
     </div>;
 };
