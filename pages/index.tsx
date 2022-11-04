@@ -1,27 +1,26 @@
-import { Post } from "./Post";
+import { withIronSessionSsr } from "iron-session/next";
+import { People } from "../database/entities/People";
+import { CookieConfig } from "./CookieConfig";
 
 interface Props {
-  posts: Post[];
-  dateTime: string;
+  people: People[];
+  user: User | null
 }
 
-export default function ({ posts, dateTime }: Props) {
+export default function ({ people, user }: Props) {
   return <>
-    <h1>Posts ({posts.length}) ({dateTime})</h1>
-    <hr />
-    {posts.map(p => <Post key={p.id} post={p} />)}
-    {posts.map(p => <Post key={p.id} post={p} />)}
-    {posts.map(p => <Post key={p.id} post={p} />)}
+    <h1>{user?.username || "Not signed in."}</h1>
+    <h1>Posts ({people.length})</h1>
+    {people.map(p => <div>{p.name}</div>)}
   </>;
 }
 
-export async function getServerSideProps() {
-  const dateTime = new Date().toLocaleString();
-  const posts = await fetch("https://www.reddit.com/r/nextjs.json")
-    .then(r => r.json())
-    .then(r => r.data.children)
-    .then(r => r.map((c: any) => c.data));
-  return { props: { posts, dateTime } as Props }
-}
-
+export const getServerSideProps = withIronSessionSsr(
+  async function ({ req }) {
+    const people = await IslaamDataSource.getRepository(People).find();
+    const user = req.session.user || null;
+    return {
+      props: { user, people } as Props
+    }
+  }, CookieConfig);
 

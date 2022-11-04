@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Footer } from "./Footer";
 import { Navbar } from "./Navbar";
 import { UserContext } from "./UserContext";
@@ -8,23 +8,28 @@ interface Props {
 }
 
 export const Layout = ({ children }: Props) => {
-    const [user, setUser] = useState<string>();
+    const [user, setUser] = useState<User>();
+
+    useEffect(() => {
+        fetch("/api/me").then(async r => {
+            const me = await r.json();
+            setUser(me);
+        })
+    }, []);
+
     const onLogin = (username: string, password: string) => fetch("/api/login", {
         method: "POST",
         body: JSON.stringify({ username, password }),
     })
         .then(async r => {
             if (r.status !== 200) return window.alert(await r.text());
-            const { username, password, isLoggedIn } = (await r.json());
-            setUser(username);
+            setUser(await r.json() as User);
         });
 
     return <UserContext.Provider value={user}>
-        <div id="layout">
-            <Navbar onLogin={onLogin} />
-            <div style={{ padding: "0 1rem" }}>
-                {children}
-            </div>
+        <Navbar onLogin={onLogin} />
+        <div style={{ padding: "0 1rem" }}>
+            {children}
         </div>
         <Footer />
     </UserContext.Provider>;
