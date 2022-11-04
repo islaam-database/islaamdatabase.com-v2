@@ -10,19 +10,21 @@ interface Props {
 
 export default function ({ people, user }: Props) {
   return <>
-    <h1>{user?.username || "Not signed in."}</h1>
-    <h1>Posts ({people.length})</h1>
-    {people.map(p => <div>{p.name}</div>)}
+    <h1>{user?.username || "Not signed in"}</h1>
+    {people.map(p => <>
+      {p.name}<br />
+    </>)}
   </>;
 }
 
 export const getServerSideProps = withIronSessionSsr(
   async function ({ req }) {
     const db = await IslaamDatabase.getInstance();
-    const people = await db.getRepository(People).find();
+    const people = toJson(await db.getRepository(People).find());
     const user = req.session.user || null;
     return {
       props: { user, people } as Props
     }
   }, CookieConfig);
 
+const toJson = (x: any) => JSON.parse(JSON.stringify(x));

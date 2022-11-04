@@ -12,6 +12,7 @@ export const Layout = ({ children }: Props) => {
 
     useEffect(() => {
         fetch("/api/me").then(async r => {
+            if (r.status == 404) return;
             const me = await r.json();
             setUser(me);
         })
