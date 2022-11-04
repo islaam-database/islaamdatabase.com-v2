@@ -1,5 +1,6 @@
 import { withIronSessionSsr } from "iron-session/next";
 import { People } from "../database/entities/People";
+import { IslaamDatabase } from "../database/IslaamDatabase";
 import { CookieConfig } from "./CookieConfig";
 
 interface Props {
@@ -17,7 +18,8 @@ export default function ({ people, user }: Props) {
 
 export const getServerSideProps = withIronSessionSsr(
   async function ({ req }) {
-    const people = await IslaamDataSource.getRepository(People).find();
+    const db = await IslaamDatabase.getInstance();
+    const people = await db.getRepository(People).find();
     const user = req.session.user || null;
     return {
       props: { user, people } as Props

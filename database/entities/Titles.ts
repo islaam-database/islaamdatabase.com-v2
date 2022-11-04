@@ -1,11 +1,12 @@
 import {
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
+    Column,
+    Entity,
+    Index,
+    JoinColumn,
+    ManyToOne,
+    OneToMany,
+    PrimaryGeneratedColumn,
+    Relation,
 } from "typeorm";
 import { People } from "./People";
 import { Praises } from "./Praises";
@@ -15,22 +16,22 @@ import { Statuses } from "./Statuses";
 @Index("IX_Titles_StatusId", ["statusId"], {})
 @Entity("Titles", { schema: "public" })
 export class Titles {
-  @PrimaryGeneratedColumn({ type: "integer", name: "Id" })
-  id: number;
+    @PrimaryGeneratedColumn({ type: "integer", name: "Id" })
+    id: number;
 
-  @Column("text", { name: "Name" })
-  name: string;
+    @Column("text", { name: "Name" })
+    name: string;
 
-  @Column("integer", { name: "StatusId", nullable: true })
-  statusId: number | null;
+    @Column("integer", { name: "StatusId", nullable: true })
+    statusId: number | null;
 
-  @OneToMany(() => People, (people) => people.mainTitle)
-  people: People[];
+    @OneToMany(() => People, (people) => people.mainTitle)
+    people: People[];
 
-  @OneToMany(() => Praises, (praises) => praises.title)
-  praises: Praises[];
+    @OneToMany(() => Praises, (praises) => praises.title)
+    praises: Praises[];
 
-  @ManyToOne(() => Statuses, (statuses) => statuses.titles)
-  @JoinColumn([{ name: "StatusId", referencedColumnName: "rank" }])
-  status: Statuses;
+    @ManyToOne(() => Statuses, (statuses) => statuses.titles)
+    @JoinColumn([{ name: "StatusId", referencedColumnName: "rank" }])
+    status: Relation<Statuses>;
 }
