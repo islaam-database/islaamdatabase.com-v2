@@ -9,12 +9,9 @@ interface Props {
     user: User | null
 }
 
-export default function ({ people, user }: Props) {
+export default function ({ people }: Props) {
     console.log(people.map(p => p.deathYear))
-    return <>
-        <h1>{user?.username || "Not signed in"}</h1>
-        <PeopleTable people={people} />
-    </>;
+    return <PeopleTable people={people} />;
 }
 
 export const getServerSideProps = withIronSessionSsr(
