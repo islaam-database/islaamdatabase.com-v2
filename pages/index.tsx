@@ -2,7 +2,7 @@ import { withIronSessionSsr } from "iron-session/next";
 import { People } from "../database/entities/People";
 import { IslaamDatabase } from "../database/IslaamDatabase";
 import { CookieConfig } from "./CookieConfig";
-import { PeopleTable } from "./components/People/PeopleTable";
+import { PeopleTable } from "./components/people/PeopleTable";
 import { toJson } from "./utils";
 
 interface Props {
