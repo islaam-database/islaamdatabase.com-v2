@@ -1,6 +1,5 @@
-import Link from "next/link";
-import { useRouter } from "next/router";
 import React from "react";
+import { useRouter } from "next/router";
 import { People } from "../../../database/entities/People";
 
 export function PeopleTable({ people }: { people: People[]; }) {
@@ -32,6 +31,4 @@ function PersonTableRow(p: People) {
     </tr>;
 }
 
-function getSuffix(year: number | null) {
-    return year == null ? null : "AH";
-}
+const getSuffix = (year: number | null) => year != null && "AH";

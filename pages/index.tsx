@@ -3,6 +3,7 @@ import { People } from "../database/entities/People";
 import { IslaamDatabase } from "../database/IslaamDatabase";
 import { CookieConfig } from "./CookieConfig";
 import { PeopleTable } from "./components/People/PeopleTable";
+import { toJson } from "./utils";
 
 interface Props {
     people: People[];
@@ -28,5 +29,3 @@ export const getServerSideProps = withIronSessionSsr(
             props: { user, people } as Props
         }
     }, CookieConfig);
-
-const toJson = (x: any) => JSON.parse(JSON.stringify(x));
