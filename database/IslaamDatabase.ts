@@ -1,4 +1,5 @@
 import { DataSource } from "typeorm";
+import { AppRoles } from "./entities/AppRoles";
 import { Books } from "./entities/Books";
 import { Generations } from "./entities/Generations";
 import { People } from "./entities/People";
@@ -7,7 +8,7 @@ import { Statuses } from "./entities/Statuses";
 import { TeacherStudents } from "./entities/TeacherStudents";
 import { Titles } from "./entities/Titles";
 import { Topics } from "./entities/Topics";
-
+console.log(process.env.DB_SYNC === "true");
 const IslaamDataSource = new DataSource({
     type: "postgres",
     host: process.env.DB_HOST,
@@ -15,7 +16,6 @@ const IslaamDataSource = new DataSource({
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    synchronize: process.env.DB_SYNC === "true",
     logging: process.env.DB_LOGGING === "true",
     entities: [
         Books,
@@ -26,6 +26,7 @@ const IslaamDataSource = new DataSource({
         TeacherStudents,
         Titles,
         Topics,
+        AppRoles,
     ],
 });
 
