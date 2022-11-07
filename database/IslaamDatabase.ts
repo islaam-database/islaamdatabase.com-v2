@@ -1,5 +1,5 @@
 import { DataSource } from "typeorm";
-import { AppUsers } from "./entities/AppRoles";
+import { AppUsers } from "./entities/AppUsers";
 import { Books } from "./entities/Books";
 import { Generations } from "./entities/Generations";
 import { People } from "./entities/People";
@@ -8,7 +8,7 @@ import { Statuses } from "./entities/Statuses";
 import { TeacherStudents } from "./entities/TeacherStudents";
 import { Titles } from "./entities/Titles";
 import { Topics } from "./entities/Topics";
-console.log(process.env.DB_SYNC === "true");
+
 const IslaamDataSource = new DataSource({
     type: "postgres",
     host: process.env.DB_HOST,
@@ -35,5 +35,13 @@ export class IslaamDatabase {
     public static async getInstance(): Promise<DataSource> {
         return (this.instance =
             this.instance || (await IslaamDataSource.initialize()));
+    }
+    static get AppUsers() {
+        return IslaamDatabase.getInstance().then(i =>
+            i.getRepository(AppUsers),
+        );
+    }
+    static get People() {
+        return IslaamDatabase.getInstance().then(i => i.getRepository(People));
     }
 }

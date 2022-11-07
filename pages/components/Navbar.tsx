@@ -1,19 +1,32 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { UserContext } from "../UserContext";
 
+type onUserNameAndPassword = (userNameAndPassword: { userName: string, password: string }) => any;
+
 interface Props {
-    onLogin: (username: string, password: string) => any;
+    onLoginRequest: onUserNameAndPassword;
+    onRegisterRequest: onUserNameAndPassword;
+    onLogoutRequest: () => any;
 }
 
-export const Navbar = ({ onLogin }: Props) => {
-    const [isOpen, setIsOpen] = useState(false);
-    const user = useContext(UserContext);
-    return <div id="navbar" onClick={() => setIsOpen(!isOpen)}>
-        {isOpen ? "open" : "closed"}
-        <h1>Navbar</h1>
-        {user ? user.username : <button onClick={() => onLogin(
-            window.prompt("Username", "askyous") || "",
-            window.prompt("Password", "password") || "",
-        )}>Login</button>}
+export const Navbar = ({ onLoginRequest, onRegisterRequest, onLogoutRequest }: Props) => {
+    return <div id="navbar" style={{ display: "flex", justifyContent: "flex-end" }}>
+        <UserLogin onLoginRequest={onLoginRequest} onRegisterRequest={onRegisterRequest} onLogoutRequest={onLogoutRequest} />
     </div>;
 };
+
+function UserLogin({ onLoginRequest, onRegisterRequest, onLogoutRequest }: Props) {
+    const user = useContext(UserContext);
+    if (user) return <button onClick={onLogoutRequest}>Assalaamu 'Alaikum, {user.userName}!</button>;
+    return <>
+        <button onClick={() => onLoginRequest(getUserNameAndPasswordFromPopup())}>Login</button>
+        <button onClick={() => onRegisterRequest(getUserNameAndPasswordFromPopup())}>Register</button>
+    </>;
+}
+
+const getUserNameAndPasswordFromPopup = () => {
+    return {
+        userName: window.prompt("Username", "askyous") || "",
+        password: window.prompt("Password", "password") || ""
+    }
+}

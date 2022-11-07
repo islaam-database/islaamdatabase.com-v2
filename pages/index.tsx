@@ -11,7 +11,6 @@ interface Props {
 }
 
 export default function ({ people }: Props) {
-    console.log(people.map(p => p.deathYear))
     return <PeopleTable people={people} />;
 }
 
