@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "bcrypt": "^5.1.0",
     "iron-session": "^6.3.1",
     "next": "13.0.0",
     "pg": "^8.8.0",

@@ -1,5 +1,5 @@
 import { DataSource } from "typeorm";
-import { AppRoles } from "./entities/AppRoles";
+import { AppUsers } from "./entities/AppRoles";
 import { Books } from "./entities/Books";
 import { Generations } from "./entities/Generations";
 import { People } from "./entities/People";
@@ -26,14 +26,14 @@ const IslaamDataSource = new DataSource({
         TeacherStudents,
         Titles,
         Topics,
-        AppRoles,
+        AppUsers,
     ],
 });
 
 export class IslaamDatabase {
-    private static dataSource: DataSource;
+    private static instance: DataSource;
     public static async getInstance(): Promise<DataSource> {
-        return (this.dataSource =
-            this.dataSource || (await IslaamDataSource.initialize()));
+        return (this.instance =
+            this.instance || (await IslaamDataSource.initialize()));
     }
 }
