@@ -1,32 +1,43 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "../UserContext";
+import { AuthDialog } from "./AuthDialog";
 
-type onUserNameAndPassword = (userNameAndPassword: { userName: string, password: string }) => any;
+interface Credentials { userName: string, password: string }
 
 interface Props {
-    onLoginRequest: onUserNameAndPassword;
-    onRegisterRequest: onUserNameAndPassword;
-    onLogoutRequest: () => any;
+    onLoginRequest: (credentials: Credentials) => any;
+    onRegisterRequest: (credentials: Credentials) => any;
+    onLogoutRequest: VoidFunction;
 }
 
 export const Navbar = ({ onLoginRequest, onRegisterRequest, onLogoutRequest }: Props) => {
+    const [authState, setAuthState] = useState<"logging-in" | "registering">();
     return <div id="navbar" style={{ display: "flex", justifyContent: "flex-end" }}>
-        <UserLogin onLoginRequest={onLoginRequest} onRegisterRequest={onRegisterRequest} onLogoutRequest={onLogoutRequest} />
+        <AuthDialog
+            isOpen={authState != null}
+            onCloseRequest={() => setAuthState(undefined)}
+            submitText={authState == "logging-in" ? "Log in" : "Register"}
+            onSubmit={authState === "logging-in" ? onLoginRequest : onRegisterRequest}
+        />
+        <UserLogin
+            onLoginRequest={() => setAuthState("logging-in")}
+            onRegisterRequest={() => setAuthState("registering")}
+            onLogoutRequest={onLogoutRequest}
+        />
     </div>;
 };
 
-function UserLogin({ onLoginRequest, onRegisterRequest, onLogoutRequest }: Props) {
+interface UserLoginProps {
+    onLoginRequest: VoidFunction;
+    onRegisterRequest: VoidFunction;
+    onLogoutRequest: VoidFunction;
+}
+
+function UserLogin({ onLoginRequest, onRegisterRequest, onLogoutRequest }: UserLoginProps) {
     const user = useContext(UserContext);
     if (user) return <button onClick={onLogoutRequest}>Assalaamu 'Alaikum, {user.userName}!</button>;
     return <>
-        <button onClick={() => onLoginRequest(getUserNameAndPasswordFromPopup())}>Login</button>
-        <button onClick={() => onRegisterRequest(getUserNameAndPasswordFromPopup())}>Register</button>
+        <button onClick={onLoginRequest}>Login</button>
+        <button onClick={onRegisterRequest}>Register</button>
     </>;
-}
-
-const getUserNameAndPasswordFromPopup = () => {
-    return {
-        userName: window.prompt("Username", "askyous") || "",
-        password: window.prompt("Password", "password") || ""
-    }
 }
