@@ -1,5 +1,6 @@
 import { withIronSessionSsr } from "iron-session/next";
 import Link from "next/link";
+import { AppRoles } from "../../database/entities/AppUsers";
 import { Praises } from "../../database/entities/Praises";
 import { IslaamDatabase } from "../../database/IslaamDatabase";
 import { Table } from "../components/Table";
@@ -7,10 +8,16 @@ import { CookieConfig } from "../CookieConfig";
 import { toJson } from "../utils";
 interface Props {
     praises: Praises[];
+    role: AppRoles;
 }
-export default function ({ praises }: Props) {
+export default function ({ praises, role }: Props) {
     return <>
-        <h1>Praises ({praises.length})</h1>
+        <h1>
+            <span>Praises ({praises.length})</span>
+            {
+                role.name === "admin" && <button>Create praise</button>
+            }
+        </h1>
         <hr />
         <Table
             headTr={<tr>
@@ -21,7 +28,7 @@ export default function ({ praises }: Props) {
                 <td>Topic</td>
                 <td>Source</td>
             </tr>}
-            bodyTrs={praises.map(p => <tr>
+            bodyTrs={praises.map(p => <tr key={p.id}>
                 <td>{p.id}</td>
                 <td>
                     <Link href={`/people/${p.praiserId}`}>{p.praiser.name}</Link>
@@ -43,9 +50,9 @@ export default function ({ praises }: Props) {
     </>;
 }
 
-export const getServerSideProps = withIronSessionSsr(async () => {
+export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
     const db = await IslaamDatabase.Praises;
-    const praises = db.find({
+    const praises = await db.find({
         relations: {
             praiser: true,
             praisee: true,
@@ -53,5 +60,6 @@ export const getServerSideProps = withIronSessionSsr(async () => {
             title: true,
         }
     }).then(p => toJson(p));
-    return { props: { praises: await praises } }
+    const role = toJson(req.session.user?.role || null);
+    return { props: { praises, role } }
 }, CookieConfig)

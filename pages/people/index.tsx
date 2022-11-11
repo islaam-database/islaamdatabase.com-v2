@@ -12,11 +12,15 @@ interface Props {
 }
 
 export default function ({ people }: Props) {
-    return <PeopleTable people={people} />;
+    return <>
+        <h1>People ({people.length})</h1>
+        <hr />
+        <PeopleTable people={people} />
+    </>;
 }
 
 export const getServerSideProps = withIronSessionSsr(
-    async (context) => {
+    async ({ req }) => {
         const db = await IslaamDatabase.getInstance();
         const query = db
             .getRepository(People)
@@ -24,7 +28,7 @@ export const getServerSideProps = withIronSessionSsr(
             .orderBy("people.deathYear", "ASC", "NULLS LAST")
             .getMany();
         const people = toJson(await query);
-        const user = context.req.session.user || null;
+        const user = req.session.user || null;
         return {
             props: { user, people }
         }

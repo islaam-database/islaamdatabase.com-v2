@@ -11,7 +11,7 @@ import { Generations } from "./Generations";
 import { Titles } from "./Titles";
 
 @Index("PK_Statuses", ["rank"], { unique: true })
-@Entity("Statuses", { schema: "public" })
+@Entity("Statuses", { schema: "public", synchronize: false })
 export class Statuses {
     @PrimaryGeneratedColumn({ type: "integer", name: "Rank" })
     rank: number;
@@ -25,9 +25,9 @@ export class Statuses {
     @Column("boolean", { name: "MentionPraisesOfGreaterStatuses" })
     mentionPraisesOfGreaterStatuses: boolean;
 
-    @OneToOne(() => Generations, (generations) => generations.status)
+    @OneToOne(() => Generations, generations => generations.status)
     generations: Relation<Generations>;
 
-    @OneToMany(() => Titles, (titles) => titles.status)
+    @OneToMany(() => Titles, titles => titles.status)
     titles: Titles[];
 }

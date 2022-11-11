@@ -19,7 +19,9 @@ export default withIronSessionApiRoute(async function (req, res) {
 
         // get user from db
         const db = await IslaamDatabase.getInstance();
-        const user = await db.getRepository(AppUsers).findOneBy({ userName });
+        const user = await db
+            .getRepository(AppUsers)
+            .findOne({ relations: { role: true }, where: { userName } });
         if (!user)
             return res.status(401).json({
                 message: `There is no user with username ${userName}`,

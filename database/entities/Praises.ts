@@ -16,7 +16,7 @@ import { Topics } from "./Topics";
 @Index("IX_Praises_PraiserId", ["praiserId"], {})
 @Index("IX_Praises_TitleId", ["titleId"], {})
 @Index("IX_Praises_TopicId", ["topicId"], {})
-@Entity("Praises", { schema: "public" })
+@Entity("Praises", { schema: "public", synchronize: false })
 export class Praises {
     @PrimaryGeneratedColumn({ type: "integer", name: "Id" })
     id: number;
@@ -36,25 +36,25 @@ export class Praises {
     @Column("text", { name: "TopicId", nullable: true })
     topicId: string | null;
 
-    @ManyToOne(() => People, (people) => people.praises, {
+    @ManyToOne(() => People, people => people.praises, {
         onDelete: "CASCADE",
     })
     @JoinColumn([{ name: "PraiseeId", referencedColumnName: "id" }])
     praisee: Relation<People>;
 
-    @ManyToOne(() => People, (people) => people.praises2, {
+    @ManyToOne(() => People, people => people.praises2, {
         onDelete: "CASCADE",
     })
     @JoinColumn([{ name: "PraiserId", referencedColumnName: "id" }])
     praiser: Relation<People>;
 
-    @ManyToOne(() => Titles, (titles) => titles.praises, {
+    @ManyToOne(() => Titles, titles => titles.praises, {
         onDelete: "RESTRICT",
     })
     @JoinColumn([{ name: "TitleId", referencedColumnName: "id" }])
     title: Relation<Titles>;
 
-    @ManyToOne(() => Topics, (topics) => topics.praises, {
+    @ManyToOne(() => Topics, topics => topics.praises, {
         onDelete: "RESTRICT",
     })
     @JoinColumn([{ name: "TopicId", referencedColumnName: "id" }])

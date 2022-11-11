@@ -11,7 +11,7 @@ import { People } from "./People";
 
 @Index("IX_Books_AuthorId", ["authorId"], {})
 @Index("PK_Books", ["id"], { unique: true })
-@Entity("Books", { schema: "public" })
+@Entity("Books", { schema: "public", synchronize: false })
 export class Books {
     @PrimaryGeneratedColumn({ type: "integer", name: "Id" })
     id: number;
@@ -25,7 +25,7 @@ export class Books {
     @Column("text", { name: "Source", nullable: true })
     source: string | null;
 
-    @ManyToOne(() => People, (people) => people.books, { onDelete: "RESTRICT" })
+    @ManyToOne(() => People, people => people.books, { onDelete: "RESTRICT" })
     @JoinColumn([{ name: "AuthorId", referencedColumnName: "id" }])
     author: Relation<People>;
 }

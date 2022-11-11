@@ -1,5 +1,6 @@
 import { DataSource } from "typeorm";
 import { AppUsers } from "./entities/AppUsers";
+import { AppRoles } from "./entities/AppRoles";
 import { Books } from "./entities/Books";
 import { Generations } from "./entities/Generations";
 import { People } from "./entities/People";
@@ -17,6 +18,7 @@ const IslaamDataSource = new DataSource({
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     logging: process.env.DB_LOGGING === "true",
+    synchronize: process.env.DB_SYNC === "true",
     entities: [
         Books,
         Generations,
@@ -27,6 +29,7 @@ const IslaamDataSource = new DataSource({
         Titles,
         Topics,
         AppUsers,
+        AppRoles,
     ],
 });
 
