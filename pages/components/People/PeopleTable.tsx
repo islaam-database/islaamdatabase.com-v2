@@ -1,24 +1,18 @@
 import React from "react";
 import { useRouter } from "next/router";
 import { People } from "../../../database/entities/People";
+import { Table } from "../Table";
 
 export function PeopleTable({ people }: { people: People[]; }) {
-    return <>
-        <h1>People ({people.length})</h1>
-        <table className="people-table">
-            <thead>
-                <tr>
-                    <td>Name</td>
-                    <td>Death</td>
-                    <td>Birth</td>
-                    <td>Generation</td>
-                </tr>
-            </thead>
-            <tbody>
-                {people.map(p => <PersonTableRow key={p.id} {...p} />)}
-            </tbody>
-        </table>
-    </>;
+    return <Table
+        headTr={<tr>
+            <td>Name</td>
+            <td>Death</td>
+            <td>Birth</td>
+            <td>Generation</td>
+        </tr>}
+        bodyTrs={people.map(p => <PersonTableRow key={p.id} {...p} />)}
+    />
 }
 
 function PersonTableRow(p: People) {

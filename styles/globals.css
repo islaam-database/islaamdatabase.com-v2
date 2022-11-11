@@ -20,20 +20,20 @@ body {
 #footer {
     margin-top: 1rem;
 }
-.people-table {
+.table {
     width: 100%;
     border-collapse: collapse;
 }
-.people-table thead {
+.table thead {
     font-weight: bold;
     border-bottom: 2px solid gray;
 }
-.people-table td {
+.table td {
     border-bottom: 1px solid lightgray;
     cursor: pointer;
     padding: 1rem;
 }
-.people-table tr:hover {
+.table tr:hover {
     background: linear-gradient(45deg, #d3bd9f, #bb9b7a);
     color: white;
 }

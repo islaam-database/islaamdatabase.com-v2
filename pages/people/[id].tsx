@@ -1,6 +1,5 @@
-import { GetServerSideProps, NextApiRequest, NextApiResponse } from "next";
+import { NextApiRequest } from "next";
 import Link from "next/link";
-import { NextRequest } from "next/server";
 import { People } from "../../database/entities/People";
 import { IslaamDatabase } from "../../database/IslaamDatabase";
 import { toJson } from "../utils";

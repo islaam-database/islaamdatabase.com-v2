@@ -44,4 +44,7 @@ export class IslaamDatabase {
     static get People() {
         return IslaamDatabase.getInstance().then(i => i.getRepository(People));
     }
+    static get Praises() {
+        return IslaamDatabase.getInstance().then(i => i.getRepository(Praises));
+    }
 }

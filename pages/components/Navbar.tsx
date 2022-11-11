@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useContext, useState } from "react";
 import { UserContext } from "../UserContext";
 import { AuthDialog } from "./AuthDialog";
@@ -12,7 +13,12 @@ interface Props {
 
 export const Navbar = ({ onLoginRequest, onRegisterRequest, onLogoutRequest }: Props) => {
     const [authState, setAuthState] = useState<"logging-in" | "registering">();
-    return <div id="navbar" style={{ display: "flex", justifyContent: "flex-end" }}>
+    return <div id="navbar" style={{ display: "flex", justifyContent: "space-between" }}>
+        <div style={{ display: "flex", gap: "1rem" }}>
+            <Link href="/">App Name</Link>
+            <Link href="/people">People</Link>
+            <Link href="/praises">Praises</Link>
+        </div>
         <AuthDialog
             isOpen={authState != null}
             onCloseRequest={() => setAuthState(undefined)}
