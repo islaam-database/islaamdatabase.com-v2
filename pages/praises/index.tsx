@@ -1,4 +1,5 @@
 import { withIronSessionSsr } from "iron-session/next";
+import Link from "next/link";
 import { Praises } from "../../database/entities/Praises";
 import { IslaamDatabase } from "../../database/IslaamDatabase";
 import { Table } from "../components/Table";
@@ -16,17 +17,27 @@ export default function ({ praises }: Props) {
                 <td>ID</td>
                 <td>Praiser</td>
                 <td>Praisee</td>
-                <td>Source</td>
                 <td>Title</td>
                 <td>Topic</td>
+                <td>Source</td>
             </tr>}
             bodyTrs={praises.map(p => <tr>
                 <td>{p.id}</td>
-                <td>{p.praiser.name}</td>
-                <td>{p.praisee.name}</td>
+                <td>
+                    <Link href={`/people/${p.praiserId}`}>{p.praiser.name}</Link>
+                </td>
+                <td>
+                    <Link href={`/people/${p.praiseeId}`}>{p.praisee.name}</Link>
+                </td>
+                <td>
+                    <Link href={`/titles/${p.titleId}`}>{p.title?.name}</Link>
+                </td>
+                <td>
+                    <Link href={`/topics/${p.topicId}`}>
+                        {p.topic?.name}
+                    </Link>
+                </td>
                 <td>{p.source}</td>
-                <td>{p.title?.name}</td>
-                <td>{p.topic?.name}</td>
             </tr>)}
         />
     </>;
