@@ -7,26 +7,37 @@ import { CookieConfig } from "../CookieConfig";
 import { toJson } from "../utils";
 
 export default withIronSessionApiRoute(async function (req, res) {
-    const { userName, password } = JSON.parse(req.body);
+    try {
+        if (!req.body)
+            return res.status(400).json({ message: "Missing request body" });
+        const { userName, password } = JSON.parse(req.body);
+        // validate query params
+        if (!userName)
+            return res.status(400).json({ message: "Missing username" });
+        if (!password)
+            return res.status(400).json({ message: "Missing password" });
 
-    // validate query params
-    if (!userName) return res.status(400).send("Missing username");
-    if (!password) return res.status(400).send("Missing password");
+        // get user from db
+        const db = await IslaamDatabase.getInstance();
+        const user = await db.getRepository(AppUsers).findOneBy({ userName });
+        if (!user)
+            return res.status(401).json({
+                message: `There is no user with username ${userName}`,
+            });
 
-    // get user from db
-    const db = await IslaamDatabase.getInstance();
-    const user = await db.getRepository(AppUsers).findOneBy({ userName });
-    if (!user)
-        return res
-            .status(401)
-            .send(`There is no user with username ${userName}`);
+        // validate password
+        const validPassword = await user.checkPassword(password);
+        if (!validPassword)
+            return res.status(401).json({ message: "Wrong password" });
 
-    // validate password
-    const validPassword = await user.checkPassword(password);
-    if (!validPassword) return res.status(401).send("Wrong password");
+        req.session.user = toJson(user);
 
-    req.session.user = toJson(user);
-
-    await req.session.save();
-    res.json(user);
+        await req.session.save();
+        res.json(user);
+    } catch (e) {
+        console.error(e);
+        res.status(500).json({
+            message: "We couldn't log you in. That's all we can say.",
+        });
+    }
 }, CookieConfig);

@@ -9,17 +9,25 @@ interface Props {
 }
 
 /** Prompts the user for their username and password */
-export const AuthDialog = ({ submitText, onSubmit, isOpen }: Props) => {
+export const AuthDialog = ({ submitText, onSubmit, isOpen, onCloseRequest }: Props) => {
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
-    return <dialog className="auth-dialog" open={isOpen}>
-        <form onSubmit={() => onSubmit({ userName, password })}>
+    return <dialog className="auth-dialog" open={isOpen} >
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "3rem" }}>
+            <h3>Enter your username and password</h3>
+            <button onClick={onCloseRequest}>ⅹ</button>
+        </div>
+        <form
+            onSubmit={() => {
+                onSubmit({ userName, password });
+                onCloseRequest();
+            }}>
             <label htmlFor="username">Username</label>
-            <input required value={userName} onInput={(e) => setUserName(e.currentTarget.value)} />
+            <input id="username" autoFocus required value={userName} onInput={(e) => setUserName(e.currentTarget.value)} />
             <br />
 
             <label htmlFor="password">Password</label>
-            <input required value={password} onInput={(e) => setPassword(e.currentTarget.value)} />
+            <input id="password" type="password" required value={password} onInput={(e) => setPassword(e.currentTarget.value)} />
             <br />
 
             <button type="submit">{submitText}</button>
