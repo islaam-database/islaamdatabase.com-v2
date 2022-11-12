@@ -1,6 +1,6 @@
 import { withIronSessionSsr } from "iron-session/next";
 import Link from "next/link";
-import { AppRoles } from "../../database/entities/AppUsers";
+import { AppRoles } from "../../database/entities/AppRoles";
 import { Praises } from "../../database/entities/Praises";
 import { IslaamDatabase } from "../../database/IslaamDatabase";
 import { Table } from "../components/Table";
@@ -12,10 +12,10 @@ interface Props {
 }
 export default function ({ praises, role }: Props) {
     return <>
-        <h1>
+        <h1 style={{ display: "flex", justifyContent: "space-between" }}>
             <span>Praises ({praises.length})</span>
             {
-                role.name === "admin" && <button>Create praise</button>
+                role.name === "admin" && <Link href="/praises/create">Create praise</Link>
             }
         </h1>
         <hr />
