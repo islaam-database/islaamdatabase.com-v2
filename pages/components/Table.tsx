@@ -5,6 +5,7 @@ interface Row {
     isActive: boolean;
     values: TD[];
     key: string | number | boolean;
+    href: string;
 }
 type TD = undefined | null | string | number | boolean | {
     text: JSX.Element | string | number;
@@ -24,27 +25,24 @@ export function Table({ columnNames, rows }: Props) {
         setTimeout(() => activeTr.current?.scrollIntoView({ behavior: "smooth" }), 500);
     }, [activeTr.current]);
 
-    return <table className="table">
-        <thead>
-            <tr>
-                {columnNames.map(cn => <th>{cn}</th>)}
-            </tr>
-        </thead>
-        <tbody>
-            {rows.map(({ values, isActive }) => <tr
-                className={isActive ? "active" : ""}
-                ref={isActive ? activeTr : null}
-            >
-                {values.map((val) => <td>
-                    {typeof val === "string" && val}
-                    {typeof val === "number" && val}
-                    {typeof val === "boolean" && val}
-                    {typeof val === "object"
-                        && val != null
-                        && <Link href={val.href}>{val.text}</Link>
-                    }
-                </td>)}
-            </tr>)}
-        </tbody>
-    </table>
+    return <div className="table">
+        <tr>
+            {columnNames.map((cn, i) => <th key={i}>{cn}</th>)}
+        </tr>
+        {rows.map(({ values, isActive }, i) => <tr
+            key={i}
+            className={isActive ? "active" : ""}
+            ref={isActive ? activeTr : null}
+        >
+            {values.map((val) => <td>
+                {typeof val === "string" && val}
+                {typeof val === "number" && val}
+                {typeof val === "boolean" && val}
+                {typeof val === "object"
+                    && val != null
+                    && <Link href={val.href}>{val.text}</Link>
+                }
+            </td>)}
+        </tr>)}
+    </div>
 }

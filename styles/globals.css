@@ -31,17 +31,22 @@ a {
 #footer {
     margin-top: 1rem;
 }
+hr {
+    border-style: solid;
+    margin-bottom: 0;
+}
 .table {
     width: 100%;
-    border-collapse: collapse;
 }
-.table thead {
-    font-weight: bold;
-    border-bottom: 2px solid gray;
+.table tr {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    border-bottom: 1px solid gray;
 }
 .table td, .table th {
+    flex: 1;
     text-align: left;
-    border-bottom: 1px solid lightgray;
     cursor: pointer;
     padding: 1rem;
 }

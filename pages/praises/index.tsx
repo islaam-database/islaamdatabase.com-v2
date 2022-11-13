@@ -1,7 +1,6 @@
 import { withIronSessionSsr } from "iron-session/next";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useRef } from "react";
 import { AppRoles } from "../../database/entities/AppRoles";
 import { Praises } from "../../database/entities/Praises";
 import { IslaamDatabase } from "../../database/IslaamDatabase";
@@ -32,6 +31,7 @@ export default function ({ praises, role }: Props) {
             ]}
             rows={praises.map(p => ({
                 key: p.id,
+                href: `/praises/${p.id}`,
                 isActive: highlight === p.id.toString(),
                 values: [
                     p.id,

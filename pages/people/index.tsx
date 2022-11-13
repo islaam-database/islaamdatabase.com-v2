@@ -29,6 +29,7 @@ export default function ({ people }: Props) {
             rows={people.map(p => ({
                 isActive: highlight === p.id.toString(),
                 key: p.id,
+                href: `/people/${p.id}`,
                 values: [
                     p.name,
                     p.deathYear != null && `${p.deathYear} AH`,
