@@ -29,7 +29,7 @@ export function Table({ columnNames, rows }: Props) {
         <tr>
             {columnNames.map((cn, i) => <th key={i}>{cn}</th>)}
         </tr>
-        {rows.map(({ values, isActive }, i) => <tr
+        {rows.map(({ values, isActive, href }, i) => <Link href={href}><tr
             key={i}
             className={isActive ? "active" : ""}
             ref={isActive ? activeTr : null}
@@ -43,6 +43,7 @@ export function Table({ columnNames, rows }: Props) {
                     && <Link href={val.href}>{val.text}</Link>
                 }
             </td>)}
-        </tr>)}
+        </tr>
+        </Link>)}
     </div>
 }
