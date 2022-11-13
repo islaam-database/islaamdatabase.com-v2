@@ -37,17 +37,13 @@ hr {
 }
 .table {
     width: 100%;
+    border-collapse: collapse;
 }
-.table tr {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
+.table td, .table tr {
     border-bottom: 1px solid gray;
 }
 .table td, .table th {
-    flex: 1;
     text-align: left;
-    cursor: pointer;
     padding: 1rem;
 }
 .table tr:hover, .table tr.active {

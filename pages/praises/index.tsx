@@ -13,6 +13,7 @@ interface Props {
 }
 export default function ({ praises, role }: Props) {
     const { highlight } = useRouter().query;
+
     return <>
         <h1 style={{ display: "flex", justifyContent: "space-between" }}>
             <span>Praises ({praises.length})</span>
@@ -34,11 +35,11 @@ export default function ({ praises, role }: Props) {
                 href: `/praises/${p.id}`,
                 isActive: highlight === p.id.toString(),
                 values: [
-                    p.id,
-                    { text: p.praiser.name, href: `/people/${p.praiserId}` },
-                    { text: p.praisee.name, href: `/people/${p.praiseeId}` },
-                    { text: p.title?.name, href: `/titles/${p.title}` },
-                    { text: p.topic?.name, href: `/topics/${p.topic}` },
+                    <Link href={`/praises/${p.id}`}>{p.id}</Link>,
+                    <Link href={`/people/${p.praiserId}`}>{p.praiser.name}</Link>,
+                    <Link href={`/people/${p.praiseeId}`}>{p.praisee.name}</Link>,
+                    <Link href={`/titles/${p.title}`}>{p.title?.name}</Link>,
+                    <Link href={`/topics/${p.topic}`}>{p.topic?.name}</Link>,
                 ],
             }))}
         />

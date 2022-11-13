@@ -6,6 +6,7 @@ import { toJson } from "../utils";
 import { AppUsers } from "../../database/entities/AppUsers";
 import { Table } from "../components/Table";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 interface Props {
     people: People[];
@@ -34,17 +35,12 @@ export default function ({ people }: Props) {
                     p.name,
                     p.deathYear != null && `${p.deathYear} AH`,
                     p.birthYear != null && `${p.birthYear} AH`,
-                    {
-                        text: p.generation?.name,
-                        href: `/generations/${p.generationId}`
-                    },
+                    <Link href={`/generations/${p.generationId}`}>{p.generation?.name}</Link>
                 ]
             }))}
         />
     </>;
 }
-
-const getSuffix = (year?: number | null) => year == null ? "" : "AH";
 
 export const getServerSideProps = withIronSessionSsr(
     async ({ req }) => {

@@ -1,15 +1,10 @@
 import Link from "next/link";
-import { useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef } from "react";
 
 interface Row {
     isActive: boolean;
-    values: TD[];
-    key: string | number | boolean;
-    href: string;
-}
-type TD = undefined | null | string | number | boolean | {
-    text: JSX.Element | string | number;
-    href: string;
+    values: JSX.Element[];
+    key: string | number;
 }
 
 interface Props {
@@ -19,31 +14,26 @@ interface Props {
     rows: Row[];
 }
 export function Table({ columnNames, rows }: Props) {
-    const activeTr = useRef<HTMLTableRowElement>(null);
+    const activeTr = useRef<HTMLAnchorElement>(null);
 
     useEffect(() => {
         setTimeout(() => activeTr.current?.scrollIntoView({ behavior: "smooth" }), 500);
     }, [activeTr.current]);
 
-    return <div className="table">
-        <tr>
-            {columnNames.map((cn, i) => <th key={i}>{cn}</th>)}
-        </tr>
-        {rows.map(({ values, isActive, href }, i) => <Link href={href}><tr
-            key={i}
-            className={isActive ? "active" : ""}
-            ref={isActive ? activeTr : null}
-        >
-            {values.map((val) => <td>
-                {typeof val === "string" && val}
-                {typeof val === "number" && val}
-                {typeof val === "boolean" && val}
-                {typeof val === "object"
-                    && val != null
-                    && <Link href={val.href}>{val.text}</Link>
-                }
-            </td>)}
-        </tr>
-        </Link>)}
-    </div>
+    return <table className="table">
+        <thead>
+            <tr className="header">
+                {columnNames.map((cn, i) => <th key={i}>{cn}</th>)}
+            </tr>
+        </thead>
+        <tbody>
+            {rows.map(({ values, isActive, key }) => <tr
+                key={key}
+                className={isActive ? "active" : ""}
+            >
+                {values.map((val, i) => <td key={i}>{val}</td>)}
+            </tr>
+            )}
+        </tbody>
+    </table>
 }
