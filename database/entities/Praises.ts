@@ -18,23 +18,19 @@ import { Topics } from "./Topics";
 @Index("IX_Praises_TopicId", ["topicId"], {})
 @Entity("Praises", { schema: "public", synchronize: false })
 export class Praises {
-    @PrimaryGeneratedColumn({ type: "integer", name: "Id" })
-    id: number;
+    @PrimaryGeneratedColumn({ type: "integer", name: "Id" }) id: number;
 
-    @Column("integer", { name: "PraiserId" })
-    praiserId: number;
+    @Column("integer", { name: "PraiserId" }) praiserId: number;
 
-    @Column("integer", { name: "PraiseeId" })
-    praiseeId: number;
+    @Column("integer", { name: "PraiseeId" }) praiseeId: number;
 
-    @Column("text", { name: "Source" })
-    source: string;
+    @Column("text", { name: "Source" }) source: string;
 
-    @Column("integer", { name: "TitleId", nullable: true })
-    titleId: number | null;
+    @Column("integer", { name: "TitleId", nullable: true }) titleId:
+        | number
+        | null;
 
-    @Column("text", { name: "TopicId", nullable: true })
-    topicId: string | null;
+    @Column("text", { name: "TopicId", nullable: true }) topicId: string | null;
 
     @ManyToOne(() => People, people => people.praises, {
         onDelete: "CASCADE",

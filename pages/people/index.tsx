@@ -2,9 +2,10 @@ import { withIronSessionSsr } from "iron-session/next";
 import { People } from "../../database/entities/People";
 import { IslaamDatabase } from "../../database/IslaamDatabase";
 import { CookieConfig } from "../CookieConfig";
-import { PeopleTable } from "../components/people/PeopleTable";
 import { toJson } from "../utils";
 import { AppUsers } from "../../database/entities/AppUsers";
+import { Table } from "../components/Table";
+import { useRouter } from "next/router";
 
 interface Props {
     people: People[];
@@ -12,12 +13,37 @@ interface Props {
 }
 
 export default function ({ people }: Props) {
+    const { highlight } = useRouter().query;
     return <>
         <h1>People ({people.length})</h1>
         <hr />
-        <PeopleTable people={people} />
+        <Table
+            columnNames={
+                [
+                    "Name",
+                    "Death",
+                    "Birth",
+                    "Generation",
+                ]
+            }
+            rows={people.map(p => ({
+                isActive: highlight === p.id.toString(),
+                key: p.id,
+                values: [
+                    p.name,
+                    p.deathYear != null && `${p.deathYear} AH`,
+                    p.birthYear != null && `${p.birthYear} AH`,
+                    {
+                        text: p.generation?.name,
+                        href: `/generations/${p.generationId}`
+                    },
+                ]
+            }))}
+        />
     </>;
 }
+
+const getSuffix = (year?: number | null) => year == null ? "" : "AH";
 
 export const getServerSideProps = withIronSessionSsr(
     async ({ req }) => {
@@ -26,6 +52,7 @@ export const getServerSideProps = withIronSessionSsr(
             .getRepository(People)
             .createQueryBuilder("people")
             .orderBy("people.deathYear", "ASC", "NULLS LAST")
+            .leftJoinAndSelect("people.generation", "generation")
             .getMany();
         const people = toJson(await query);
         const user = req.session.user || null;

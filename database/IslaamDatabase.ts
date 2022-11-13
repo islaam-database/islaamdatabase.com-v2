@@ -17,7 +17,7 @@ const IslaamDataSource = new DataSource({
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    logging: process.env.DB_LOGGING === "true",
+    // logging: process.env.DB_LOGGING === "true", // annoying
     synchronize: process.env.DB_SYNC === "true",
     entities: [
         Books,
@@ -49,5 +49,11 @@ export class IslaamDatabase {
     }
     static get Praises() {
         return IslaamDatabase.getInstance().then(i => i.getRepository(Praises));
+    }
+    static get Topics() {
+        return IslaamDatabase.getInstance().then(i => i.getRepository(Topics));
+    }
+    static get Titles() {
+        return IslaamDatabase.getInstance().then(i => i.getRepository(Titles));
     }
 }

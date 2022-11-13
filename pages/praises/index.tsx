@@ -1,5 +1,7 @@
 import { withIronSessionSsr } from "iron-session/next";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useRef } from "react";
 import { AppRoles } from "../../database/entities/AppRoles";
 import { Praises } from "../../database/entities/Praises";
 import { IslaamDatabase } from "../../database/IslaamDatabase";
@@ -11,6 +13,7 @@ interface Props {
     role: AppRoles;
 }
 export default function ({ praises, role }: Props) {
+    const { highlight } = useRouter().query;
     return <>
         <h1 style={{ display: "flex", justifyContent: "space-between" }}>
             <span>Praises ({praises.length})</span>
@@ -20,32 +23,24 @@ export default function ({ praises, role }: Props) {
         </h1>
         <hr />
         <Table
-            headTr={<tr>
-                <td>ID</td>
-                <td>Praiser</td>
-                <td>Praisee</td>
-                <td>Title</td>
-                <td>Topic</td>
-                <td>Source</td>
-            </tr>}
-            bodyTrs={praises.map(p => <tr key={p.id}>
-                <td>{p.id}</td>
-                <td>
-                    <Link href={`/people/${p.praiserId}`}>{p.praiser.name}</Link>
-                </td>
-                <td>
-                    <Link href={`/people/${p.praiseeId}`}>{p.praisee.name}</Link>
-                </td>
-                <td>
-                    <Link href={`/titles/${p.titleId}`}>{p.title?.name}</Link>
-                </td>
-                <td>
-                    <Link href={`/topics/${p.topicId}`}>
-                        {p.topic?.name}
-                    </Link>
-                </td>
-                <td>{p.source}</td>
-            </tr>)}
+            columnNames={[
+                "ID",
+                "Praiser",
+                "Praisee",
+                "Title",
+                "Topic",
+            ]}
+            rows={praises.map(p => ({
+                key: p.id,
+                isActive: highlight === p.id.toString(),
+                values: [
+                    { text: p.id },
+                    { text: p.praiser.name, href: `/people/${p.praiserId}` },
+                    { text: p.praisee.name, href: `/people/${p.praiseeId}` },
+                    { text: p.title?.name, href: `/titles/${p.title}` },
+                    { text: p.topic?.name, href: `/topics/${p.topic}` },
+                ],
+            }))}
         />
     </>;
 }

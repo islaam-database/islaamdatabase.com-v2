@@ -24,6 +24,10 @@ body {
 #navbar a:hover {
     text-decoration: underline;
 }
+a {
+    text-decoration: none;
+    color: inherit;
+}
 #footer {
     margin-top: 1rem;
 }
@@ -35,12 +39,13 @@ body {
     font-weight: bold;
     border-bottom: 2px solid gray;
 }
-.table td {
+.table td, .table th {
+    text-align: left;
     border-bottom: 1px solid lightgray;
     cursor: pointer;
     padding: 1rem;
 }
-.table tr:hover {
+.table tr:hover, .table tr.active {
     background: linear-gradient(45deg, #d3bd9f, #bb9b7a);
     color: white;
 }
