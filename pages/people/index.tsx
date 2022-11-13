@@ -31,7 +31,7 @@ export default function ({ people }: Props) {
                 isActive: highlight === p.id.toString(),
                 key: p.id,
                 href: `/people/${p.id}`,
-                values: [
+                columns: [
                     p.name,
                     p.deathYear != null && `${p.deathYear} AH`,
                     p.birthYear != null && `${p.birthYear} AH`,

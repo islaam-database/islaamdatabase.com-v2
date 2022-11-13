@@ -34,7 +34,7 @@ export default function ({ praises, role }: Props) {
                 key: p.id,
                 href: `/praises/${p.id}`,
                 isActive: highlight === p.id.toString(),
-                values: [
+                columns: [
                     <Link href={`/praises/${p.id}`}>{p.id}</Link>,
                     <Link href={`/people/${p.praiserId}`}>{p.praiser.name}</Link>,
                     <Link href={`/people/${p.praiseeId}`}>{p.praisee.name}</Link>,

@@ -1,9 +1,8 @@
-import Link from "next/link";
-import { Suspense, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 interface Row {
     isActive: boolean;
-    values: JSX.Element[];
+    columns: (JSX.Element | string | boolean)[];
     key: string | number;
 }
 
@@ -27,11 +26,11 @@ export function Table({ columnNames, rows }: Props) {
             </tr>
         </thead>
         <tbody>
-            {rows.map(({ values, isActive, key }) => <tr
+            {rows.map(({ columns, isActive, key }) => <tr
                 key={key}
                 className={isActive ? "active" : ""}
             >
-                {values.map((val, i) => <td key={i}>{val}</td>)}
+                {columns.map((val, i) => <td key={i}>{val}</td>)}
             </tr>
             )}
         </tbody>
