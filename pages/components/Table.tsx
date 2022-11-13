@@ -37,6 +37,7 @@ export function Table({ columnNames, rows }: Props) {
             >
                 {values.map((val) => <td>
                     {typeof val === "string" && val}
+                    {typeof val === "number" && val}
                     {typeof val === "boolean" && val}
                     {typeof val === "object"
                         && val != null
