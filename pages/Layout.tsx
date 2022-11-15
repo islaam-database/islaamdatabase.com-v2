@@ -45,7 +45,7 @@ export const Layout = ({ children }: Props) => {
                         setUser(await r.json() as AppUsers);
                     });
             }} />
-        <div style={{ padding: "0 1rem", maxWidth: "1024px", margin: "0 auto" }}>
+        <div style={{ padding: "0 1rem" }}>
             {children}
         </div>
         <Footer />
