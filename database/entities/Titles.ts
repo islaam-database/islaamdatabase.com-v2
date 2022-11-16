@@ -8,15 +8,15 @@ import {
     PrimaryGeneratedColumn,
     Relation,
 } from "typeorm";
-import { SelectableOption } from "../../types";
 import { People } from "./People";
 import { Praises } from "./Praises";
 import { Statuses } from "./Statuses";
+import { SelectableOption } from "../../utils";
 
 @Index("PK_Titles", ["id"], { unique: true })
 @Index("IX_Titles_StatusId", ["statusId"], {})
 @Entity("Titles", { schema: "public", synchronize: false })
-export class Titles implements SelectableOption {
+export class Titles extends SelectableOption {
     @PrimaryGeneratedColumn({ type: "integer", name: "Id" })
     id: number;
 

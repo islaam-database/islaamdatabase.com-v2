@@ -3,8 +3,3 @@ declare module "iron-session" {
         user?: AppUsers;
     }
 }
-
-export interface SelectableOption {
-    id: string | number;
-    name: string;
-}

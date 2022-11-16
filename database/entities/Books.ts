@@ -7,13 +7,13 @@ import {
     PrimaryGeneratedColumn,
     Relation,
 } from "typeorm";
-import { SelectableOption } from "../../types";
+import { SelectableOption } from "../../utils";
 import { People } from "./People";
 
 @Index("IX_Books_AuthorId", ["authorId"], {})
 @Index("PK_Books", ["id"], { unique: true })
 @Entity("Books", { schema: "public", synchronize: false })
-export class Books implements SelectableOption {
+export class Books extends SelectableOption {
     get name() {
         return this.title;
     }

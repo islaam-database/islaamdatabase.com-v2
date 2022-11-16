@@ -9,12 +9,12 @@ import {
 } from "typeorm";
 import { Statuses } from "./Statuses";
 import { People } from "./People";
-import { SelectableOption } from "../../types";
+import { SelectableOption } from "../../utils";
 
 @Index("PK_Generations", ["id"], { unique: true })
 @Index("IX_Generations_StatusId", ["statusId"], { unique: true })
 @Entity("Generations", { schema: "public", synchronize: false })
-export class Generations implements SelectableOption {
+export class Generations extends SelectableOption {
     @PrimaryGeneratedColumn({ type: "integer", name: "Id" })
     id: number;
 

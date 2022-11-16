@@ -33,6 +33,7 @@ export default function ({ praise, people, titles, topics, canEdit }: Props) {
 
 export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
     if (req.method === "POST") {
+        // user is creating a praise
         const isAdmin = req.session.user?.role.name === "admin";
         if (!isAdmin) return {
             redirect: {

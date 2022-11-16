@@ -7,6 +7,7 @@ import {
     PrimaryGeneratedColumn,
     Relation,
 } from "typeorm";
+import { SelectableOption } from "../../utils";
 import { People } from "./People";
 import { Titles } from "./Titles";
 import { Topics } from "./Topics";

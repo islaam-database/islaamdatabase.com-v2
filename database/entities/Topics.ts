@@ -6,14 +6,14 @@ import {
     ManyToOne,
     OneToMany,
 } from "typeorm";
-import { SelectableOption } from "../../types";
+import { SelectableOption } from "../../utils";
 import { Praises } from "./Praises";
 import { TeacherStudents } from "./TeacherStudents";
 
 @Index("PK_Topics", ["id"], { unique: true })
 @Index("IX_Topics_ParentTopicId", ["parentTopicId"], {})
 @Entity("Topics", { schema: "public", synchronize: false })
-export class Topics implements SelectableOption {
+export class Topics extends SelectableOption {
     @Column("text", { name: "Name", default: () => "''" })
     name: string;
 

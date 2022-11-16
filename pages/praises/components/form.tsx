@@ -1,5 +1,5 @@
 import { Praises } from "../../../database/entities/Praises";
-import { SelectableOption } from "../../../types";
+import { SelectableOption, toOptionLabel } from "../../../utils";
 
 interface Props {
     praiseEditing?: Praises;
@@ -30,22 +30,22 @@ export default function PraiseForm({
             <div>
                 <label htmlFor="praiser">Praiser: </label>
                 {' '}
-                <input readOnly={disabled} name="praiser" required list="people" />
+                <input value={toOptionLabel(praiseEditing?.praiser)} readOnly={disabled} name="praiser" required list="people" />
             </div>
             <div>
                 <label htmlFor="praisee">Praisee: </label>
                 {' '}
-                <input readOnly={disabled} name="praisee" required list="people" />
+                <input value={toOptionLabel(praiseEditing?.praisee)} readOnly={disabled} name="praisee" required list="people" />
             </div>
             <div>
                 <label htmlFor="title">Title:</label>
                 {' '}
-                <input readOnly={disabled} name="title" list="titles" />
+                <input value={toOptionLabel(praiseEditing?.title)} readOnly={disabled} name="title" list="titles" />
             </div>
             <div>
                 <label htmlFor="topic">Topic:</label>
                 {' '}
-                <input readOnly={disabled} name="topic" list="topics" />
+                <input value={toOptionLabel(praiseEditing?.topic)} readOnly={disabled} name="topic" list="topics" />
             </div>
             <div>
                 <label htmlFor="source">Source: </label>
@@ -53,6 +53,7 @@ export default function PraiseForm({
             </div>
 
             {!disabled && <div className="buttons">
+                <hr />
                 {praiseEditing && <button type="button" name="is-deleting">Delete</button>}
                 <button type="submit">Submit</button>
             </div>}

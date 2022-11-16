@@ -12,13 +12,13 @@ import { Generations } from "./Generations";
 import { Titles } from "./Titles";
 import { Praises } from "./Praises";
 import { TeacherStudents } from "./TeacherStudents";
-import { SelectableOption } from "../../types";
+import { SelectableOption } from "../../utils";
 
 @Index("IX_People_GenerationId", ["generationId"], {})
 @Index("PK_People", ["id"], { unique: true })
 @Index("IX_People_MainTitleId", ["mainTitleId"], {})
 @Entity("People", { schema: "public", synchronize: false })
-export class People implements SelectableOption {
+export class People extends SelectableOption {
     @PrimaryGeneratedColumn({ type: "integer", name: "Id" })
     id: number;
 
