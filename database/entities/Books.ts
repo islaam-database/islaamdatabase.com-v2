@@ -7,12 +7,16 @@ import {
     PrimaryGeneratedColumn,
     Relation,
 } from "typeorm";
+import { SelectableOption } from "../../types";
 import { People } from "./People";
 
 @Index("IX_Books_AuthorId", ["authorId"], {})
 @Index("PK_Books", ["id"], { unique: true })
 @Entity("Books", { schema: "public", synchronize: false })
-export class Books {
+export class Books implements SelectableOption {
+    get name() {
+        return this.title;
+    }
     @PrimaryGeneratedColumn({ type: "integer", name: "Id" })
     id: number;
 

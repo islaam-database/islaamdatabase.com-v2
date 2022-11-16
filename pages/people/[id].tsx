@@ -2,7 +2,7 @@ import { NextApiRequest } from "next";
 import Link from "next/link";
 import { People } from "../../database/entities/People";
 import { IslaamDatabase } from "../../database/IslaamDatabase";
-import { toJson } from "../utils";
+import { toJson } from "../../utils";
 
 export default function ({ person }: { person: People }) {
     return <>

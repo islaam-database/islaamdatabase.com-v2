@@ -6,7 +6,7 @@ import { Praises } from "../../database/entities/Praises";
 import { IslaamDatabase } from "../../database/IslaamDatabase";
 import { Table } from "../components/Table";
 import { CookieConfig } from "../CookieConfig";
-import { toJson } from "../utils";
+import { toJson } from "../../utils";
 interface Props {
     praises: Praises[];
     role: AppRoles;

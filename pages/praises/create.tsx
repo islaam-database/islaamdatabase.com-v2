@@ -4,7 +4,7 @@ import { Titles } from "../../database/entities/Titles";
 import { Topics } from "../../database/entities/Topics";
 import { Praises } from "../../database/entities/Praises";
 import { IslaamDatabase } from "../../database/IslaamDatabase";
-import { toJson } from "../utils";
+import { toJson } from "../../utils";
 import { parseBody } from "next/dist/server/api-utils/node";
 import { withIronSessionSsr } from "iron-session/next";
 import { CookieConfig } from "../CookieConfig";

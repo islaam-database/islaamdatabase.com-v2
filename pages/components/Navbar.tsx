@@ -19,17 +19,19 @@ export const Navbar = ({ onLoginRequest, onRegisterRequest, onLogoutRequest }: P
             <Link href="/people">People</Link>
             <Link href="/praises">Praises</Link>
         </div>
-        <AuthDialog
-            isOpen={authState != null}
-            onCloseRequest={() => setAuthState(undefined)}
-            submitText={authState == "logging-in" ? "Log in" : "Register"}
-            onSubmit={authState === "logging-in" ? onLoginRequest : onRegisterRequest}
-        />
-        <UserLogin
-            onLoginRequest={() => setAuthState("logging-in")}
-            onRegisterRequest={() => setAuthState("registering")}
-            onLogoutRequest={onLogoutRequest}
-        />
+        <div style={{ display: "flex", gap: "1rem" }}>
+            <AuthDialog
+                isOpen={authState != null}
+                onCloseRequest={() => setAuthState(undefined)}
+                submitText={authState == "logging-in" ? "Log in" : "Register"}
+                onSubmit={authState === "logging-in" ? onLoginRequest : onRegisterRequest}
+            />
+            <UserLogin
+                onLoginRequest={() => setAuthState("logging-in")}
+                onRegisterRequest={() => setAuthState("registering")}
+                onLogoutRequest={onLogoutRequest}
+            />
+        </div>
     </div>;
 };
 
