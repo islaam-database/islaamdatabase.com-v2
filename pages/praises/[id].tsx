@@ -6,7 +6,7 @@ import { Topics } from "../../database/entities/Topics";
 import { IslaamDatabase } from "../../database/IslaamDatabase";
 import { CookieConfig } from "../CookieConfig";
 import { toJson } from "../../utils";
-import PraiseForm from "./components/form";
+import PraiseForm from "./form";
 import { parseBody } from "next/dist/server/api-utils/node";
 
 interface Props {
