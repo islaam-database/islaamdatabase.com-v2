@@ -13,7 +13,7 @@ interface Props {
     rows: Row[];
 }
 export function Table({ columnNames, rows }: Props) {
-    const activeTr = useRef<HTMLAnchorElement>(null);
+    const activeTr = useRef<HTMLTableRowElement>(null);
 
     useEffect(() => {
         setTimeout(() => activeTr.current?.scrollIntoView({ behavior: "smooth" }), 500);
@@ -27,6 +27,7 @@ export function Table({ columnNames, rows }: Props) {
         </thead>
         <tbody>
             {rows.map(({ columns, isActive, key }) => <tr
+                ref={isActive ? activeTr : undefined}
                 key={key}
                 className={isActive ? "active" : ""}
             >
