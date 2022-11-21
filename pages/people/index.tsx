@@ -1,7 +1,7 @@
 import { withIronSessionSsr } from "iron-session/next";
 import { People } from "../../database/entities/People";
 import { IslaamDatabase } from "../../database/IslaamDatabase";
-import { CookieConfig } from "../CookieConfig";
+import { CookieConfig } from "../SessionUtils";
 import { toJson } from "../../utils";
 import { AppUsers } from "../../database/entities/AppUsers";
 import { Table } from "../components/Table";

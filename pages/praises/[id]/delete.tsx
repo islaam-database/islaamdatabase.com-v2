@@ -1,0 +1,62 @@
+import { withIronSessionSsr } from "iron-session/next";
+import { Praises } from "../../../database/entities/Praises";
+import { IslaamDatabase } from "../../../database/IslaamDatabase";
+import { toJson } from "../../../utils";
+import { CookieConfig, getIsAdminFromReq } from "../../SessionUtils";
+import PraiseForm from "../form";
+
+interface Props {
+    praise: Praises;
+    error?: string;
+    removed?: number;
+}
+export default function ({ praise, error, removed }: Props) {
+    if (error) throw error;
+    return <>
+        {removed && <h1>This praise has been successfully deleted.</h1>}
+        <h1>Are you sure you want to delete praise {praise.id}?</h1>
+        <hr />
+        <PraiseForm
+            people={[praise.praiser, praise.praisee]}
+            titles={[praise.title]}
+            topics={[praise.topic]}
+            disabled
+            praiseEditing={praise}
+        />
+        <hr />
+        <form method="post">
+            <button type="submit">Delete</button>
+        </form>
+    </>;
+}
+
+export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
+    const id = parseInt((req.url)?.split("/").at(-2) as string);
+    if (req.method === "POST") {
+        const isAdmin = getIsAdminFromReq(req);
+        if (!isAdmin) return { props: { error: "Unauthorized" } };
+        const praiseToDelete = await IslaamDatabase.Praises.then(praises => praises.findOne({ where: { id } }));
+        if (!praiseToDelete) return { props: { error: "That praise doesn't exist" } }
+        await IslaamDatabase.Praises.then(p => p.remove(praiseToDelete));
+        return {
+            props: {
+                praise: toJson(praiseToDelete),
+                removed: true,
+            },
+            redirect: "/praises"
+        }
+    }
+    const praise = await IslaamDatabase
+        .Praises
+        .then(praises => praises.findOne({
+            relations: {
+                praisee: true,
+                praiser: true,
+                title: true,
+                topic: true
+            },
+            where: { id }
+        }))
+        .then(toJson);
+    return { props: { praise } };
+}, CookieConfig)

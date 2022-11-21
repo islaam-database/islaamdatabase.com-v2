@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { Praises } from "../../database/entities/Praises";
 import { SelectableOption, toOptionLabel } from "../../utils";
@@ -17,10 +18,12 @@ export default function PraiseForm({
     topics,
     disabled,
 }: Props) {
+    const router = useRouter();
     const [praisee, setPraisee] = useState(toOptionLabel(praiseEditing?.praisee));
     const [praiser, setPraiser] = useState(toOptionLabel(praiseEditing?.praiser));
     const [title, setTitle] = useState(toOptionLabel(praiseEditing?.title));
     const [topic, setTopic] = useState(toOptionLabel(praiseEditing?.topic));
+    const deleteLink = praiseEditing && `/praises/${praiseEditing.id}/delete`;
     return <>
         <>
             <datalist id="people">
@@ -61,7 +64,13 @@ export default function PraiseForm({
 
             {!disabled && <div className="buttons">
                 <hr />
-                {praiseEditing && <button type="button" name="is-deleting">Delete</button>}
+                {praiseEditing && deleteLink && <button
+                    type="button"
+                    name="is-deleting"
+                    onClick={() => window.confirm(`Delete praise ${praiseEditing.id}?`) && router.push(deleteLink)}
+                >
+                    Delete
+                </button>}
                 <button type="submit">Submit</button>
             </div>}
         </form>

@@ -4,7 +4,7 @@ import { Praises } from "../../database/entities/Praises";
 import { Titles } from "../../database/entities/Titles";
 import { Topics } from "../../database/entities/Topics";
 import { IslaamDatabase } from "../../database/IslaamDatabase";
-import { CookieConfig } from "../CookieConfig";
+import { CookieConfig } from "../SessionUtils";
 import { toJson } from "../../utils";
 import PraiseForm from "./form";
 import { parseBody } from "next/dist/server/api-utils/node";
@@ -42,13 +42,14 @@ export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
             }
         };
 
-        const body = await parseBody(req, "1mb");
+        const { praiser, praisee, title, source, topic } = (await parseBody(req, "1mb")) as Record<string, string>;
         const newPraise = new Praises();
-        newPraise.praiserId = parseInt(body.praiser.split(".")[0]);
-        newPraise.praiseeId = parseInt(body.praisee.split(".")[0]);
-        newPraise.topicId = body.praiser.split(".")[0];
-        newPraise.titleId = parseInt(body.title.split(".")[0]);
-        newPraise.source = body.source;
+        newPraise.praiserId = parseInt(praiser.split(".")[0]);
+        newPraise.praiseeId = parseInt(praisee.split(".")[0]);
+        newPraise.topicId = praiser.split(".")[0];
+        newPraise.titleId = title ? parseInt(title.split(".")[0]) : null;
+        newPraise.topicId = topic.split(".")[0];
+        newPraise.source = source;
 
         const created = await IslaamDatabase.Praises.then(p => p.create(newPraise));
         return {

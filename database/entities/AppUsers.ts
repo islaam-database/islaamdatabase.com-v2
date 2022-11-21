@@ -2,7 +2,6 @@ import {
     Column,
     Entity,
     ManyToOne,
-    OneToMany,
     PrimaryGeneratedColumn,
     Relation,
     Unique,
@@ -28,5 +27,8 @@ export class AppUsers {
     /** Checks if the provided password matches this user's unhashed password */
     checkPassword(plainTextPassword: string) {
         return bcrypt.compare(plainTextPassword, this.passwordHashed);
+    }
+    get isAdmin() {
+        return this.role?.name === "admin";
     }
 }
