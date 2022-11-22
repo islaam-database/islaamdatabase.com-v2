@@ -12,12 +12,12 @@ import { Topics } from "./entities/Topics";
 
 const IslaamDataSource = new DataSource({
     type: "postgres",
-    host: process.env.DB_HOST,
-    port: parseInt(process.env.DB_PORT),
-    username: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    // logging: process.env.DB_LOGGING === "true", // annoying
+    host: process.env.DB_HOST as string,
+    port: parseInt(process.env.DB_PORT as string),
+    username: process.env.DB_USERNAME as string,
+    password: process.env.DB_PASSWORD as string,
+    database: process.env.DB_NAME as string,
+    logging: process.env.DB_LOGGING === "true", // warning: annoying if true
     synchronize: process.env.DB_SYNC === "true",
     entities: [
         Books,
