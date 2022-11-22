@@ -5,9 +5,9 @@ import {
     JoinColumn,
     ManyToOne,
     PrimaryGeneratedColumn,
-    Relation,
 } from "typeorm";
 import { SelectableOption } from "../../utils";
+import type { Relation } from "typeorm";
 import { People } from "./People";
 
 @Index("IX_Books_AuthorId", ["authorId"], {})

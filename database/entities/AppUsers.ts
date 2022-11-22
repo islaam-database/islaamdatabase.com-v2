@@ -3,9 +3,9 @@ import {
     Entity,
     ManyToOne,
     PrimaryGeneratedColumn,
-    Relation,
     Unique,
 } from "typeorm";
+import type { Relation } from "typeorm";
 import * as bcrypt from "bcrypt"; // https://auth0.com/blog/hashing-in-action-understanding-bcrypt/
 import { AppRoles } from "./AppRoles";
 

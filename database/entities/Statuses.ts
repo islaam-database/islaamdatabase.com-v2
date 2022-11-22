@@ -5,8 +5,8 @@ import {
     OneToMany,
     OneToOne,
     PrimaryGeneratedColumn,
-    Relation,
 } from "typeorm";
+import type { Relation } from "typeorm";
 import { SelectableOption } from "../../utils";
 import { Generations } from "./Generations";
 import { Titles } from "./Titles";
