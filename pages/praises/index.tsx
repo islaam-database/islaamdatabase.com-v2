@@ -4,8 +4,8 @@ import { useRouter } from "next/router";
 import { AppRoles } from "../../database/entities/AppRoles";
 import { Praises } from "../../database/entities/Praises";
 import { IslaamDatabase } from "../../database/IslaamDatabase";
-import { Table } from "../components/Table";
-import { CookieConfig } from "../SessionUtils";
+import { Table } from "../../components/Table";
+import { CookieConfig } from "../../utils/SessionUtils";
 import { toJson } from "../../utils";
 interface Props {
     praises: Praises[];

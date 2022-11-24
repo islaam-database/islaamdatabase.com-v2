@@ -6,8 +6,8 @@ import { IslaamDatabase } from "../../database/IslaamDatabase";
 import { toJson } from "../../utils";
 import { parseBody } from "next/dist/server/api-utils/node";
 import { withIronSessionSsr } from "iron-session/next";
-import { CookieConfig } from "../SessionUtils";
-import PraiseForm from "./form";
+import { CookieConfig } from "../../utils/SessionUtils";
+import PraiseForm from "../../utils/PraiseForm";
 import { GetServerSidePropsResult } from "next";
 
 interface Props {

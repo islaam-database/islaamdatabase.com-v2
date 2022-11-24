@@ -3,8 +3,8 @@ import { GetServerSideProps, GetServerSidePropsResult } from "next";
 import { Praises } from "../../../database/entities/Praises";
 import { IslaamDatabase } from "../../../database/IslaamDatabase";
 import { toJson } from "../../../utils";
-import { CookieConfig, getIsAdminFromReq } from "../../SessionUtils";
-import PraiseForm from "../form";
+import { CookieConfig, getIsAdminFromReq } from "../../../utils/SessionUtils";
+import PraiseForm from "../../../utils/PraiseForm";
 
 interface Props {
     praise?: Praises;

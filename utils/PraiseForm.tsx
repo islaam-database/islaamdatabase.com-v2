@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { Praises } from "../../database/entities/Praises";
-import { SelectableOption, toOptionLabel } from "../../utils";
+import { Praises } from "../database/entities/Praises";
+import { SelectableOption, toOptionLabel } from "../utils";
 
 interface Props {
     praiseEditing?: Praises;

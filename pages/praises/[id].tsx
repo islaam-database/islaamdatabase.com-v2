@@ -4,9 +4,9 @@ import { Praises } from "../../database/entities/Praises";
 import { Titles } from "../../database/entities/Titles";
 import { Topics } from "../../database/entities/Topics";
 import { IslaamDatabase } from "../../database/IslaamDatabase";
-import { CookieConfig, SessionProps } from "../SessionUtils";
+import { CookieConfig, SessionProps } from "../../utils/SessionUtils";
 import { toJson } from "../../utils";
-import PraiseForm from "./form";
+import PraiseForm from "../../utils/PraiseForm";
 import { parseBody } from "next/dist/server/api-utils/node";
 import { GetServerSidePropsResult } from "next";
 

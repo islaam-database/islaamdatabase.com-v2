@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { AppUsers } from "../database/entities/AppUsers";
-import { Footer } from "./components/Footer";
-import { Navbar } from "./components/Navbar";
-import { UserContext } from "./UserContext";
+import { Footer } from "../components/Footer";
+import { Navbar } from "../components/Navbar";
+import { UserContext } from "../utils/UserContext";
 
 interface Props {
     children: JSX.Element;
