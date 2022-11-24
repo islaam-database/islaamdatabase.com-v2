@@ -1,5 +1,5 @@
 import type { AppProps } from 'next/app'
-import { Layout } from "./Layout";
+import { Layout } from "../Layout";
 import "reflect-metadata"
 import "../styles/globals.css";
 
