@@ -20,7 +20,7 @@ export class AppUsers {
     async storePassword(plainTextPassword: string) {
         const hashedPassword = await bcrypt.hash(
             plainTextPassword,
-            parseInt(process.env.SALT_ROUNDS),
+            parseInt(process.env.SALT_ROUNDS as string),
         );
         this.passwordHashed = hashedPassword;
     }

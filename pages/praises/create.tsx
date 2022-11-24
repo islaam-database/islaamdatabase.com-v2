@@ -8,12 +8,14 @@ import { parseBody } from "next/dist/server/api-utils/node";
 import { withIronSessionSsr } from "iron-session/next";
 import { CookieConfig } from "../SessionUtils";
 import PraiseForm from "./form";
+import { GetServerSidePropsResult } from "next";
 
 interface Props {
     people: People[]
     titles: Titles[],
     topics: Topics[],
     error?: string,
+    [key: string]: any;
 }
 
 export default function ({ people, titles, topics, error }: Props) {
@@ -51,7 +53,7 @@ export const getServerSideProps = withIronSessionSsr(
                 redirect: {
                     destination: `/praises?highlight=${id}`,
                 }
-            }
+            } as GetServerSidePropsResult<Props>;
         }
         const people = toJson(
             await IslaamDatabase.People.then(x => x.find())
@@ -63,5 +65,5 @@ export const getServerSideProps = withIronSessionSsr(
             await IslaamDatabase.Topics.then(t => t.find())
         );
         const props = { people, titles, topics } as Props;
-        return { props }
+        return { props } as GetServerSidePropsResult<Props>;
     }, CookieConfig);

@@ -7,10 +7,12 @@ import { AppUsers } from "../../database/entities/AppUsers";
 import { Table } from "../components/Table";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { GetServerSidePropsResult } from "next";
 
 interface Props {
     people: People[];
     user: AppUsers | null
+    [key: string]: any;
 }
 
 export default function ({ people }: Props) {
@@ -55,5 +57,5 @@ export const getServerSideProps = withIronSessionSsr(
         const user = req.session.user || null;
         return {
             props: { user, people }
-        }
+        } as GetServerSidePropsResult<Props>;
     }, CookieConfig);

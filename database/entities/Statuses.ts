@@ -20,8 +20,8 @@ export class Statuses extends SelectableOption {
     @PrimaryGeneratedColumn({ type: "integer", name: "Rank" })
     rank: number;
 
-    @Column("text", { name: "Name", nullable: true })
-    name: string | null;
+    @Column("text", { name: "Name" })
+    name: string;
 
     @Column("boolean", { name: "MentionPraisesOfEqualStatuses" })
     mentionPraisesOfEqualStatuses: boolean;
