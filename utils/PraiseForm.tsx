@@ -23,6 +23,7 @@ export default function PraiseForm({
     const [praiser, setPraiser] = useState(toOptionLabel(praiseEditing?.praiser));
     const [title, setTitle] = useState(toOptionLabel(praiseEditing?.title));
     const [topic, setTopic] = useState(toOptionLabel(praiseEditing?.topic));
+    const [source, setSource] = useState(praiseEditing?.source);
     const deleteLink = praiseEditing && `/praises/${praiseEditing.id}/delete`;
     return <>
         <>
@@ -59,7 +60,7 @@ export default function PraiseForm({
             </div>
             <div>
                 <label htmlFor="source">Source: </label>
-                <input value={praiseEditing?.source} readOnly={disabled} name="source" required />
+                <input value={source} onChange={e => setSource(e.target.value)} readOnly={disabled} name="source" required />
             </div>
 
             {!disabled && <div className="buttons">
