@@ -56,9 +56,9 @@ export default function ({ person }: { person: People }) {
             <dd>{person.locationSource}</dd>
         </dl>
         <div>
-            <Link href={`people/${person.id}/edit`}>Edit</Link>
+            <Link href={`${person.id}/edit`}>Edit</Link>
             {' '}
-            <Link href={`people/${person.id}/delete`}>Delete</Link>
+            <Link href={`${person.id}/delete`}>Delete</Link>
         </div>
     </>;
 }
