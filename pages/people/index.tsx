@@ -23,6 +23,7 @@ export default function ({ people }: Props) {
         <Table
             columnNames={
                 [
+                    "Id",
                     "Name",
                     "Death",
                     "Birth",
@@ -34,6 +35,7 @@ export default function ({ people }: Props) {
                 key: p.id,
                 href: `/people/${p.id}`,
                 columns: [
+                    <Link href={`/people/${p.id}`}>{p.id.toString()}</Link>,
                     p.name,
                     p.deathYear != null && `${p.deathYear} AH`,
                     p.birthYear != null && `${p.birthYear} AH`,
