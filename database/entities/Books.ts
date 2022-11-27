@@ -5,9 +5,9 @@ import {
     JoinColumn,
     ManyToOne,
     PrimaryGeneratedColumn,
-    Relation,
 } from "typeorm";
 import { SelectableOption } from "../../utils";
+import type { Relation } from "typeorm";
 import { People } from "./People";
 
 @Index("IX_Books_AuthorId", ["authorId"], {})
@@ -15,7 +15,7 @@ import { People } from "./People";
 @Entity("Books", { schema: "public", synchronize: false })
 export class Books extends SelectableOption {
     get name() {
-        return this.title;
+        return this.title as string;
     }
     @PrimaryGeneratedColumn({ type: "integer", name: "Id" })
     id: number;

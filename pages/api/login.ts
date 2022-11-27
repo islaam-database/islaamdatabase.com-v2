@@ -3,7 +3,7 @@ import { withIronSessionApiRoute } from "iron-session/next";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { AppUsers } from "../../database/entities/AppUsers";
 import { IslaamDatabase } from "../../database/IslaamDatabase";
-import { CookieConfig } from "../SessionUtils";
+import { CookieConfig } from "../../utils/SessionUtils";
 import { toJson } from "../../utils";
 
 export default withIronSessionApiRoute(async function (req, res) {

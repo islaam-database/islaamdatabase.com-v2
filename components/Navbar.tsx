@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useContext, useState } from "react";
-import { UserContext } from "../UserContext";
+import { UserContext } from "../utils/UserContext";
 import { AuthDialog } from "./AuthDialog";
 
 interface Credentials { userName: string, password: string }

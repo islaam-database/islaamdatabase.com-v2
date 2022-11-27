@@ -1,16 +1,18 @@
 import { withIronSessionSsr } from "iron-session/next";
 import { People } from "../../database/entities/People";
 import { IslaamDatabase } from "../../database/IslaamDatabase";
-import { CookieConfig } from "../SessionUtils";
+import { CookieConfig } from "../../utils/SessionUtils";
 import { toJson } from "../../utils";
 import { AppUsers } from "../../database/entities/AppUsers";
-import { Table } from "../components/Table";
+import { Table } from "../../components/Table";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { GetServerSidePropsResult } from "next";
 
 interface Props {
     people: People[];
     user: AppUsers | null
+    [key: string]: any;
 }
 
 export default function ({ people }: Props) {
@@ -55,5 +57,5 @@ export const getServerSideProps = withIronSessionSsr(
         const user = req.session.user || null;
         return {
             props: { user, people }
-        }
+        } as GetServerSidePropsResult<Props>;
     }, CookieConfig);

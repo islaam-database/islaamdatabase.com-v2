@@ -1,7 +1,7 @@
 import { withIronSessionApiRoute } from "iron-session/next";
 import { AppUsers } from "../../database/entities/AppUsers";
 import { IslaamDatabase } from "../../database/IslaamDatabase";
-import { CookieConfig } from "../SessionUtils";
+import { CookieConfig } from "../../utils/SessionUtils";
 
 export default withIronSessionApiRoute(async function (req, res) {
     const { userName, password } = JSON.parse(req.body) as {

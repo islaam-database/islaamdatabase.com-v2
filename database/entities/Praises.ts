@@ -5,9 +5,8 @@ import {
     JoinColumn,
     ManyToOne,
     PrimaryGeneratedColumn,
-    Relation,
 } from "typeorm";
-import { SelectableOption } from "../../utils";
+import type { Relation } from "typeorm";
 import { People } from "./People";
 import { Titles } from "./Titles";
 import { Topics } from "./Topics";

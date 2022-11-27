@@ -19,3 +19,7 @@ declare module "iron-session" {
 export const getIsAdminFromReq = (
     req: NextIncomingMessage & { session: { user?: AppUsers } },
 ) => req.session.user?.role?.name === "admin";
+
+export interface SessionProps {
+    [key: string]: unknown;
+}

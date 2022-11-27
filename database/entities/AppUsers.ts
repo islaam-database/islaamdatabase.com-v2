@@ -3,9 +3,9 @@ import {
     Entity,
     ManyToOne,
     PrimaryGeneratedColumn,
-    Relation,
     Unique,
 } from "typeorm";
+import type { Relation } from "typeorm";
 import * as bcrypt from "bcrypt"; // https://auth0.com/blog/hashing-in-action-understanding-bcrypt/
 import { AppRoles } from "./AppRoles";
 
@@ -20,7 +20,7 @@ export class AppUsers {
     async storePassword(plainTextPassword: string) {
         const hashedPassword = await bcrypt.hash(
             plainTextPassword,
-            parseInt(process.env.SALT_ROUNDS),
+            parseInt(process.env.SALT_ROUNDS as string),
         );
         this.passwordHashed = hashedPassword;
     }

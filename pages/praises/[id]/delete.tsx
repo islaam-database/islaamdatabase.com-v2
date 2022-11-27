@@ -1,17 +1,20 @@
 import { withIronSessionSsr } from "iron-session/next";
+import { GetServerSideProps, GetServerSidePropsResult } from "next";
 import { Praises } from "../../../database/entities/Praises";
 import { IslaamDatabase } from "../../../database/IslaamDatabase";
 import { toJson } from "../../../utils";
-import { CookieConfig, getIsAdminFromReq } from "../../SessionUtils";
-import PraiseForm from "../form";
+import { CookieConfig, getIsAdminFromReq } from "../../../utils/SessionUtils";
+import PraiseForm from "../../../utils/PraiseForm";
 
 interface Props {
-    praise: Praises;
+    praise?: Praises;
     error?: string;
-    removed?: number;
+    removed?: boolean;
+    [key: string]: any;
 }
 export default function ({ praise, error, removed }: Props) {
     if (error) throw error;
+    if (!praise) throw "Missing praise or error message";
     return <>
         {removed && <h1>This praise has been successfully deleted.</h1>}
         <h1>Are you sure you want to delete praise {praise.id}?</h1>
@@ -44,7 +47,7 @@ export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
                 removed: true,
             },
             redirect: "/praises"
-        }
+        } as GetServerSidePropsResult<Props>;
     }
     const praise = await IslaamDatabase
         .Praises
@@ -58,5 +61,5 @@ export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
             where: { id }
         }))
         .then(toJson);
-    return { props: { praise } };
+    return { props: { praise } } as GetServerSidePropsResult<Props>;
 }, CookieConfig)

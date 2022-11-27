@@ -6,12 +6,12 @@ import {
     ManyToOne,
     OneToMany,
     PrimaryGeneratedColumn,
-    Relation,
 } from "typeorm";
 import { People } from "./People";
 import { Praises } from "./Praises";
 import { Statuses } from "./Statuses";
 import { SelectableOption } from "../../utils";
+import type { Relation } from "typeorm";
 
 @Index("PK_Titles", ["id"], { unique: true })
 @Index("IX_Titles_StatusId", ["statusId"], {})

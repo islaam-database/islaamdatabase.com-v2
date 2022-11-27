@@ -4,12 +4,13 @@ import { Praises } from "../../database/entities/Praises";
 import { Titles } from "../../database/entities/Titles";
 import { Topics } from "../../database/entities/Topics";
 import { IslaamDatabase } from "../../database/IslaamDatabase";
-import { CookieConfig } from "../SessionUtils";
+import { CookieConfig, SessionProps } from "../../utils/SessionUtils";
 import { toJson } from "../../utils";
-import PraiseForm from "./form";
+import PraiseForm from "../../utils/PraiseForm";
 import { parseBody } from "next/dist/server/api-utils/node";
+import { GetServerSidePropsResult } from "next";
 
-interface Props {
+interface Props extends SessionProps {
     praise: Praises;
     people: People[]
     titles: Titles[];
@@ -35,12 +36,7 @@ export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
     if (req.method === "POST") {
         // user is creating a praise
         const isAdmin = req.session.user?.role.name === "admin";
-        if (!isAdmin) return {
-            redirect: {
-                statusCode: 401,
-                destination: req.url,
-            }
-        };
+        if (!isAdmin) throw "Unauthorized";
 
         const { praiser, praisee, title, source, topic } = (await parseBody(req, "1mb")) as Record<string, string>;
         const newPraise = new Praises();
@@ -55,8 +51,8 @@ export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
         return {
             redirect: {
                 destination: `/praises?highlight=${created.id}`,
-            }
-        }
+            },
+        } as GetServerSidePropsResult<Props>
     }
     const id = parseInt(req.url?.split("/").at(-1) as string);
     const [people, titles, topics, praise] = await Promise.all([
@@ -74,6 +70,6 @@ export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
         }))
     ]).then(toJson)
     const canEdit = req.session.user ? req.session.user?.role.name === "admin" : false;
-    const props = { people, titles, topics, praise, canEdit } as Props;
-    return { props };
-}, CookieConfig);
+    const props = { people, titles, topics, praise, canEdit };
+    return { props } as GetServerSidePropsResult<Props>;
+}, CookieConfig)

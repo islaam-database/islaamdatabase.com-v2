@@ -5,8 +5,8 @@ import {
     JoinColumn,
     ManyToOne,
     PrimaryGeneratedColumn,
-    Relation,
 } from "typeorm";
+import type { Relation } from "typeorm";
 import { People } from "./People";
 import { Topics } from "./Topics";
 
