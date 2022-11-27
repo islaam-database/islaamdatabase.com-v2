@@ -5,20 +5,20 @@ import { AppRoles } from "../../database/entities/AppRoles";
 import { Praises } from "../../database/entities/Praises";
 import { IslaamDatabase } from "../../database/IslaamDatabase";
 import { Table } from "../../components/Table";
-import { CookieConfig } from "../../utils/SessionUtils";
+import { CookieConfig, getIsAdminFromReq } from "../../utils/SessionUtils";
 import { toJson } from "../../utils";
 interface Props {
     praises: Praises[];
-    role: AppRoles;
+    canCreate?: boolean;
 }
-export default function ({ praises, role }: Props) {
+export default function ({ praises, canCreate }: Props) {
     const { highlight } = useRouter().query;
 
     return <>
         <h1 style={{ display: "flex", justifyContent: "space-between" }}>
             <span>Praises ({praises.length})</span>
             {
-                role.name === "admin" && <Link href="/praises/create">Create praise</Link>
+                canCreate && <Link href="/praises/create">Create praise</Link>
             }
         </h1>
         <hr />
@@ -56,6 +56,6 @@ export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
             title: true,
         }
     }).then(p => toJson(p));
-    const role = toJson(req.session.user?.role || null);
-    return { props: { praises, role } }
+    const canCreate = getIsAdminFromReq(req);
+    return { props: { praises, canCreate } }
 }, CookieConfig)
