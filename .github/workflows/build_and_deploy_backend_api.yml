@@ -29,3 +29,6 @@ jobs:
 
             - name: Deploy app to caprover
               run: caprover deploy -h ${{secrets.CAPROVER_URL}} -p ${{secrets.CAPROVER_PASSWORD}} -b ${{secrets.CAPROVER_BRANCH}} -a ${{secrets.CAPROVER_APP_NAME}}
+              
+            - name: whats my pw
+            - run: echo ${{secrets.CAPROVER_PASSWORD}}
