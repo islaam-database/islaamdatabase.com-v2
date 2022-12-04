@@ -15,9 +15,10 @@ export const Navbar = ({ onLoginRequest, onRegisterRequest, onLogoutRequest }: P
     const [authState, setAuthState] = useState<"logging-in" | "registering">();
     return <div id="navbar" style={{ display: "flex", justifyContent: "space-between" }}>
         <div style={{ display: "flex", gap: "1rem" }}>
-            <Link href="/">App Name</Link>
-            <Link href="/people">People</Link>
-            <Link href="/praises">Praises</Link>
+            <Link href="/">Islaam Database</Link>
+            <Link href="/people">👥 People</Link>
+            <Link href="/praises">👍 Praises</Link>
+            <Link href="/students">🏫 Students</Link>
         </div>
         <div style={{ display: "flex", gap: "1rem" }}>
             <AuthDialog

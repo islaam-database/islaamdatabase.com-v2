@@ -2,8 +2,8 @@ import Link from "next/link";
 import { Table, TableProps } from "./Table";
 
 interface Props extends TableProps {
-    canCreate: boolean;
     modelName: { singular: string, plural: string };
+    canCreate?: boolean;
 }
 export const ListPage = function (p: Props) {
     return <>
