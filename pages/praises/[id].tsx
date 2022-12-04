@@ -6,7 +6,7 @@ import { Topics } from "../../database/entities/Topics";
 import { IslaamDatabase } from "../../database/IslaamDatabase";
 import { CookieConfig, SessionProps } from "../../utils/SessionUtils";
 import { toJson } from "../../utils";
-import PraiseForm from "../../utils/PraiseForm";
+import PraiseForm from "../../components/PraiseForm";
 import { parseBody } from "next/dist/server/api-utils/node";
 import { GetServerSidePropsResult } from "next";
 

@@ -31,17 +31,15 @@ export default function (p: Props) {
 }
 
 export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
+    const students = await IslaamDatabase.TeacherStudents
+        .then(ts => ts.find({
+            relations: {
+                student: true,
+                teacher: true,
+            }
+        }))
+        .then(toJson);
     return {
-        props: {
-            canCreate: getIsAdminFromReq(req),
-            students: await IslaamDatabase.TeacherStudents
-                .then(ts => ts.find({
-                    relations: {
-                        student: true,
-                        teacher: true,
-                    }
-                }))
-                .then(toJson)
-        } as Props
+        props: { canCreate: getIsAdminFromReq(req), students } as Props
     }
 }, CookieConfig);

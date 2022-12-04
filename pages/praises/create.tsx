@@ -7,7 +7,7 @@ import { toJson } from "../../utils";
 import { parseBody } from "next/dist/server/api-utils/node";
 import { withIronSessionSsr } from "iron-session/next";
 import { CookieConfig } from "../../utils/SessionUtils";
-import PraiseForm from "../../utils/PraiseForm";
+import PraiseForm from "../../components/PraiseForm";
 import { GetServerSidePropsResult } from "next";
 
 interface Props {

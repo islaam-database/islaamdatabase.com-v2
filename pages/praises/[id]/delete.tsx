@@ -4,7 +4,7 @@ import { Praises } from "../../../database/entities/Praises";
 import { IslaamDatabase } from "../../../database/IslaamDatabase";
 import { toJson } from "../../../utils";
 import { CookieConfig, getIsAdminFromReq } from "../../../utils/SessionUtils";
-import PraiseForm from "../../../utils/PraiseForm";
+import PraiseForm from "../../../components/PraiseForm";
 
 interface Props {
     praise?: Praises;

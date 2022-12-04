@@ -10,7 +10,9 @@ export const ListPage = function (p: Props) {
         <h1 style={{ display: "flex", justifyContent: "space-between" }}>
             <span>{p.modelName.plural} ({p.rows.length})</span>
             {
-                p.canCreate && <Link href={`/${p.modelName.plural.toLowerCase()}/create`}>Create {p.modelName.singular}</Link>
+                p.canCreate && <Link href={`/${p.modelName.plural.toLowerCase()}/create`}>
+                    Create {p.modelName.singular}
+                </Link>
             }
         </h1>
         <hr />
