@@ -9,6 +9,7 @@ import { withIronSessionSsr } from "iron-session/next";
 import { CookieConfig } from "../../utils/SessionUtils";
 import PraiseForm from "../../components/PraiseForm";
 import { GetServerSidePropsResult } from "next";
+import { CreateEditPage } from "../../components/CreateEditPage";
 
 interface Props {
     people: People[]
@@ -20,15 +21,13 @@ interface Props {
 
 export default function ({ people, titles, topics, error }: Props) {
     if (error) throw error;
-    return <>
-        <h1>New Praise</h1>
-        <hr />
+    return <CreateEditPage modelName={{ plural: "Praises", singular: "praise" }}>
         <PraiseForm
             people={people}
             titles={titles}
             topics={topics}
         />
-    </>;
+    </CreateEditPage>
 }
 
 export const getServerSideProps = withIronSessionSsr(

@@ -9,6 +9,7 @@ import { toJson } from "../../utils";
 import PraiseForm from "../../components/PraiseForm";
 import { parseBody } from "next/dist/server/api-utils/node";
 import { GetServerSidePropsResult } from "next";
+import { CreateEditPage } from "../../components/CreateEditPage";
 
 interface Props extends SessionProps {
     praise: Praises;
@@ -19,9 +20,7 @@ interface Props extends SessionProps {
 }
 
 export default function ({ praise, people, titles, topics, canEdit }: Props) {
-    return <>
-        <h1>Praise {praise.id}</h1>
-        <hr />
+    return <CreateEditPage modelName={{ singular: "Praise", plural: "Praises" }} title={`Praise ${praise.id}`}>
         <PraiseForm
             praiseEditing={praise}
             people={people}
@@ -29,7 +28,7 @@ export default function ({ praise, people, titles, topics, canEdit }: Props) {
             topics={topics}
             disabled={!canEdit}
         />
-    </>;
+    </CreateEditPage>
 }
 
 export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
