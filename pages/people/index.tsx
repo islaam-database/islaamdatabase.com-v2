@@ -1,36 +1,35 @@
 import { withIronSessionSsr } from "iron-session/next";
 import { People } from "../../database/entities/People";
 import { IslaamDatabase } from "../../database/IslaamDatabase";
-import { CookieConfig } from "../../utils/SessionUtils";
+import { CookieConfig, getIsAdminFromReq } from "../../utils/SessionUtils";
 import { toJson } from "../../utils";
 import { AppUsers } from "../../database/entities/AppUsers";
 import { Table } from "../../components/Table";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { GetServerSidePropsResult } from "next";
+import { ListPage } from "../../components/ListPage";
 
 interface Props {
     people: People[];
-    user: AppUsers | null
+    canCreate: boolean;
     [key: string]: any;
 }
 
-export default function ({ people }: Props) {
+export default function (p: Props) {
     const { highlight } = useRouter().query;
     return <>
-        <h1>People ({people.length})</h1>
-        <hr />
-        <Table
-            columnNames={
-                [
-                    "Id",
-                    "Name",
-                    "Death",
-                    "Birth",
-                    "Generation",
-                ]
-            }
-            rows={people.map(p => ({
+        <ListPage
+            canCreate={p.canCreate}
+            modelName={{ plural: "People", singular: "Person" }}
+            columnNames={[
+                "Id",
+                "Name",
+                "Death",
+                "Birth",
+                "Generation",
+            ]}
+            rows={p.people.map(p => ({
                 isActive: highlight === p.id.toString(),
                 key: p.id,
                 href: `/people/${p.id}`,
@@ -58,6 +57,9 @@ export const getServerSideProps = withIronSessionSsr(
         const people = toJson(await query);
         const user = req.session.user || null;
         return {
-            props: { user, people }
+            props: {
+                canCreate: getIsAdminFromReq(req),
+                people
+            }
         } as GetServerSidePropsResult<Props>;
     }, CookieConfig);

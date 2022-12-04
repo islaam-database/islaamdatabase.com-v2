@@ -6,13 +6,13 @@ interface Row {
     key: string | number;
 }
 
-interface Props {
+export interface TableProps {
     /** The `<tr>` that goes in the `<thead>` */
     columnNames: string[];
     /** The `<tr>`s that go in the `<tbody>` */
     rows: Row[];
 }
-export function Table({ columnNames, rows }: Props) {
+export function Table({ columnNames, rows }: TableProps) {
     const activeTr = useRef<HTMLTableRowElement>(null);
 
     useEffect(() => {
