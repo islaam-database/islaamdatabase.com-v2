@@ -56,4 +56,9 @@ export class IslaamDatabase {
     static get Titles() {
         return IslaamDatabase.getInstance().then(i => i.getRepository(Titles));
     }
+    static get TeacherStudents() {
+        return IslaamDatabase.getInstance().then(i =>
+            i.getRepository(TeacherStudents),
+        );
+    }
 }
