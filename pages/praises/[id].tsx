@@ -32,6 +32,9 @@ export default function ({ praise, people, titles, topics, canEdit }: Props) {
 }
 
 export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
+    const idEditing = parseInt(req.url?.split("/").at(-1) as string);
+    const isEditing = !isNaN(idEditing);
+
     if (req.method === "POST") {
         // user is creating a praise
         const isAdmin = req.session.user?.role.name === "admin";
@@ -45,15 +48,20 @@ export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
         newPraise.titleId = title ? parseInt(title.split(".")[0]) : null;
         newPraise.topicId = topic.split(".")[0];
         newPraise.source = source;
+        if (isEditing) newPraise.id = idEditing;
 
-        const created = await IslaamDatabase.Praises.then(p => p.create(newPraise));
+        const created = await IslaamDatabase
+            .Praises
+            .then(p => isEditing
+                ? p.save(newPraise)
+                : p.create(newPraise)
+            );
         return {
             redirect: {
-                destination: `/praises?highlight=${created.id}`,
+                destination: `/praises?highlight=${created.id || idEditing}`,
             },
         } as GetServerSidePropsResult<Props>
     }
-    const id = parseInt(req.url?.split("/").at(-1) as string);
     const [people, titles, topics, praise] = await Promise.all([
         IslaamDatabase.People.then(p => p.find()).then(toJson),
         IslaamDatabase.Titles.then(p => p.find()).then(toJson),
@@ -65,7 +73,7 @@ export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
                 title: true,
                 topic: true,
             },
-            where: { id }
+            where: { id: idEditing }
         }))
     ]).then(toJson)
     const canEdit = req.session.user ? req.session.user?.role.name === "admin" : false;
