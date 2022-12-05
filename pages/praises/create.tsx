@@ -41,13 +41,15 @@ export const getServerSideProps = withIronSessionSsr(
                 }
             }
             const { praiser, praisee, title, topic, source } = await parseBody(req, "1mb");
-            const { id } = await (await IslaamDatabase.Praises).save({
-                praiserId: praiser.split(".")[0],
-                praiseeId: praisee.split(".")[0],
-                titleId: title?.split(".")[0],
-                topicId: topic?.split(".")[0],
-                source
-            } as Praises);
+            const { id } = await IslaamDatabase.Praises.then(p => p.save(
+                {
+                    praiserId: parseInt(praiser.split(".")[0]),
+                    praiseeId: parseInt(praisee.split(".")[0]),
+                    titleId: parseInt(title?.split(".")[0]),
+                    topicId: topic?.split(".")[0],
+                    source,
+                } as Praises)
+            );
             return {
                 redirect: {
                     destination: `/praises?highlight=${id}`,
