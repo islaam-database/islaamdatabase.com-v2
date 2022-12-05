@@ -13,6 +13,7 @@ import { Titles } from "./Titles";
 import { Praises } from "./Praises";
 import { TeacherStudents } from "./TeacherStudents";
 import { SelectableOption } from "../../utils";
+import { IslaamDatabase } from "../IslaamDatabase";
 
 @Index("IX_People_GenerationId", ["generationId"], {})
 @Index("PK_People", ["id"], { unique: true })

@@ -56,15 +56,9 @@ export const getServerSideProps = withIronSessionSsr(
                 }
             } as GetServerSidePropsResult<Props>;
         }
-        const people = toJson(
-            await IslaamDatabase.People.then(x => x.find())
-        );
-        const titles = toJson(
-            await IslaamDatabase.Titles.then(t => t.find())
-        );
-        const topics = toJson(
-            await IslaamDatabase.Topics.then(t => t.find())
-        );
+        const people = await IslaamDatabase.People.then(x => x.find()).then(toJson)
+        const titles = await IslaamDatabase.Titles.then(t => t.find()).then(toJson)
+        const topics = await IslaamDatabase.Topics.then(t => t.find()).then(toJson)
         const props = { people, titles, topics } as Props;
         return { props } as GetServerSidePropsResult<Props>;
     }, CookieConfig);
