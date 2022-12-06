@@ -21,9 +21,11 @@ interface Props extends SSProps {
 export default function ({ people, titles, topics, error }: Props) {
     if (error) throw error;
     return <FormPage
+        canEdit
         title="New praise"
-        formControls={<PraiseFormFields people={people} titles={titles} topics={topics} />}
-    />;
+    >
+        <PraiseFormFields people={people} titles={titles} topics={topics} />
+    </FormPage>;
 }
 
 export const getServerSideProps = withIronSessionSsr(

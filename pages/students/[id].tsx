@@ -7,6 +7,7 @@ import { toJson } from "../../utils";
 import { CookieConfig, getIsAdminFromReq } from "../../utils/SessionUtils";
 import { FormPage } from "../../components/forms/FormPage";
 import { StudentFormFields } from "../../components/forms/StudentFormFields";
+import { parseBody } from "next/dist/server/api-utils/node";
 
 interface Props extends SSProps {
     teacherStudent: TeacherStudents;
@@ -19,8 +20,9 @@ export default (p: Props) => {
         title={`Teacher Student ${p.teacherStudent?.id}`}
         canDelete={p.canEdit}
         canEdit={p.canEdit}
-        formControls={<StudentFormFields people={p.people} teacherStudent={p.teacherStudent} />}
-    />
+    >
+        <StudentFormFields canEdit={p.canEdit} people={p.people} teacherStudent={p.teacherStudent} />
+    </FormPage>
 };
 
 export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
@@ -30,7 +32,21 @@ export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
 
     if (isEditing) {
         if (!isAdmin) throw "Unauthorized";
+        const { teacher, student, source } = await parseBody(req, "1mb") as Record<string, string>;
+        const newTeacherStudent = {
+            id,
+            studentId: parseInt(student.split(".")[0]),
+            teacherId: parseInt(teacher.split(".")[0]),
+            source,
+        } as TeacherStudents;
+        await IslaamDatabase.TeacherStudents.then(ts => ts.save(newTeacherStudent));
+        return {
+            redirect: {
+                destination: `/students?highlight=${id}`
+            }
+        };
     }
+
     const teacherStudent = await IslaamDatabase
         .TeacherStudents
         .then(ts => ts.findOne({

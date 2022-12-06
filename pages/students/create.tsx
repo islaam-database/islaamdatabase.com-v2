@@ -13,10 +13,9 @@ export interface Props extends SSProps {
     people: People[];
 }
 
-export default (p: Props) => <FormPage
-    title="New teacher/student"
-    formControls={<StudentFormFields people={p.people} />}
-/>;
+export default (p: Props) => <FormPage title="New teacher/student">
+    <StudentFormFields people={p.people} />
+</FormPage>;
 
 export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
     if (req.method?.toLowerCase() === "get") {

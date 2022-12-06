@@ -3,7 +3,8 @@ import { People } from "../../database/entities/People";
 import { Praises } from "../../database/entities/Praises";
 import { Titles } from "../../database/entities/Titles";
 import { Topics } from "../../database/entities/Topics";
-import { DataList, toOptionLabel } from "./DataList";
+import { toOptionLabel } from "../../utils";
+import { DataList } from "./DataList";
 import { LabelAndInput } from "./LabelAndInput";
 
 interface Props {

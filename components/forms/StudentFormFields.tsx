@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { LabelAndInput } from "./LabelAndInput";
 import { TeacherStudents } from "../../database/entities/TeacherStudents";
-import { FormPage } from "./FormPage";
 import { People } from "../../database/entities/People";
-import people from "../../pages/people";
-import { DataList, toOptionLabel } from "./DataList";
+import { DataList } from "./DataList";
+import { toOptionLabel } from "../../utils";
 
 export interface Props {
     teacherStudent?: TeacherStudents;

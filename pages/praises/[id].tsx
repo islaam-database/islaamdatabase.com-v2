@@ -19,20 +19,10 @@ interface Props extends SessionProps {
     canEdit: boolean;
 }
 
-export default function ({ praise, people, titles, topics, canEdit }: Props) {
-    return <FormPage
-        title={`Praise ${praise.id}`}
-        dataLists={[
-            { id: "people", options: people.map(p => ({ label: toOptionLabel(p) })) },
-            { id: "titles", options: titles.map(t => ({ label: toOptionLabel(t) })) },
-            { id: "topics", options: topics.map(t => ({ label: toOptionLabel(t) })) },
-        ]}
-        formControls={<PraiseFormFields
-            praiseEditing={praise}
-            disabled={!canEdit}
-        />}
-        canEdit={canEdit}
-    />
+export default function (p: Props) {
+    return <FormPage title={`Praise ${p.praise.id}`} canEdit={p.canEdit}>
+        <PraiseFormFields praiseEditing={p.praise} disabled={!p.canEdit} {...p} />
+    </FormPage>
 }
 
 export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
