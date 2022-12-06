@@ -24,18 +24,18 @@ export default function (p: Props) {
             "Name",
             "Death",
             "Birth",
-            "Generation",
+            "Generation"
         ]}
         rows={p.people.map(p => ({
             isActive: highlight === p.id.toString(),
             key: p.id,
             href: `/people/${p.id}`,
             columns: [
-                <Link href={`/people/${p.id}`}>{p.id.toString()}</Link>,
+                <Link key={0} href={`/people/${p.id}`}>{p.id.toString()}</Link>,
                 p.name,
                 p.deathYear != null && `${p.deathYear} AH`,
                 p.birthYear != null && `${p.birthYear} AH`,
-                <Link href={`/generations/${p.generationId}`}>{p.generation?.name}</Link>
+                <Link key={1} href={`/generations/${p.generationId}`}>{p.generation?.name}</Link>
             ]
         }))}
     />;
