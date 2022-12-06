@@ -5,11 +5,11 @@ import { Titles } from "../../database/entities/Titles";
 import { Topics } from "../../database/entities/Topics";
 import { IslaamDatabase } from "../../database/IslaamDatabase";
 import { CookieConfig, SessionProps } from "../../utils/SessionUtils";
-import { toJson } from "../../utils";
-import PraiseForm from "../../components/PraiseForm";
+import { toJson, toOptionLabel } from "../../utils";
+import PraiseFormFields from "../../components/forms/PraiseFormFields";
 import { parseBody } from "next/dist/server/api-utils/node";
 import { GetServerSidePropsResult } from "next";
-import { CreateEditPage } from "../../components/CreateEditPage";
+import { FormPage } from "../../components/forms/FormPage";
 
 interface Props extends SessionProps {
     praise: Praises;
@@ -20,15 +20,19 @@ interface Props extends SessionProps {
 }
 
 export default function ({ praise, people, titles, topics, canEdit }: Props) {
-    return <CreateEditPage modelName={{ singular: "Praise", plural: "Praises" }} title={`Praise ${praise.id}`}>
-        <PraiseForm
+    return <FormPage
+        title={`Praise ${praise.id}`}
+        dataLists={[
+            { id: "people", options: people.map(p => ({ label: toOptionLabel(p) })) },
+            { id: "titles", options: titles.map(t => ({ label: toOptionLabel(t) })) },
+            { id: "topics", options: topics.map(t => ({ label: toOptionLabel(t) })) },
+        ]}
+        formControls={<PraiseFormFields
             praiseEditing={praise}
-            people={people}
-            titles={titles}
-            topics={topics}
             disabled={!canEdit}
-        />
-    </CreateEditPage>
+        />}
+        canEdit={canEdit}
+    />
 }
 
 export const getServerSideProps = withIronSessionSsr(async ({ req }) => {

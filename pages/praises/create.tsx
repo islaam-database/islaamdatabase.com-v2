@@ -7,27 +7,23 @@ import { toJson } from "../../utils";
 import { parseBody } from "next/dist/server/api-utils/node";
 import { withIronSessionSsr } from "iron-session/next";
 import { CookieConfig } from "../../utils/SessionUtils";
-import PraiseForm from "../../components/PraiseForm";
+import PraiseFormFields from "../../components/forms/PraiseFormFields";
 import { GetServerSidePropsResult } from "next";
-import { CreateEditPage } from "../../components/CreateEditPage";
+import { FormPage } from "../../components/forms/FormPage";
 
-interface Props {
+interface Props extends SSProps {
     people: People[]
     titles: Titles[],
     topics: Topics[],
     error?: string,
-    [key: string]: any;
 }
 
 export default function ({ people, titles, topics, error }: Props) {
     if (error) throw error;
-    return <CreateEditPage modelName={{ plural: "Praises", singular: "praise" }}>
-        <PraiseForm
-            people={people}
-            titles={titles}
-            topics={topics}
-        />
-    </CreateEditPage>
+    return <FormPage
+        title="New praise"
+        formControls={<PraiseFormFields people={people} titles={titles} topics={topics} />}
+    />;
 }
 
 export const getServerSideProps = withIronSessionSsr(

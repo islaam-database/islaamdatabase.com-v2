@@ -1,36 +1,22 @@
 import { withIronSessionSsr } from "iron-session/next";
 import { GetServerSidePropsResult } from "next";
 import { parseBody } from "next/dist/server/api-utils/node";
-import { CreateEditPage } from "../../components/CreateEditPage";
-import { LabelAndInput } from "../../components/LabelAndInput";
 import { People } from "../../database/entities/People";
 import { TeacherStudents } from "../../database/entities/TeacherStudents";
 import { IslaamDatabase } from "../../database/IslaamDatabase";
 import { toJson } from "../../utils";
 import { CookieConfig, getIsAdminFromReq } from "../../utils/SessionUtils";
+import { StudentFormFields } from "../../components/forms/StudentFormFields";
+import { FormPage } from "../../components/forms/FormPage";
 
-interface Props extends SSProps {
+export interface Props extends SSProps {
     people: People[];
 }
 
-export default (p: Props) => <CreateEditPage
-    modelName={{ plural: "Students", singular: "student" }}
-    dataLists={[
-        {
-            id: "people",
-            options: p.people.map(({ id, name }) => ({
-                label: `${id}. ${name}`,
-            })),
-        }
-    ]}
->
-    <form>
-        <LabelAndInput label="Teacher" name="teacher" list="people" required />
-        <LabelAndInput label="Student" name="student" list="people" required />
-        <LabelAndInput label="Source" name="source" required />
-        <button type="submit">Submit</button>
-    </form>
-</CreateEditPage>;
+export default (p: Props) => <FormPage
+    title="New teacher/student"
+    formControls={<StudentFormFields people={p.people} />}
+/>;
 
 export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
     if (req.method?.toLowerCase() === "get") {
@@ -48,12 +34,13 @@ export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
         studentId: parseInt(student.split(".")[0]),
         source
     } as TeacherStudents;
-    const newId = await IslaamDatabase.TeacherStudents.then(ts => ts.save(teacherStudent));
+    const { id } = await IslaamDatabase.TeacherStudents.then(ts => ts.save(teacherStudent));
     return {
         redirect: {
-            destination: `/students?highlight=${newId}`,
+            destination: `/students?highlight=${id}`,
             permanent: false,
         }
     }
 }, CookieConfig);
+
 
