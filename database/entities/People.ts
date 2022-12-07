@@ -1,19 +1,10 @@
-import {
-    Column,
-    Entity,
-    Index,
-    JoinColumn,
-    ManyToOne,
-    OneToMany,
-    PrimaryGeneratedColumn,
-} from "typeorm";
+import { Column, Entity, Index, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Books } from "./Books";
 import { Generations } from "./Generations";
 import { Titles } from "./Titles";
 import { Praises } from "./Praises";
 import { TeacherStudents } from "./TeacherStudents";
 import { SelectableOption } from "../../utils";
-import { IslaamDatabase } from "../IslaamDatabase";
 
 @Index("IX_People_GenerationId", ["generationId"], {})
 @Index("PK_People", ["id"], { unique: true })
@@ -71,34 +62,28 @@ export class People extends SelectableOption {
     @Column("text", { name: "MainTitleSource", nullable: true })
     mainTitleSource: string | null;
 
-    @OneToMany(() => Books, books => books.author)
+    @OneToMany(() => Books, (books) => books.author)
     books: Books[];
 
-    @ManyToOne(() => Generations, generations => generations.people, {
+    @ManyToOne(() => Generations, (generations) => generations.people, {
         onDelete: "RESTRICT",
     })
     @JoinColumn([{ name: "GenerationId", referencedColumnName: "id" }])
     generation: Generations;
 
-    @ManyToOne(() => Titles, titles => titles.people)
+    @ManyToOne(() => Titles, (titles) => titles.people)
     @JoinColumn([{ name: "MainTitleId", referencedColumnName: "id" }])
     mainTitle: Titles;
 
-    @OneToMany(() => Praises, praises => praises.praisee)
+    @OneToMany(() => Praises, (praises) => praises.praisee)
     praises: Praises[];
 
-    @OneToMany(() => Praises, praises => praises.praiser)
+    @OneToMany(() => Praises, (praises) => praises.praiser)
     praises2: Praises[];
 
-    @OneToMany(
-        () => TeacherStudents,
-        teacherStudents => teacherStudents.student,
-    )
+    @OneToMany(() => TeacherStudents, (teacherStudents) => teacherStudents.student)
     teacherStudents: TeacherStudents[];
 
-    @OneToMany(
-        () => TeacherStudents,
-        teacherStudents => teacherStudents.teacher,
-    )
+    @OneToMany(() => TeacherStudents, (teacherStudents) => teacherStudents.teacher)
     teacherStudents2: TeacherStudents[];
 }

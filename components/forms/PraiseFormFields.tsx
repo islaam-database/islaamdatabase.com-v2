@@ -23,9 +23,9 @@ export default function PraiseFormFields(p: Props) {
     const [source, setSource] = useState(p.praiseEditing?.source);
     return (
         <>
-            <DataList id="people" items={p.people} />
-            <DataList id="titles" items={p.titles} />
-            <DataList id="topics" items={p.topics} />
+            <DataList id="people" options={p.people} />
+            <DataList id="titles" options={p.titles} />
+            <DataList id="topics" options={p.topics} />
 
             <LabelAndInput
                 label="Praiser"

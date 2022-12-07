@@ -4,11 +4,7 @@
         "es2021": true,
         "node": true
     },
-    "extends": [
-        "eslint:recommended",
-        "plugin:react/recommended",
-        "plugin:@typescript-eslint/recommended"
-    ],
+    "extends": ["eslint:recommended", "plugin:react/recommended", "plugin:@typescript-eslint/recommended"],
     "overrides": [],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -18,11 +14,9 @@
     "plugins": ["react", "@typescript-eslint"],
     "rules": {
         "react/react-in-jsx-scope": "off",
-        "indent": ["error", 4],
         "linebreak-style": ["error", "unix"],
         "quotes": ["error", "double"],
         "semi": ["error", "always"],
-        "comma-dangle": "warn",
         "no-useless-rename": "warn",
         "max-statements-per-line": "warn",
         "react/display-name": "off"

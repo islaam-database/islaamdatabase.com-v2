@@ -1,74 +1,44 @@
-import { NextApiRequest } from "next";
+import { withIronSessionSsr } from "iron-session/next";
+import { GetServerSidePropsResult } from "next";
 import Link from "next/link";
+import { FormPage } from "../../components/forms/FormPage";
+import { PersonFormFields } from "../../components/forms/PersonFormFields";
+import { Generations } from "../../database/entities/Generations";
 import { People } from "../../database/entities/People";
+import { Titles } from "../../database/entities/Titles";
 import { IslaamDatabase } from "../../database/IslaamDatabase";
 import { toJson } from "../../utils";
+import { CookieConfig, getIsAdminFromReq } from "../../utils/SessionUtils";
 
-export default function ({ person }: { person: People }) {
-    return <>
-        <h1>{person.name}</h1>
-        <hr />
-
-        <dl>
-            <dt>Name</dt>
-            <dd>{person.name}</dd>
-
-            <dt>Source</dt>
-            <dd>{person.source}</dd>
-
-            <dt>Main title</dt>
-            <dd>{person.mainTitleId}</dd>
-
-            <dt>Main title source</dt>
-            <dd>{person.mainTitleSource}</dd>
-
-            <dt>Full name</dt>
-            <dd>{person.fillNameSource}</dd>
-
-            <dt>Death year</dt>
-            <dd>{person.deathYear}</dd>
-
-            <dt>Death year source</dt>
-            <dd>{person.deathYearSource}</dd>
-
-            <dt>Birth year</dt>
-            <dd>{person.birthYearSource}</dd>
-
-            <dt>Death year</dt>
-            <dd>{person.deathYear}</dd>
-
-            <dt>Death year source</dt>
-            <dd>{person.deathYearSource}</dd>
-
-            <dt>Generation</dt>
-            <dt>{person.generationId}</dt>
-
-            <dt>Generation source</dt>
-            <dd>{person.generationSource}</dd>
-
-            <dt>Taqreeb at-Tahdheeb ID</dt>
-            <dd>{person.taqreedId}</dd>
-
-            <dt>Location</dt>
-            <dd>{person.location}</dd>
-
-            <dt>Location source</dt>
-            <dd>{person.locationSource}</dd>
-        </dl>
-        <div>
-            <Link href={`${person.id}/edit`}>Edit</Link>
-            {' '}
-            <Link href={`${person.id}/delete`}>Delete</Link>
-        </div>
-    </>;
+interface Props extends SSProps {
+    person: People;
+    generations: Generations[];
+    titles: Titles[];
+    canEdit: boolean;
 }
 
-export async function getServerSideProps(req: NextApiRequest) {
-    if (typeof req.query.id !== "string") throw Error("Invalid ID query parameter");
-    const id = parseInt(req.query.id || "");
+export default (p: Props) => (
+    <FormPage {...p} title={p.person.name} canDelete={p.canEdit}>
+        <PersonFormFields personEditing={p.person} {...p} />
+    </FormPage>
+);
+
+export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
+    const id = parseInt(req.url?.split("/").at(-1) || "");
     if (isNaN(id)) throw Error("Invalid ID query parameter");
     const db = await IslaamDatabase.getInstance();
-    const response = await db.getRepository(People).findOneBy({ id });
-    const person = toJson(response);
-    return { props: { person }, notFound: person == null }
-}
+    const [titles, generations, person] = await Promise.all([
+        IslaamDatabase.Titles.then((t) => t.find()).then(toJson),
+        IslaamDatabase.Generations.then((g) => g.find()).then(toJson),
+        db.getRepository(People).findOneBy({ id }).then(toJson),
+    ]);
+    return {
+        props: {
+            person,
+            canEdit: getIsAdminFromReq(req),
+            titles,
+            generations,
+        },
+        notFound: person == null,
+    } as GetServerSidePropsResult<Props>;
+}, CookieConfig);

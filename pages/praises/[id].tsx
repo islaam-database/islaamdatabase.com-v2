@@ -1,4 +1,4 @@
-import { withIronSessionSsr } from "iron-session/next"
+import { withIronSessionSsr } from "iron-session/next";
 import { People } from "../../database/entities/People";
 import { Praises } from "../../database/entities/Praises";
 import { Titles } from "../../database/entities/Titles";
@@ -13,16 +13,18 @@ import { FormPage } from "../../components/forms/FormPage";
 
 interface Props extends SessionProps {
     praise: Praises;
-    people: People[]
+    people: People[];
     titles: Titles[];
     topics: Topics[];
     canEdit: boolean;
 }
 
 export default function (p: Props) {
-    return <FormPage title={`Praise ${p.praise.id}`} canEdit={p.canEdit}>
-        <PraiseFormFields praiseEditing={p.praise} disabled={!p.canEdit} {...p} />
-    </FormPage>
+    return (
+        <FormPage title={`Praise ${p.praise.id}`} canEdit={p.canEdit}>
+            <PraiseFormFields praiseEditing={p.praise} disabled={!p.canEdit} {...p} />
+        </FormPage>
+    );
 }
 
 export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
@@ -44,33 +46,30 @@ export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
         newPraise.source = source;
         if (isEditing) newPraise.id = idEditing;
 
-        const created = await IslaamDatabase
-            .Praises
-            .then(p => isEditing
-                ? p.save(newPraise)
-                : p.create(newPraise)
-            );
+        const created = await IslaamDatabase.Praises.then((p) => (isEditing ? p.save(newPraise) : p.create(newPraise)));
         return {
             redirect: {
                 destination: `/praises?highlight=${created.id || idEditing}`,
             },
-        } as GetServerSidePropsResult<Props>
+        } as GetServerSidePropsResult<Props>;
     }
     const [people, titles, topics, praise] = await Promise.all([
-        IslaamDatabase.People.then(p => p.find()).then(toJson),
-        IslaamDatabase.Titles.then(p => p.find()).then(toJson),
-        IslaamDatabase.Topics.then(p => p.find()).then(toJson),
-        IslaamDatabase.Praises.then(praises => praises.findOne({
-            relations: {
-                praisee: true,
-                praiser: true,
-                title: true,
-                topic: true,
-            },
-            where: { id: idEditing }
-        }))
-    ]).then(toJson)
+        IslaamDatabase.People.then((p) => p.find()).then(toJson),
+        IslaamDatabase.Titles.then((p) => p.find()).then(toJson),
+        IslaamDatabase.Topics.then((p) => p.find()).then(toJson),
+        IslaamDatabase.Praises.then((praises) =>
+            praises.findOne({
+                relations: {
+                    praisee: true,
+                    praiser: true,
+                    title: true,
+                    topic: true,
+                },
+                where: { id: idEditing },
+            })
+        ),
+    ]).then(toJson);
     const canEdit = req.session.user ? req.session.user?.role.name === "admin" : false;
     const props = { people, titles, topics, praise, canEdit };
     return { props } as GetServerSidePropsResult<Props>;
-}, CookieConfig)
+}, CookieConfig);

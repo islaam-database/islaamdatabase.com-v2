@@ -2,10 +2,12 @@ import { SelectableOption, toOptionLabel } from "../../utils";
 
 interface Props {
     id: string;
-    items: SelectableOption[];
+    options: SelectableOption[];
 }
-export const DataList = (p: Props) => <datalist id={p.id}>
-    {p.items.map(i => <option key={i.id}>{toOptionLabel(i)}</option>)}
-</datalist>
-
-
+export const DataList = (p: Props) => (
+    <datalist id={p.id}>
+        {p.options.map((i) => (
+            <option key={i.id}>{toOptionLabel(i)}</option>
+        ))}
+    </datalist>
+);
