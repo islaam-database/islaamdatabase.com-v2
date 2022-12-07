@@ -86,4 +86,25 @@ export class People extends SelectableOption {
 
     @OneToMany(() => TeacherStudents, (teacherStudents) => teacherStudents.teacher)
     teacherStudents2: TeacherStudents[];
+    static fromReqBody(body: Record<string, string>, id?: string | number) {
+        return {
+            id: parseInt(id.toString()),
+            name: body.name,
+            useMascPron: ["on", "true"].includes(body.useMascPron),
+            location: body.location,
+            locationSource: body.locationSource,
+            taqreedId: body.taqreebId ? parseInt(body.taqreebId) : undefined,
+            source: body.source,
+            mainTitleId: body.mainTitle ? parseInt(body.mainTitle?.split(".")[0]) : undefined,
+            mainTitleSource: body.mainTitleSource,
+            fullName: body.fullName,
+            fillNameSource: body.fullNameSource,
+            deathYear: body.deathYear ? parseInt(body.deathYear) : undefined,
+            deathYearSource: body.deathYearSource,
+            birthYear: body.birthYear ? parseInt(body.birthYear) : undefined,
+            birthYearSource: body.birthYearSource,
+            generationId: body.generation ? parseInt(body.generation.split(".")[0]) : undefined,
+            generationSource: body.generationSource,
+        } as Partial<People>;
+    }
 }

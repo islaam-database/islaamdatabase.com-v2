@@ -16,7 +16,7 @@
         "react/react-in-jsx-scope": "off",
         "linebreak-style": ["error", "unix"],
         "quotes": ["error", "double"],
-        "semi": ["error", "always"],
+        "semi": ["warn", "always"],
         "no-useless-rename": "warn",
         "max-statements-per-line": "warn",
         "react/display-name": "off"

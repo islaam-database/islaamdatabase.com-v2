@@ -31,47 +31,13 @@ export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
     }
     const isAdmin = getIsAdminFromReq(req);
     if (!isAdmin) throw "Unauthorized";
-    const {
-        name,
-        source,
-        mainTitle,
-        mainTitleSource,
-        fullName,
-        fullNameSource,
-        deathYear,
-        deathYearSource,
-        birthYear,
-        birthYearSource,
-        generation,
-        generationSource,
-        taqreebId,
-        useMascPron,
-        location,
-        locationSource,
-    } = (await parseBody(req, "1mb")) as Record<string, string>;
-    const { id } = await IslaamDatabase.People.then((p) =>
-        p.save({
-            name,
-            useMascPron: ["on", "true"].includes(useMascPron),
-            location,
-            locationSource,
-            taqreedId: taqreebId ? parseInt(taqreebId) : undefined,
-            source,
-            mainTitleId: mainTitle ? parseInt(mainTitle?.split(".")[0]) : undefined,
-            mainTitleSource,
-            fullName,
-            fillNameSource: fullNameSource,
-            deathYear: deathYear ? parseInt(deathYear) : undefined,
-            deathYearSource,
-            birthYear: birthYear ? parseInt(birthYear) : undefined,
-            birthYearSource,
-            generationId: generation ? parseInt(generation.split(".")[0]) : undefined,
-            generationSource,
-        } as Partial<People>)
+    const { id } = await parseBody(req, "1mb").then((body) =>
+        IslaamDatabase.People.then((p) => p.save(People.fromReqBody(body)))
     );
     return {
         redirect: {
             destination: `/people?highlight=${id}`,
+            permanent: false,
         },
     };
 }, CookieConfig);
