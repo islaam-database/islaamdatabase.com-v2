@@ -16,6 +16,8 @@ export class People extends SelectableOption {
 
     @Column("text", { name: "Name" })
     name: string;
+    @Column("text", { name: "NameArabic" })
+    nameArabic: string | null;
 
     @Column("text", { name: "Source", nullable: true })
     source: string | null;
@@ -90,6 +92,7 @@ export class People extends SelectableOption {
         return {
             id: parseInt(id.toString()),
             name: body.name,
+            nameArabic: body.nameArabic,
             useMascPron: ["on", "true"].includes(body.useMascPron),
             location: body.location,
             locationSource: body.locationSource,

@@ -14,6 +14,7 @@ interface Props {
 }
 export const PersonFormFields = (p: Props) => {
     const [name, setName] = useState(p.personEditing?.name);
+    const [nameArabic, setNameArabic] = useState(p.personEditing?.nameArabic || "");
     const [source, setSource] = useState(p.personEditing?.source || "");
     const [mainTitle, setMainTitle] = useState(toOptionLabel(p.personEditing?.mainTitle));
     const [mainTitleSource, setMainTitleSource] = useState(p.personEditing?.mainTitleSource || "");
@@ -41,6 +42,15 @@ export const PersonFormFields = (p: Props) => {
                 label="Name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                required
+            />
+            <LabelAndInput
+                readOnly={p.readonly}
+                name="nameArabic"
+                id="name-arabic"
+                label="Name in Arabic"
+                value={nameArabic}
+                onChange={(e) => setNameArabic(e.target.value)}
                 required
             />
             <LabelAndInput
