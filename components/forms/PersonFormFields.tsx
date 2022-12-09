@@ -51,7 +51,6 @@ export const PersonFormFields = (p: Props) => {
                 label="Name in Arabic"
                 value={nameArabic}
                 onChange={(e) => setNameArabic(e.target.value)}
-                required
             />
             <LabelAndInput
                 readOnly={p.readonly}
