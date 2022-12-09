@@ -1,12 +1,4 @@
-import {
-    Column,
-    Entity,
-    Index,
-    JoinColumn,
-    ManyToOne,
-    OneToMany,
-    PrimaryGeneratedColumn,
-} from "typeorm";
+import { Column, Entity, Index, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Books } from "./Books";
 import { Generations } from "./Generations";
 import { Titles } from "./Titles";
@@ -70,34 +62,49 @@ export class People extends SelectableOption {
     @Column("text", { name: "MainTitleSource", nullable: true })
     mainTitleSource: string | null;
 
-    @OneToMany(() => Books, books => books.author)
+    @OneToMany(() => Books, (books) => books.author)
     books: Books[];
 
-    @ManyToOne(() => Generations, generations => generations.people, {
+    @ManyToOne(() => Generations, (generations) => generations.people, {
         onDelete: "RESTRICT",
     })
     @JoinColumn([{ name: "GenerationId", referencedColumnName: "id" }])
     generation: Generations;
 
-    @ManyToOne(() => Titles, titles => titles.people)
+    @ManyToOne(() => Titles, (titles) => titles.people)
     @JoinColumn([{ name: "MainTitleId", referencedColumnName: "id" }])
     mainTitle: Titles;
 
-    @OneToMany(() => Praises, praises => praises.praisee)
+    @OneToMany(() => Praises, (praises) => praises.praisee)
     praises: Praises[];
 
-    @OneToMany(() => Praises, praises => praises.praiser)
+    @OneToMany(() => Praises, (praises) => praises.praiser)
     praises2: Praises[];
 
-    @OneToMany(
-        () => TeacherStudents,
-        teacherStudents => teacherStudents.student,
-    )
+    @OneToMany(() => TeacherStudents, (teacherStudents) => teacherStudents.student)
     teacherStudents: TeacherStudents[];
 
-    @OneToMany(
-        () => TeacherStudents,
-        teacherStudents => teacherStudents.teacher,
-    )
+    @OneToMany(() => TeacherStudents, (teacherStudents) => teacherStudents.teacher)
     teacherStudents2: TeacherStudents[];
+    static fromReqBody(body: Record<string, string>, id?: string | number) {
+        return {
+            id: parseInt(id.toString()),
+            name: body.name,
+            useMascPron: ["on", "true"].includes(body.useMascPron),
+            location: body.location,
+            locationSource: body.locationSource,
+            taqreedId: body.taqreebId ? parseInt(body.taqreebId) : undefined,
+            source: body.source,
+            mainTitleId: body.mainTitle ? parseInt(body.mainTitle?.split(".")[0]) : undefined,
+            mainTitleSource: body.mainTitleSource,
+            fullName: body.fullName,
+            fillNameSource: body.fullNameSource,
+            deathYear: body.deathYear ? parseInt(body.deathYear) : undefined,
+            deathYearSource: body.deathYearSource,
+            birthYear: body.birthYear ? parseInt(body.birthYear) : undefined,
+            birthYearSource: body.birthYearSource,
+            generationId: body.generation ? parseInt(body.generation.split(".")[0]) : undefined,
+            generationSource: body.generationSource,
+        } as Partial<People>;
+    }
 }

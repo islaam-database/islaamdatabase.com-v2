@@ -19,41 +19,33 @@ const IslaamDataSource = new DataSource({
     database: process.env.DB_NAME as string,
     logging: process.env.DB_LOGGING === "true", // warning: annoying if true
     synchronize: process.env.DB_SYNC === "true",
-    entities: [
-        Books,
-        Generations,
-        People,
-        Praises,
-        Statuses,
-        TeacherStudents,
-        Titles,
-        Topics,
-        AppUsers,
-        AppRoles,
-    ],
+    entities: [Books, Generations, People, Praises, Statuses, TeacherStudents, Titles, Topics, AppUsers, AppRoles],
 });
 
 export class IslaamDatabase {
     private static instance: DataSource;
     public static async getInstance(): Promise<DataSource> {
-        return (this.instance =
-            this.instance || (await IslaamDataSource.initialize()));
+        return (this.instance = this.instance || (await IslaamDataSource.initialize()));
     }
     static get AppUsers() {
-        return IslaamDatabase.getInstance().then(i =>
-            i.getRepository(AppUsers),
-        );
+        return IslaamDatabase.getInstance().then((i) => i.getRepository(AppUsers));
     }
     static get People() {
-        return IslaamDatabase.getInstance().then(i => i.getRepository(People));
+        return IslaamDatabase.getInstance().then((i) => i.getRepository(People));
     }
     static get Praises() {
-        return IslaamDatabase.getInstance().then(i => i.getRepository(Praises));
+        return IslaamDatabase.getInstance().then((i) => i.getRepository(Praises));
     }
     static get Topics() {
-        return IslaamDatabase.getInstance().then(i => i.getRepository(Topics));
+        return IslaamDatabase.getInstance().then((i) => i.getRepository(Topics));
     }
     static get Titles() {
-        return IslaamDatabase.getInstance().then(i => i.getRepository(Titles));
+        return IslaamDatabase.getInstance().then((i) => i.getRepository(Titles));
+    }
+    static get TeacherStudents() {
+        return IslaamDatabase.getInstance().then((i) => i.getRepository(TeacherStudents));
+    }
+    static get Generations() {
+        return IslaamDatabase.getInstance().then((i) => i.getRepository(Generations));
     }
 }

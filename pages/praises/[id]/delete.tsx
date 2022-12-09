@@ -4,7 +4,7 @@ import { Praises } from "../../../database/entities/Praises";
 import { IslaamDatabase } from "../../../database/IslaamDatabase";
 import { toJson } from "../../../utils";
 import { CookieConfig, getIsAdminFromReq } from "../../../utils/SessionUtils";
-import PraiseForm from "../../../utils/PraiseForm";
+import PraiseFormFields from "../../../components/forms/PraiseFormFields";
 
 interface Props {
     praise?: Praises;
@@ -19,7 +19,7 @@ export default function ({ praise, error, removed }: Props) {
         {removed && <h1>This praise has been successfully deleted.</h1>}
         <h1>Are you sure you want to delete praise {praise.id}?</h1>
         <hr />
-        <PraiseForm
+        <PraiseFormFields
             people={[praise.praiser, praise.praisee]}
             titles={[praise.title]}
             topics={[praise.topic]}

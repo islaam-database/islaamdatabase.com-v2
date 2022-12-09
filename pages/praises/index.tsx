@@ -7,6 +7,7 @@ import { IslaamDatabase } from "../../database/IslaamDatabase";
 import { Table } from "../../components/Table";
 import { CookieConfig, getIsAdminFromReq } from "../../utils/SessionUtils";
 import { toJson } from "../../utils";
+import { ListPage } from "../../components/ListPage";
 interface Props {
     praises: Praises[];
     canCreate?: boolean;
@@ -14,36 +15,29 @@ interface Props {
 export default function ({ praises, canCreate }: Props) {
     const { highlight } = useRouter().query;
 
-    return <>
-        <h1 style={{ display: "flex", justifyContent: "space-between" }}>
-            <span>Praises ({praises.length})</span>
-            {
-                canCreate && <Link href="/praises/create">Create praise</Link>
-            }
-        </h1>
-        <hr />
-        <Table
-            columnNames={[
-                "ID",
-                "Praiser",
-                "Praisee",
-                "Title",
-                "Topic",
-            ]}
-            rows={praises.map(p => ({
-                key: p.id,
-                href: `/praises/${p.id}`,
-                isActive: highlight === p.id.toString(),
-                columns: [
-                    <Link href={`/praises/${p.id}`}>{p.id}</Link>,
-                    <Link href={`/people/${p.praiserId}`}>{p.praiser.name}</Link>,
-                    <Link href={`/people/${p.praiseeId}`}>{p.praisee.name}</Link>,
-                    <Link href={`/titles/${p.title}`}>{p.title?.name}</Link>,
-                    <Link href={`/topics/${p.topic}`}>{p.topic?.name}</Link>,
-                ],
-            }))}
-        />
-    </>;
+    return <ListPage
+        modelName={{ plural: "Praises", singular: "Praise" }}
+        canCreate={canCreate}
+        columnNames={[
+            "ID",
+            "Praiser",
+            "Praisee",
+            "Title",
+            "Topic",
+        ]}
+        rows={praises.map(p => ({
+            key: p.id,
+            href: `/praises/${p.id}`,
+            isActive: highlight === p.id.toString(),
+            columns: [
+                <Link href={`/praises/${p.id}`}>{p.id}</Link>,
+                <Link href={`/people/${p.praiserId}`}>{p.praiser.name}</Link>,
+                <Link href={`/people/${p.praiseeId}`}>{p.praisee.name}</Link>,
+                <Link href={`/titles/${p.title}`}>{p.title?.name}</Link>,
+                <Link href={`/topics/${p.topic}`}>{p.topic?.name}</Link>,
+            ],
+        }))}
+    />;
 }
 
 export const getServerSideProps = withIronSessionSsr(async ({ req }) => {

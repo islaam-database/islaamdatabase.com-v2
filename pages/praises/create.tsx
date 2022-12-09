@@ -7,28 +7,25 @@ import { toJson } from "../../utils";
 import { parseBody } from "next/dist/server/api-utils/node";
 import { withIronSessionSsr } from "iron-session/next";
 import { CookieConfig } from "../../utils/SessionUtils";
-import PraiseForm from "../../utils/PraiseForm";
+import PraiseFormFields from "../../components/forms/PraiseFormFields";
 import { GetServerSidePropsResult } from "next";
+import { FormPage } from "../../components/forms/FormPage";
 
-interface Props {
+interface Props extends SSProps {
     people: People[]
     titles: Titles[],
     topics: Topics[],
     error?: string,
-    [key: string]: any;
 }
 
 export default function ({ people, titles, topics, error }: Props) {
     if (error) throw error;
-    return <>
-        <h1>New Praise</h1>
-        <hr />
-        <PraiseForm
-            people={people}
-            titles={titles}
-            topics={topics}
-        />
-    </>;
+    return <FormPage
+        canEdit
+        title="New praise"
+    >
+        <PraiseFormFields people={people} titles={titles} topics={topics} />
+    </FormPage>;
 }
 
 export const getServerSideProps = withIronSessionSsr(
@@ -42,28 +39,24 @@ export const getServerSideProps = withIronSessionSsr(
                 }
             }
             const { praiser, praisee, title, topic, source } = await parseBody(req, "1mb");
-            const { id } = await (await IslaamDatabase.Praises).save({
-                praiserId: praiser.split(".")[0],
-                praiseeId: praisee.split(".")[0],
-                titleId: title?.split(".")[0],
-                topicId: topic?.split(".")[0],
-                source
-            } as Praises);
+            const { id } = await IslaamDatabase.Praises.then(p => p.save(
+                {
+                    praiserId: parseInt(praiser.split(".")[0]),
+                    praiseeId: parseInt(praisee.split(".")[0]),
+                    titleId: parseInt(title?.split(".")[0]),
+                    topicId: topic?.split(".")[0],
+                    source,
+                } as Praises)
+            );
             return {
                 redirect: {
                     destination: `/praises?highlight=${id}`,
                 }
             } as GetServerSidePropsResult<Props>;
         }
-        const people = toJson(
-            await IslaamDatabase.People.then(x => x.find())
-        );
-        const titles = toJson(
-            await IslaamDatabase.Titles.then(t => t.find())
-        );
-        const topics = toJson(
-            await IslaamDatabase.Topics.then(t => t.find())
-        );
+        const people = await IslaamDatabase.People.then(x => x.find()).then(toJson)
+        const titles = await IslaamDatabase.Titles.then(t => t.find()).then(toJson)
+        const topics = await IslaamDatabase.Topics.then(t => t.find()).then(toJson)
         const props = { people, titles, topics } as Props;
         return { props } as GetServerSidePropsResult<Props>;
     }, CookieConfig);
