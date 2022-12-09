@@ -10,6 +10,7 @@ interface Props {
     generations: Generations[];
     titles: Titles[];
     personEditing?: People;
+    readonly?: boolean;
 }
 export const PersonFormFields = (p: Props) => {
     const [name, setName] = useState(p.personEditing?.name);
@@ -34,6 +35,7 @@ export const PersonFormFields = (p: Props) => {
             <DataList id="titles" options={p.titles} />
             <DataList id="generations" options={p.generations} />
             <LabelAndInput
+                readOnly={p.readonly}
                 name="name"
                 id="name"
                 label="Name"
@@ -42,6 +44,7 @@ export const PersonFormFields = (p: Props) => {
                 required
             />
             <LabelAndInput
+                readOnly={p.readonly}
                 label="Source"
                 name="source"
                 id="source"
@@ -50,6 +53,7 @@ export const PersonFormFields = (p: Props) => {
                 required
             />
             <LabelAndInput
+                readOnly={p.readonly}
                 label="Main title"
                 name="mainTitle"
                 list="titles"
@@ -58,6 +62,7 @@ export const PersonFormFields = (p: Props) => {
                 onChange={(e) => setMainTitle(e.target.value)}
             />
             <LabelAndInput
+                readOnly={p.readonly}
                 label="Main title source"
                 name="mainTitleSource"
                 id="main-title-source"
@@ -65,6 +70,7 @@ export const PersonFormFields = (p: Props) => {
                 onChange={(e) => setMainTitleSource(e.target.value)}
             />
             <LabelAndInput
+                readOnly={p.readonly}
                 label="Full name"
                 id="full-name"
                 name="fullName"
@@ -72,6 +78,7 @@ export const PersonFormFields = (p: Props) => {
                 onChange={(e) => setFullName(e.target.value)}
             />
             <LabelAndInput
+                readOnly={p.readonly}
                 label="Full name source"
                 id="full-name-source"
                 name="fullNameSource"
@@ -79,6 +86,7 @@ export const PersonFormFields = (p: Props) => {
                 onChange={(e) => setFullNameSource(e.target.value)}
             />
             <LabelAndInput
+                readOnly={p.readonly}
                 label="Death year"
                 id="deathYear"
                 name="deathYear"
@@ -86,6 +94,7 @@ export const PersonFormFields = (p: Props) => {
                 onChange={(e) => setDeathYear(e.target.value)}
             />
             <LabelAndInput
+                readOnly={p.readonly}
                 label="Death year source"
                 id="deathYearSource"
                 name="deathYearSource"
@@ -93,6 +102,7 @@ export const PersonFormFields = (p: Props) => {
                 onChange={(e) => setDeathYearSource(e.target.value)}
             />
             <LabelAndInput
+                readOnly={p.readonly}
                 label="Birth year"
                 id="birthYear"
                 name="birthYear"
@@ -100,6 +110,7 @@ export const PersonFormFields = (p: Props) => {
                 onChange={(e) => setBirthYear(e.target.value)}
             />
             <LabelAndInput
+                readOnly={p.readonly}
                 label="Birth year source"
                 id="birthYearSource"
                 name="birthYearSource"
@@ -107,6 +118,7 @@ export const PersonFormFields = (p: Props) => {
                 onChange={(e) => setBirthYearSource(e.target.value)}
             />
             <LabelAndInput
+                readOnly={p.readonly}
                 label="Generation"
                 list="generations"
                 id="generation"
@@ -115,6 +127,7 @@ export const PersonFormFields = (p: Props) => {
                 onChange={(e) => setGeneration(e.target.value)}
             />
             <LabelAndInput
+                readOnly={p.readonly}
                 label="Generation source"
                 id="generationSource"
                 name="generationSource"
@@ -122,6 +135,7 @@ export const PersonFormFields = (p: Props) => {
                 onChange={(e) => setGenerationSource(e.target.value)}
             />
             <LabelAndInput
+                readOnly={p.readonly}
                 label="Taqreeb at-Tahdheeb ID"
                 id="taqreeb-id"
                 name="taqreebId"
@@ -129,6 +143,7 @@ export const PersonFormFields = (p: Props) => {
                 onChange={(e) => setTaqreebId(e.target.value)}
             />
             <LabelAndInput
+                readOnly={p.readonly}
                 label="Use masculine pronoun"
                 id="use-masc-pron"
                 name="useMascPron"
@@ -137,6 +152,7 @@ export const PersonFormFields = (p: Props) => {
                 onChange={(e) => setUseMascPronoun(e.target.checked)}
             />
             <LabelAndInput
+                readOnly={p.readonly}
                 label="Location"
                 id="location"
                 name="location"
@@ -144,6 +160,7 @@ export const PersonFormFields = (p: Props) => {
                 onChange={(e) => setLocation(e.target.value)}
             />
             <LabelAndInput
+                readOnly={p.readonly}
                 label="Location source"
                 id="location-source"
                 name="location-source"
