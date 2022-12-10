@@ -44,7 +44,7 @@ export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
                 titleId: parseInt(title?.split(".")[0]) || undefined,
                 topicId: topic?.split(".")[0] || undefined,
                 source,
-            } as Praises)
+            })
         );
         return {
             redirect: {

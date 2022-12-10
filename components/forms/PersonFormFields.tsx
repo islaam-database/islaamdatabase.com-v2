@@ -41,7 +41,7 @@ export const PersonFormFields = (p: Props) => {
                 id="name"
                 label="Name"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={e => setName(e.target.value)}
                 required
             />
             <LabelAndInput
@@ -50,7 +50,7 @@ export const PersonFormFields = (p: Props) => {
                 id="name-arabic"
                 label="Name in Arabic"
                 value={nameArabic}
-                onChange={(e) => setNameArabic(e.target.value)}
+                onChange={e => setNameArabic(e.target.value)}
             />
             <LabelAndInput
                 readOnly={p.readonly}
@@ -58,7 +58,7 @@ export const PersonFormFields = (p: Props) => {
                 name="source"
                 id="source"
                 value={source}
-                onChange={(e) => setSource(e.target.value)}
+                onChange={e => setSource(e.target.value)}
                 required
             />
             <LabelAndInput
@@ -68,7 +68,7 @@ export const PersonFormFields = (p: Props) => {
                 list="titles"
                 id="main-title"
                 value={mainTitle}
-                onChange={(e) => setMainTitle(e.target.value)}
+                onChange={e => setMainTitle(e.target.value)}
             />
             <LabelAndInput
                 readOnly={p.readonly}
@@ -76,7 +76,7 @@ export const PersonFormFields = (p: Props) => {
                 name="mainTitleSource"
                 id="main-title-source"
                 value={mainTitleSource}
-                onChange={(e) => setMainTitleSource(e.target.value)}
+                onChange={e => setMainTitleSource(e.target.value)}
             />
             <LabelAndInput
                 readOnly={p.readonly}
@@ -84,7 +84,7 @@ export const PersonFormFields = (p: Props) => {
                 id="full-name"
                 name="fullName"
                 value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
+                onChange={e => setFullName(e.target.value)}
             />
             <LabelAndInput
                 readOnly={p.readonly}
@@ -92,7 +92,7 @@ export const PersonFormFields = (p: Props) => {
                 id="full-name-source"
                 name="fullNameSource"
                 value={fullNameSource}
-                onChange={(e) => setFullNameSource(e.target.value)}
+                onChange={e => setFullNameSource(e.target.value)}
             />
             <LabelAndInput
                 readOnly={p.readonly}
@@ -100,7 +100,7 @@ export const PersonFormFields = (p: Props) => {
                 id="deathYear"
                 name="deathYear"
                 value={deathYear}
-                onChange={(e) => setDeathYear(e.target.value)}
+                onChange={e => setDeathYear(e.target.value)}
             />
             <LabelAndInput
                 readOnly={p.readonly}
@@ -108,7 +108,7 @@ export const PersonFormFields = (p: Props) => {
                 id="deathYearSource"
                 name="deathYearSource"
                 value={deathYearSource}
-                onChange={(e) => setDeathYearSource(e.target.value)}
+                onChange={e => setDeathYearSource(e.target.value)}
             />
             <LabelAndInput
                 readOnly={p.readonly}
@@ -116,7 +116,7 @@ export const PersonFormFields = (p: Props) => {
                 id="birthYear"
                 name="birthYear"
                 value={birthYear}
-                onChange={(e) => setBirthYear(e.target.value)}
+                onChange={e => setBirthYear(e.target.value)}
             />
             <LabelAndInput
                 readOnly={p.readonly}
@@ -124,7 +124,7 @@ export const PersonFormFields = (p: Props) => {
                 id="birthYearSource"
                 name="birthYearSource"
                 value={birthYearSource}
-                onChange={(e) => setBirthYearSource(e.target.value)}
+                onChange={e => setBirthYearSource(e.target.value)}
             />
             <LabelAndInput
                 readOnly={p.readonly}
@@ -133,7 +133,7 @@ export const PersonFormFields = (p: Props) => {
                 id="generation"
                 name="generation"
                 value={generation}
-                onChange={(e) => setGeneration(e.target.value)}
+                onChange={e => setGeneration(e.target.value)}
             />
             <LabelAndInput
                 readOnly={p.readonly}
@@ -141,15 +141,18 @@ export const PersonFormFields = (p: Props) => {
                 id="generationSource"
                 name="generationSource"
                 value={generationSource}
-                onChange={(e) => setGenerationSource(e.target.value)}
+                onChange={e => setGenerationSource(e.target.value)}
             />
             <LabelAndInput
                 readOnly={p.readonly}
                 label="Taqreeb at-Tahdheeb ID"
                 id="taqreeb-id"
                 name="taqreebId"
-                value={taqreebId}
-                onChange={(e) => setTaqreebId(e.target.value)}
+                value={parseInt(taqreebId)}
+                type="number"
+                min={1}
+                step={1}
+                onChange={e => setTaqreebId(e.target.value)}
             />
             <LabelAndInput
                 readOnly={p.readonly}
@@ -158,7 +161,7 @@ export const PersonFormFields = (p: Props) => {
                 name="useMascPron"
                 checked={useMascPronoun}
                 type="checkbox"
-                onChange={(e) => setUseMascPronoun(e.target.checked)}
+                onChange={e => setUseMascPronoun(e.target.checked)}
             />
             <LabelAndInput
                 readOnly={p.readonly}
@@ -166,7 +169,7 @@ export const PersonFormFields = (p: Props) => {
                 id="location"
                 name="location"
                 value={location}
-                onChange={(e) => setLocation(e.target.value)}
+                onChange={e => setLocation(e.target.value)}
             />
             <LabelAndInput
                 readOnly={p.readonly}
@@ -174,7 +177,7 @@ export const PersonFormFields = (p: Props) => {
                 id="location-source"
                 name="location-source"
                 value={locationSource}
-                onChange={(e) => setLocationSource(e.target.value)}
+                onChange={e => setLocationSource(e.target.value)}
             />
         </>
     );
