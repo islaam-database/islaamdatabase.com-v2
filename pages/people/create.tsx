@@ -24,15 +24,15 @@ export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
     if (req.method?.toLowerCase() !== "post") {
         return {
             props: {
-                titles: await IslaamDatabase.Titles.then((t) => t.find()).then(toJson),
-                generations: await IslaamDatabase.Generations.then((t) => t.find()).then(toJson),
+                titles: await IslaamDatabase.Titles.then(t => t.find()).then(toJson),
+                generations: await IslaamDatabase.Generations.then(t => t.find()).then(toJson),
             },
         } as GetServerSidePropsResult<Props>;
     }
     const isAdmin = getIsAdminFromReq(req);
     if (!isAdmin) throw "Unauthorized";
-    const { id } = await parseBody(req, "1mb").then((body) =>
-        IslaamDatabase.People.then((p) => p.save(People.fromReqBody(body)))
+    const { id } = await parseBody(req, "1mb").then(body =>
+        IslaamDatabase.People.then(p => p.save(People.fromReqBody(body)))
     );
     return {
         redirect: {

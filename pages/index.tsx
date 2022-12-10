@@ -4,7 +4,7 @@ import { useEffect } from "react";
 export default function () {
     const router = useRouter();
     useEffect(() => {
-        router.push("/people")
+        router.push("/people");
     });
     return <></>;
 }

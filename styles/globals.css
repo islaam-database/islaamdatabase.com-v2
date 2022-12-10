@@ -1,28 +1,10 @@
-body, html {
+body,
+html {
     margin: 0;
     padding: 0;
 }
 body {
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-}
-#navbar, #footer {
-    height: 3rem;
-    padding: 1rem;
-    background-color: black;
-    color: white;
-    display: flex;
-    align-items: center;
-}
-#navbar {
-    gap: 1rem;
-    margin-bottom: 1rem;
-}
-#navbar a {
-    color: white;
-    text-decoration: none;
-}
-#navbar a:hover {
-    text-decoration: underline;
+    font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
 }
 a {
     text-decoration: none;
@@ -38,14 +20,17 @@ hr {
     width: 100%;
     border-collapse: collapse;
 }
-.table td, .table tr {
+.table td,
+.table tr {
     border-bottom: 1px solid gray;
 }
-.table td, .table th {
+.table td,
+.table th {
     text-align: left;
     padding: 1rem;
 }
-.table tr:hover, .table tr.active {
+.table tr:hover,
+.table tr.active {
     background: linear-gradient(45deg, #d3bd9f, #bb9b7a);
     color: white;
 }
