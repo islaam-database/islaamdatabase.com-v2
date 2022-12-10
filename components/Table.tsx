@@ -19,21 +19,24 @@ export function Table({ columnNames, rows }: TableProps) {
         setTimeout(() => activeTr.current?.scrollIntoView({ behavior: "smooth" }), 500);
     }, [activeTr.current]);
 
-    return <table className="table">
-        <thead>
-            <tr className="header">
-                {columnNames.map((cn, i) => <th key={i}>{cn}</th>)}
-            </tr>
-        </thead>
-        <tbody>
-            {rows.map(({ columns, isActive, key }) => <tr
-                ref={isActive ? activeTr : undefined}
-                key={key}
-                className={isActive ? "active" : ""}
-            >
-                {columns.map((val, i) => <td key={i}>{val}</td>)}
-            </tr>
-            )}
-        </tbody>
-    </table>
+    return (
+        <table className="table">
+            <thead>
+                <tr className="header">
+                    {columnNames.map((cn, i) => (
+                        <th key={i}>{cn}</th>
+                    ))}
+                </tr>
+            </thead>
+            <tbody>
+                {rows.map(({ columns, isActive, key }) => (
+                    <tr ref={isActive ? activeTr : undefined} key={key} className={isActive ? "active" : ""}>
+                        {columns.map((val, i) => (
+                            <td key={i}>{val}</td>
+                        ))}
+                    </tr>
+                ))}
+            </tbody>
+        </table>
+    );
 }
