@@ -1,5 +1,4 @@
-import Link from "next/link";
-import { useContext, useState } from "react";
+simport { useContext, useState } from "react";
 import { UserContext } from "../../../utils/UserContext";
 import { AuthDialog } from "../../AuthDialog";
 import { NavLink } from "./NavLink/NavLink";
