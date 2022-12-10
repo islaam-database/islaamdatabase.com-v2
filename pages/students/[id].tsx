@@ -16,13 +16,11 @@ interface Props extends SSProps {
 }
 
 export default (p: Props) => {
-    return <FormPage
-        title={`Teacher Student ${p.teacherStudent?.id}`}
-        canDelete={p.canEdit}
-        canEdit={p.canEdit}
-    >
-        <StudentFormFields canEdit={p.canEdit} people={p.people} teacherStudent={p.teacherStudent} />
-    </FormPage>
+    return (
+        <FormPage title={`Teacher Student ${p.teacherStudent?.id}`} canDelete={p.canEdit} canEdit={p.canEdit}>
+            <StudentFormFields canEdit={p.canEdit} people={p.people} teacherStudent={p.teacherStudent} />
+        </FormPage>
+    );
 };
 
 export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
@@ -32,7 +30,7 @@ export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
 
     if (isEditing) {
         if (!isAdmin) throw "Unauthorized";
-        const { teacher, student, source } = await parseBody(req, "1mb") as Record<string, string>;
+        const { teacher, student, source } = (await parseBody(req, "1mb")) as Record<string, string>;
         const newTeacherStudent = {
             id,
             studentId: parseInt(student.split(".")[0]),
@@ -42,23 +40,23 @@ export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
         await IslaamDatabase.TeacherStudents.then(ts => ts.save(newTeacherStudent));
         return {
             redirect: {
-                destination: `/students?highlight=${id}`
-            }
+                destination: `/students?highlight=${id}`,
+                permanent: false,
+            },
         };
     }
 
-    const teacherStudent = await IslaamDatabase
-        .TeacherStudents
-        .then(ts => ts.findOne({
+    const teacherStudent = await IslaamDatabase.TeacherStudents.then(ts =>
+        ts.findOne({
             relations: {
                 teacher: true,
-                student: true
+                student: true,
             },
-            where: { id }
-        }))
-        .then(toJson);
+            where: { id },
+        })
+    ).then(toJson);
     const people = await IslaamDatabase.People.then(p => p.find()).then(toJson);
     return {
-        props: { teacherStudent, people, canEdit: isAdmin }
+        props: { teacherStudent, people, canEdit: isAdmin },
     } as GetServerSidePropsResult<Props>;
-}, CookieConfig)
+}, CookieConfig);

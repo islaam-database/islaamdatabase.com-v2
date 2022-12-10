@@ -8,10 +8,9 @@ import Link from "next/link";
 import { GetServerSidePropsResult } from "next";
 import { ListPage } from "../../components/ListPage";
 
-interface Props {
+interface Props extends SSProps {
     people: People[];
     canCreate: boolean;
-    [key: string]: any;
 }
 
 export default function (p: Props) {
@@ -21,7 +20,7 @@ export default function (p: Props) {
             canCreate={p.canCreate}
             modelName={{ plural: "People", singular: "Person" }}
             columnNames={["Id", "Name", "Death", "Birth", "Generation"]}
-            rows={p.people.map((p) => ({
+            rows={p.people.map(p => ({
                 isActive: highlight === p.id.toString(),
                 key: p.id,
                 href: `/people/${p.id}`,

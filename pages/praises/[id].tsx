@@ -5,7 +5,7 @@ import { Titles } from "../../database/entities/Titles";
 import { Topics } from "../../database/entities/Topics";
 import { IslaamDatabase } from "../../database/IslaamDatabase";
 import { CookieConfig, SessionProps } from "../../utils/SessionUtils";
-import { toJson, toOptionLabel } from "../../utils";
+import { toJson } from "../../utils";
 import PraiseFormFields from "../../components/forms/PraiseFormFields";
 import { parseBody } from "next/dist/server/api-utils/node";
 import { GetServerSidePropsResult } from "next";
@@ -46,7 +46,7 @@ export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
         newPraise.source = source;
         if (isEditing) newPraise.id = idEditing;
 
-        const created = await IslaamDatabase.Praises.then((p) => (isEditing ? p.save(newPraise) : p.create(newPraise)));
+        const created = await IslaamDatabase.Praises.then(p => (isEditing ? p.save(newPraise) : p.create(newPraise)));
         return {
             redirect: {
                 destination: `/praises?highlight=${created.id || idEditing}`,
@@ -54,10 +54,10 @@ export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
         } as GetServerSidePropsResult<Props>;
     }
     const [people, titles, topics, praise] = await Promise.all([
-        IslaamDatabase.People.then((p) => p.find()).then(toJson),
-        IslaamDatabase.Titles.then((p) => p.find()).then(toJson),
-        IslaamDatabase.Topics.then((p) => p.find()).then(toJson),
-        IslaamDatabase.Praises.then((praises) =>
+        IslaamDatabase.People.then(p => p.find()).then(toJson),
+        IslaamDatabase.Titles.then(p => p.find()).then(toJson),
+        IslaamDatabase.Topics.then(p => p.find()).then(toJson),
+        IslaamDatabase.Praises.then(praises =>
             praises.findOne({
                 relations: {
                     praisee: true,

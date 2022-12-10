@@ -1,6 +1,5 @@
 import { TeacherStudents } from "../../../database/entities/TeacherStudents";
 import { StudentFormFields } from "../../../components/forms/StudentFormFields";
-import { FormPage } from "../../../components/forms/FormPage";
 import { withIronSessionSsr } from "iron-session/next";
 import { CookieConfig, getIsAdminFromReq } from "../../../utils/SessionUtils";
 import { IslaamDatabase } from "../../../database/IslaamDatabase";
@@ -11,9 +10,11 @@ import { DeletePage } from "../../../components/forms/DeletePage";
 interface Props extends SSProps {
     teacherStudent: TeacherStudents;
 }
-export default (p: Props) => <DeletePage title={`Are you sure you want to delete teacher/student ${p.teacherStudent.id}?`}>
-    <StudentFormFields teacherStudent={p.teacherStudent} />
-</DeletePage>;
+export default (p: Props) => (
+    <DeletePage title={`Are you sure you want to delete teacher/student ${p.teacherStudent.id}?`}>
+        <StudentFormFields teacherStudent={p.teacherStudent} />
+    </DeletePage>
+);
 
 export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
     const id = parseInt(req.url?.split("/").at(-2) as string);
@@ -23,20 +24,20 @@ export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
         await IslaamDatabase.TeacherStudents.then(ts => ts.delete({ id }));
         return {
             redirect: {
-                destination: "/students"
-            }
-        }
+                destination: "/students",
+                permanent: false,
+            },
+        };
     }
-    const teacherStudent = await IslaamDatabase
-        .TeacherStudents
-        .then(ts => ts.findOne({
+    const teacherStudent = await IslaamDatabase.TeacherStudents.then(ts =>
+        ts.findOne({
             where: { id },
-            relations: { teacher: true, student: true }
-        }))
-        .then(toJson);
+            relations: { teacher: true, student: true },
+        })
+    ).then(toJson);
     return {
         props: {
-            teacherStudent
-        }
+            teacherStudent,
+        },
     } as GetServerSidePropsResult<Props>;
-}, CookieConfig)
+}, CookieConfig);

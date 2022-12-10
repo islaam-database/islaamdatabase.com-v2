@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { useContext, useState } from "react";
 import { UserContext } from "../../../utils/UserContext";
 import { AuthDialog } from "../../AuthDialog";
