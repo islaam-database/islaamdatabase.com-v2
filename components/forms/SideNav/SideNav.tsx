@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "../../../utils/UserContext";
 import { AuthDialog } from "../../AuthDialog";
 import { NavLink } from "./NavLink/NavLink";

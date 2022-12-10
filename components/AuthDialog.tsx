@@ -3,7 +3,7 @@ import { useState } from "react";
 interface Props {
     /** The text to show on the submit button (eg: Sign in, Register) */
     submitText: string;
-    onSubmit: (credentials: { userName: string; password: string }) => any;
+    onSubmit: (credentials: { userName: string; password: string }) => void;
     isOpen: boolean;
     onCloseRequest: () => void;
 }

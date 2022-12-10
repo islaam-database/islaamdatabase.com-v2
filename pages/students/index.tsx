@@ -6,10 +6,9 @@ import { TeacherStudents } from "../../database/entities/TeacherStudents";
 import { IslaamDatabase } from "../../database/IslaamDatabase";
 import { toJson } from "../../utils";
 import { CookieConfig, getIsAdminFromReq } from "../../utils/SessionUtils";
-interface Props {
+interface Props extends SSProps {
     canCreate: boolean;
     students: TeacherStudents[];
-    [k: string]: any;
 }
 export default function (p: Props) {
     const { highlight } = useRouter().query;

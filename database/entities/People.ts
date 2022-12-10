@@ -64,33 +64,33 @@ export class People extends SelectableOption {
     @Column("text", { name: "MainTitleSource", nullable: true })
     mainTitleSource: string | null;
 
-    @OneToMany(() => Books, (books) => books.author)
+    @OneToMany(() => Books, books => books.author)
     books: Books[];
 
-    @ManyToOne(() => Generations, (generations) => generations.people, {
+    @ManyToOne(() => Generations, generations => generations.people, {
         onDelete: "RESTRICT",
     })
     @JoinColumn([{ name: "GenerationId", referencedColumnName: "id" }])
     generation: Generations;
 
-    @ManyToOne(() => Titles, (titles) => titles.people)
+    @ManyToOne(() => Titles, titles => titles.people)
     @JoinColumn([{ name: "MainTitleId", referencedColumnName: "id" }])
     mainTitle: Titles;
 
-    @OneToMany(() => Praises, (praises) => praises.praisee)
+    @OneToMany(() => Praises, praises => praises.praisee)
     praises: Praises[];
 
-    @OneToMany(() => Praises, (praises) => praises.praiser)
+    @OneToMany(() => Praises, praises => praises.praiser)
     praises2: Praises[];
 
-    @OneToMany(() => TeacherStudents, (teacherStudents) => teacherStudents.student)
+    @OneToMany(() => TeacherStudents, teacherStudents => teacherStudents.student)
     teacherStudents: TeacherStudents[];
 
-    @OneToMany(() => TeacherStudents, (teacherStudents) => teacherStudents.teacher)
+    @OneToMany(() => TeacherStudents, teacherStudents => teacherStudents.teacher)
     teacherStudents2: TeacherStudents[];
     static fromReqBody(body: Record<string, string>, id?: string | number) {
         return {
-            id: parseInt(id.toString()),
+            id: id ? parseInt(id.toString()) : undefined,
             name: body.name,
             nameArabic: body.nameArabic,
             useMascPron: ["on", "true"].includes(body.useMascPron),
