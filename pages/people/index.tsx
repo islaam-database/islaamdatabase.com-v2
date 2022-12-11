@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { GetServerSidePropsResult } from "next";
 import { ListPage } from "../../components/ListPage";
+import { Badge } from "../../components/Badge";
 
 interface Props extends SSProps {
     people: People[];
@@ -39,9 +40,13 @@ export default function (p: Props) {
                     </>,
                     p.deathYear != null && `${p.deathYear} AH`,
                     p.birthYear != null && `${p.birthYear} AH`,
-                    <Link key={1} href={`/generations/${p.generationId}`}>
-                        {p.generation?.name}
-                    </Link>,
+                    p.generationId && (
+                        <Badge key={4}>
+                            <Link key={1} href={`/generations/${p.generationId}`}>
+                                {p.generation.name}
+                            </Link>
+                        </Badge>
+                    ),
                 ],
             }))}
         />

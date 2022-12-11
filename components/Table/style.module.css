@@ -1,0 +1,18 @@
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.table td,
+.table tr {
+    border-bottom: 1px solid gray;
+}
+.table td,
+.table th {
+    text-align: left;
+    padding: 1rem;
+}
+.table tr:hover,
+.active {
+    background: linear-gradient(45deg, #d3bd9f, #bb9b7a);
+    color: white;
+}

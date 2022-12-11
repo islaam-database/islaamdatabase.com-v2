@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Table, TableProps } from "./Table";
+import { Table, TableProps } from "./Table/Table";
 
 interface Props extends TableProps {
     modelName: { singular: string; plural: string };

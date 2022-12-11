@@ -1,8 +1,9 @@
 import { useEffect, useRef } from "react";
+import styles from "./style.module.css";
 
 interface Row {
     isActive: boolean;
-    columns: (JSX.Element | string | boolean)[];
+    columns: (JSX.Element | string | boolean | null | number)[];
     key: string | number;
 }
 
@@ -20,9 +21,9 @@ export function Table({ columnNames, rows }: TableProps) {
     }, [activeTr.current]);
 
     return (
-        <table className="table">
+        <table className={styles.table}>
             <thead>
-                <tr className="header">
+                <tr className={activeTr.current ? "" : styles.active}>
                     {columnNames.map((cn, i) => (
                         <th key={i}>{cn}</th>
                     ))}
