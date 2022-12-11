@@ -5,7 +5,7 @@ import { Praises } from "../../database/entities/Praises";
 import { IslaamDatabase } from "../../database/IslaamDatabase";
 import { CookieConfig, getIsAdminFromReq } from "../../utils/SessionUtils";
 import { toJson } from "../../utils";
-import { ListPage } from "../../components/ListPage";
+import { ListPage } from "../../components/ListPage/ListPage";
 interface Props {
     praises: Praises[];
     canCreate?: boolean;

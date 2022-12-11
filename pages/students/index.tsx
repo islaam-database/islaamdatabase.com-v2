@@ -1,7 +1,7 @@
 import { withIronSessionSsr } from "iron-session/next";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { ListPage } from "../../components/ListPage";
+import { ListPage } from "../../components/ListPage/ListPage";
 import { TeacherStudents } from "../../database/entities/TeacherStudents";
 import { IslaamDatabase } from "../../database/IslaamDatabase";
 import { toJson } from "../../utils";

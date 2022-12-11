@@ -6,8 +6,9 @@ import { toJson } from "../../utils";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { GetServerSidePropsResult } from "next";
-import { ListPage } from "../../components/ListPage";
+import { ListPage } from "../../components/ListPage/ListPage";
 import { Badge } from "../../components/Badge";
+import { useState } from "react";
 
 interface Props extends SSProps {
     people: People[];
@@ -15,40 +16,50 @@ interface Props extends SSProps {
 }
 
 export default function (p: Props) {
+    const [query, setQuery] = useState("");
     const { highlight } = useRouter().query;
     return (
         <ListPage
+            onSearch={setQuery}
+            query={query}
             canCreate={p.canCreate}
             modelName={{ plural: "People", singular: "Person" }}
             columnNames={["Id", "Name", "Death", "Birth", "Generation"]}
-            rows={p.people.map(p => ({
-                isActive: highlight === p.id.toString(),
-                key: p.id,
-                href: `/people/${p.id}`,
-                columns: [
-                    <Link key={0} href={`/people/${p.id}`}>
-                        {p.id.toString()}
-                    </Link>,
-                    <>
-                        {p.name}
-                        {p.nameArabic && (
-                            <>
-                                <br />
-                                {p.nameArabic}
-                            </>
-                        )}
-                    </>,
-                    p.deathYear != null && `${p.deathYear} AH`,
-                    p.birthYear != null && `${p.birthYear} AH`,
-                    p.generationId && (
-                        <Badge key={4}>
-                            <Link key={1} href={`/generations/${p.generationId}`}>
-                                {p.generation.name}
-                            </Link>
-                        </Badge>
-                    ),
-                ],
-            }))}
+            rows={p.people
+                .filter(person => {
+                    if (!query) return true;
+                    if (person.name.toLowerCase().includes(query)) return true;
+                    if (person.nameArabic?.toLowerCase().includes(query)) return true;
+                    return false;
+                })
+                .map(person => ({
+                    isActive: highlight === person.id.toString(),
+                    key: person.id,
+                    href: `/people/${person.id}`,
+                    columns: [
+                        <Link key={0} href={`/people/${person.id}`}>
+                            {person.id.toString()}
+                        </Link>,
+                        <>
+                            {person.name}
+                            {person.nameArabic && (
+                                <>
+                                    <br />
+                                    {person.nameArabic}
+                                </>
+                            )}
+                        </>,
+                        person.deathYear != null && `${person.deathYear} AH`,
+                        person.birthYear != null && `${person.birthYear} AH`,
+                        person.generationId && (
+                            <Badge key={4}>
+                                <Link key={1} href={`/generations/${person.generationId}`}>
+                                    {person.generation.name}
+                                </Link>
+                            </Badge>
+                        ),
+                    ],
+                }))}
         />
     );
 }

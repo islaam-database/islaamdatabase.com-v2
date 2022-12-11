@@ -1,0 +1,9 @@
+.search {
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid lightgray;
+    height: 3rem;
+}
+.search:focus {
+    outline: none;
+}
