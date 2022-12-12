@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { GetServerSidePropsResult } from "next";
 import { ListPage } from "../../components/ListPage/ListPage";
-import { Badge } from "../../components/Badge";
+import { Badge } from "../../components/Badge/Badge";
 import { useState } from "react";
 
 interface Props extends SSProps {
