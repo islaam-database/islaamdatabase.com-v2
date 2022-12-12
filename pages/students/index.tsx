@@ -17,22 +17,21 @@ export default function (p: Props) {
             columnNames={["ID", "Student", "Teacher", "Source"]}
             modelName={{ plural: "Students", singular: "Student" }}
             canCreate={p.canCreate}
-            rows={p.students.map(s => ({
-                key: s.id,
-                isActive: highlight === s.id.toString(),
-                columns: [
-                    <Link key={0} href={`/students/${s.id}`}>
-                        {s.id}
-                    </Link>,
-                    <Link key={1} href={`/people/${s.teacherId}`}>
-                        {s.teacher.name}
-                    </Link>,
-                    <Link key={2} href={`/people/${s.studentId}`}>
-                        {s.student.name}
-                    </Link>,
-                    s.source,
-                ],
-            }))}
+            items={p.students}
+            itemToTr={s => (
+                <tr>
+                    <td>
+                        <Link href={`/students/${s.id}`}>{s.id}</Link>
+                    </td>
+                    <td>
+                        <Link href={`/people/${s.teacherId}`}>{s.teacher.name}</Link>
+                    </td>
+                    <td>
+                        <Link href={`/people/${s.studentId}`}>{s.student.name}</Link>
+                    </td>
+                    <td>{s.source}</td>
+                </tr>
+            )}
         />
     );
 }

@@ -25,41 +25,39 @@ export default function (p: Props) {
             canCreate={p.canCreate}
             modelName={{ plural: "People", singular: "Person" }}
             columnNames={["Id", "Name", "Death", "Birth", "Generation"]}
-            rows={p.people
+            items={p.people
+                .map(p => ({ ...p, key: p.id.toString() }))
                 .filter(person => {
                     if (!query) return true;
                     if (person.name.toLowerCase().includes(query)) return true;
                     if (person.nameArabic?.toLowerCase().includes(query)) return true;
                     return false;
-                })
-                .map(person => ({
-                    isActive: highlight === person.id.toString(),
-                    key: person.id,
-                    href: `/people/${person.id}`,
-                    columns: [
-                        <Link key={0} href={`/people/${person.id}`}>
-                            {person.id.toString()}
-                        </Link>,
-                        <>
-                            {person.name}
-                            {person.nameArabic && (
-                                <>
-                                    <br />
-                                    {person.nameArabic}
-                                </>
-                            )}
-                        </>,
-                        person.deathYear != null && `${person.deathYear} AH`,
-                        person.birthYear != null && `${person.birthYear} AH`,
-                        person.generationId && (
-                            <Badge key={4}>
-                                <Link key={1} href={`/generations/${person.generationId}`}>
-                                    {person.generation.name}
-                                </Link>
+                })}
+            itemToTr={person => (
+                <tr className={highlight === person.id.toString() ? "active" : ""}>
+                    <td>
+                        <Link href={`/people/${person.id}`}>{person.id.toString()}</Link>
+                    </td>
+                    <td>
+                        {person.name}
+                        {person.nameArabic && (
+                            <>
+                                <br />
+                                {person.nameArabic}
+                            </>
+                        )}
+                    </td>
+                    <td>{person.deathYear != null && `${person.deathYear} AH`}</td>
+                    <td>{person.birthYear != null && `${person.birthYear} AH`}</td>
+                    <td>
+                        {person.generationId && (
+                            <Badge>
+                                <Link href={`/generations/${person.generationId}`}>{person.generation.name}</Link>
                             </Badge>
-                        ),
-                    ],
-                }))}
+                        )}
+                    </td>
+                </tr>
+            )}
         />
     );
 }

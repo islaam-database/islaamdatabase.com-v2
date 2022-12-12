@@ -18,28 +18,26 @@ export default function ({ praises, canCreate }: Props) {
             modelName={{ plural: "Praises", singular: "Praise" }}
             canCreate={canCreate}
             columnNames={["ID", "Praiser", "Praisee", "Title", "Topic"]}
-            rows={praises.map(p => ({
-                key: p.id,
-                href: `/praises/${p.id}`,
-                isActive: highlight === p.id.toString(),
-                columns: [
-                    <Link key={0} href={`/praises/${p.id}`}>
-                        {p.id}
-                    </Link>,
-                    <Link key={1} href={`/people/${p.praiserId}`}>
-                        {p.praiser.name}
-                    </Link>,
-                    <Link key={2} href={`/people/${p.praiseeId}`}>
-                        {p.praisee.name}
-                    </Link>,
-                    <Link key={3} href={`/titles/${p.title}`}>
-                        {p.title?.name}
-                    </Link>,
-                    <Link key={4} href={`/topics/${p.topic}`}>
-                        {p.topic?.name}
-                    </Link>,
-                ],
-            }))}
+            items={praises.map((p, i) => ({ ...p, key: i.toString() }))}
+            itemToTr={praise => (
+                <tr>
+                    <td>
+                        <Link href={`/praises/${praise.id}`}>{praise.id}</Link>
+                    </td>
+                    <td>
+                        <Link href={`/people/${praise.praiserId}`}>{praise.praiser.name}</Link>
+                    </td>
+                    <td>
+                        <Link href={`/people/${praise.praiseeId}`}>{praise.praisee.name}</Link>
+                    </td>
+                    <td>
+                        <Link href={`/titles/${praise.title}`}>{praise.title?.name}</Link>
+                    </td>
+                    <td>
+                        <Link href={`/topics/${praise.topic}`}>{praise.topic?.name}</Link>
+                    </td>
+                </tr>
+            )}
         />
     );
 }

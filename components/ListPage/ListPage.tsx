@@ -2,13 +2,13 @@ import Link from "next/link";
 import { Table, TableProps } from "../Table/Table";
 import style from "./style.module.css";
 
-interface Props extends TableProps {
+interface Props<T> extends TableProps<T> {
     modelName: { singular: string; plural: string };
     canCreate?: boolean;
     onSearch?: (query: string) => void;
     query?: string;
 }
-export const ListPage = function (p: Props) {
+export const ListPage = function <T>(p: Props<T>) {
     const createLink = `/${p.modelName.plural.toLowerCase()}/create`;
     return (
         <>
@@ -21,7 +21,7 @@ export const ListPage = function (p: Props) {
                         onChange={e => p.onSearch?.(e.target.value.toLowerCase())}
                     />
                 )}
-                {p.canCreate && <Link href={createLink}>Create {p.modelName.singular}</Link>}
+                {p.canCreate && <Link href={createLink}>New</Link>}
             </h1>
             <Table {...p} />
         </>
