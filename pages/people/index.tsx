@@ -25,39 +25,39 @@ export default function (p: Props) {
             canCreate={p.canCreate}
             modelName={{ plural: "People", singular: "Person" }}
             columnNames={["Id", "Name", "Death", "Birth", "Generation"]}
-            items={p.people
+            trs={p.people
                 .map(p => ({ ...p, key: p.id.toString() }))
                 .filter(person => {
                     if (!query) return true;
                     if (person.name.toLowerCase().includes(query)) return true;
                     if (person.nameArabic?.toLowerCase().includes(query)) return true;
                     return false;
-                })}
-            itemToTr={person => (
-                <tr className={highlight === person.id.toString() ? "active" : ""}>
-                    <td>
-                        <Link href={`/people/${person.id}`}>{person.id.toString()}</Link>
-                    </td>
-                    <td>
-                        {person.name}
-                        {person.nameArabic && (
-                            <>
-                                <br />
-                                {person.nameArabic}
-                            </>
-                        )}
-                    </td>
-                    <td>{person.deathYear != null && `${person.deathYear} AH`}</td>
-                    <td>{person.birthYear != null && `${person.birthYear} AH`}</td>
-                    <td>
-                        {person.generationId && (
-                            <Badge>
-                                <Link href={`/generations/${person.generationId}`}>{person.generation.name}</Link>
-                            </Badge>
-                        )}
-                    </td>
-                </tr>
-            )}
+                })
+                .map(person => (
+                    <tr key={person.id} className={highlight === person.id.toString() ? "active" : ""}>
+                        <td>
+                            <Link href={`/people/${person.id}`}>{person.id.toString()}</Link>
+                        </td>
+                        <td>
+                            {person.name}
+                            {person.nameArabic && (
+                                <>
+                                    <br />
+                                    {person.nameArabic}
+                                </>
+                            )}
+                        </td>
+                        <td>{person.deathYear != null && `${person.deathYear} AH`}</td>
+                        <td>{person.birthYear != null && `${person.birthYear} AH`}</td>
+                        <td>
+                            {person.generationId && (
+                                <Badge>
+                                    <Link href={`/generations/${person.generationId}`}>{person.generation.name}</Link>
+                                </Badge>
+                            )}
+                        </td>
+                    </tr>
+                ))}
         />
     );
 }

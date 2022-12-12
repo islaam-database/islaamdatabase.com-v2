@@ -1,13 +1,12 @@
 import { useEffect, useRef } from "react";
 import styles from "./style.module.css";
-export interface TableProps<T> {
+export interface TableProps {
     /** The `<tr>` that goes in the `<thead>` */
     columnNames: string[];
-    items: T[];
-    itemToTr: (item: T) => JSX.Element;
+    trs: JSX.Element[];
 }
 
-export function Table<T>(p: TableProps<T>) {
+export function Table(p: TableProps) {
     const activeTr = useRef<HTMLTableRowElement>(null);
 
     useEffect(() => {
@@ -23,7 +22,7 @@ export function Table<T>(p: TableProps<T>) {
                     ))}
                 </tr>
             </thead>
-            <tbody>{p.items.map(item => p.itemToTr(item))}</tbody>
+            <tbody>{p.trs}</tbody>
         </table>
     );
 }

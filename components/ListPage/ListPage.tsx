@@ -2,13 +2,13 @@ import Link from "next/link";
 import { Table, TableProps } from "../Table/Table";
 import style from "./style.module.css";
 
-interface Props<T> extends TableProps<T> {
+interface Props extends TableProps {
     modelName: { singular: string; plural: string };
     canCreate?: boolean;
     onSearch?: (query: string) => void;
     query?: string;
 }
-export const ListPage = function <T>(p: Props<T>) {
+export const ListPage = function (p: Props) {
     const createLink = `/${p.modelName.plural.toLowerCase()}/create`;
     return (
         <>

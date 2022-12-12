@@ -17,9 +17,8 @@ export default function (p: Props) {
             columnNames={["ID", "Student", "Teacher", "Source"]}
             modelName={{ plural: "Students", singular: "Student" }}
             canCreate={p.canCreate}
-            items={p.students}
-            itemToTr={s => (
-                <tr>
+            trs={p.students.map(s => (
+                <tr key={s.id}>
                     <td>
                         <Link href={`/students/${s.id}`}>{s.id}</Link>
                     </td>
@@ -31,7 +30,7 @@ export default function (p: Props) {
                     </td>
                     <td>{s.source}</td>
                 </tr>
-            )}
+            ))}
         />
     );
 }
