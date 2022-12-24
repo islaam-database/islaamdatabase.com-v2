@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react";
 import styles from "./style.module.css";
 export interface TableProps {
-    /** The `<tr>` that goes in the `<thead>` */
     columnNames: string[];
     trs: JSX.Element[];
 }

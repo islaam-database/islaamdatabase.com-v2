@@ -4,7 +4,7 @@ import { DeletePage } from "../../../components/forms/DeletePage";
 import { PersonFormFields } from "../../../components/forms/PersonFormFields";
 import { People } from "../../../database/entities/People";
 import { IslaamDatabase } from "../../../database/IslaamDatabase";
-import { toJson } from "../../../utils";
+import { toJson } from "../../../utils/utils";
 import { CookieConfig, getIsAdminFromReq } from "../../../utils/SessionUtils";
 
 interface Props extends SSProps {

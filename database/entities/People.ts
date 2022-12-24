@@ -4,7 +4,7 @@ import { Generations } from "./Generations";
 import { Titles } from "./Titles";
 import { Praises } from "./Praises";
 import { TeacherStudents } from "./TeacherStudents";
-import { SelectableOption } from "../../utils";
+import { SelectableOption } from "../../utils/utils";
 
 @Index("IX_People_GenerationId", ["generationId"], {})
 @Index("PK_People", ["id"], { unique: true })
@@ -78,16 +78,16 @@ export class People extends SelectableOption {
     mainTitle: Titles;
 
     @OneToMany(() => Praises, praises => praises.praisee)
-    praises: Praises[];
+    praisesReceived: Praises[];
 
     @OneToMany(() => Praises, praises => praises.praiser)
-    praises2: Praises[];
+    praisesGiven: Praises[];
 
     @OneToMany(() => TeacherStudents, teacherStudents => teacherStudents.student)
-    teacherStudents: TeacherStudents[];
+    teachers: TeacherStudents[];
 
     @OneToMany(() => TeacherStudents, teacherStudents => teacherStudents.teacher)
-    teacherStudents2: TeacherStudents[];
+    students: TeacherStudents[];
     static fromReqBody(body: Record<string, string>, id?: string | number) {
         return {
             id: id ? parseInt(id.toString()) : undefined,

@@ -1,11 +1,4 @@
-import {
-    Column,
-    Entity,
-    Index,
-    JoinColumn,
-    ManyToOne,
-    PrimaryGeneratedColumn,
-} from "typeorm";
+import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import type { Relation } from "typeorm";
 import { People } from "./People";
 import { Titles } from "./Titles";
@@ -26,19 +19,17 @@ export class Praises {
 
     @Column("text", { name: "Source" }) source: string;
 
-    @Column("integer", { name: "TitleId", nullable: true }) titleId:
-        | number
-        | null;
+    @Column("integer", { name: "TitleId", nullable: true }) titleId: number | null;
 
     @Column("text", { name: "TopicId", nullable: true }) topicId: string | null;
 
-    @ManyToOne(() => People, people => people.praises, {
+    @ManyToOne(() => People, people => people.praisesReceived, {
         onDelete: "CASCADE",
     })
     @JoinColumn([{ name: "PraiseeId", referencedColumnName: "id" }])
     praisee: Relation<People>;
 
-    @ManyToOne(() => People, people => people.praises2, {
+    @ManyToOne(() => People, people => people.praisesGiven, {
         onDelete: "CASCADE",
     })
     @JoinColumn([{ name: "PraiserId", referencedColumnName: "id" }])

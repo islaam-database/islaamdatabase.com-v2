@@ -4,7 +4,7 @@ import { parseBody } from "next/dist/server/api-utils/node";
 import { People } from "../../database/entities/People";
 import { TeacherStudents } from "../../database/entities/TeacherStudents";
 import { IslaamDatabase } from "../../database/IslaamDatabase";
-import { toJson } from "../../utils";
+import { toJson } from "../../utils/utils";
 import { CookieConfig, getIsAdminFromReq } from "../../utils/SessionUtils";
 import { StudentFormFields } from "../../components/forms/StudentFormFields";
 import { FormPage } from "../../components/forms/FormPage";

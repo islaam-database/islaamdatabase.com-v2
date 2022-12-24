@@ -1,11 +1,4 @@
-import {
-    Column,
-    Entity,
-    Index,
-    JoinColumn,
-    ManyToOne,
-    PrimaryGeneratedColumn,
-} from "typeorm";
+import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import type { Relation } from "typeorm";
 import { People } from "./People";
 import { Topics } from "./Topics";
@@ -31,13 +24,13 @@ export class TeacherStudents {
     @Column("text", { name: "Source", default: () => "''" })
     source: string;
 
-    @ManyToOne(() => People, people => people.teacherStudents, {
+    @ManyToOne(() => People, people => people.teachers, {
         onDelete: "RESTRICT",
     })
     @JoinColumn([{ name: "StudentId", referencedColumnName: "id" }])
     student: Relation<People>;
 
-    @ManyToOne(() => People, people => people.teacherStudents2, {
+    @ManyToOne(() => People, people => people.students, {
         onDelete: "RESTRICT",
     })
     @JoinColumn([{ name: "TeacherId", referencedColumnName: "id" }])

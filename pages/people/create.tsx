@@ -7,7 +7,7 @@ import { Generations } from "../../database/entities/Generations";
 import { People } from "../../database/entities/People";
 import { Titles } from "../../database/entities/Titles";
 import { IslaamDatabase } from "../../database/IslaamDatabase";
-import { toJson } from "../../utils";
+import { toJson } from "../../utils/utils";
 import { CookieConfig, getIsAdminFromReq } from "../../utils/SessionUtils";
 
 interface Props extends SSProps {

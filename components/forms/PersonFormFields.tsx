@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Generations } from "../../database/entities/Generations";
 import { People } from "../../database/entities/People";
 import { Titles } from "../../database/entities/Titles";
-import { toOptionLabel } from "../../utils";
+import { toOptionLabel } from "../../utils/utils";
 import { DataList } from "./DataList";
 import { LabelAndInput } from "./LabelAndInput";
 

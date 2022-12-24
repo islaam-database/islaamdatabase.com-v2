@@ -3,7 +3,7 @@ import { LabelAndInput } from "./LabelAndInput";
 import { TeacherStudents } from "../../database/entities/TeacherStudents";
 import { People } from "../../database/entities/People";
 import { DataList } from "./DataList";
-import { toOptionLabel } from "../../utils";
+import { toOptionLabel } from "../../utils/utils";
 
 export interface Props {
     teacherStudent?: TeacherStudents;
@@ -21,7 +21,7 @@ export const StudentFormFields = (p: Props) => {
             <LabelAndInput
                 readOnly={!p.canEdit}
                 value={teacher}
-                onChange={(e) => setTeacher(e.target.value)}
+                onChange={e => setTeacher(e.target.value)}
                 label="Teacher"
                 name="teacher"
                 list="people"
@@ -30,7 +30,7 @@ export const StudentFormFields = (p: Props) => {
             <LabelAndInput
                 readOnly={!p.canEdit}
                 value={student}
-                onChange={(e) => setStudent(e.target.value)}
+                onChange={e => setStudent(e.target.value)}
                 label="Student"
                 name="student"
                 list="people"
@@ -39,7 +39,7 @@ export const StudentFormFields = (p: Props) => {
             <LabelAndInput
                 readOnly={!p.canEdit}
                 value={source}
-                onChange={(e) => setSource(e.target.value)}
+                onChange={e => setSource(e.target.value)}
                 label="Source"
                 name="source"
                 required

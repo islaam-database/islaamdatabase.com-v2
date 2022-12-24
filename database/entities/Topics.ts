@@ -1,12 +1,5 @@
-import {
-    Column,
-    Entity,
-    Index,
-    JoinColumn,
-    ManyToOne,
-    OneToMany,
-} from "typeorm";
-import { SelectableOption } from "../../utils";
+import { Column, Entity, Index, JoinColumn, ManyToOne, OneToMany } from "typeorm";
+import { SelectableOption } from "../../utils/utils";
 import { Praises } from "./Praises";
 import { TeacherStudents } from "./TeacherStudents";
 @Index("PK_Topics", ["id"], { unique: true })

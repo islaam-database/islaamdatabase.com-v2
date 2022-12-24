@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { ListPage } from "../../components/ListPage/ListPage";
 import { TeacherStudents } from "../../database/entities/TeacherStudents";
 import { IslaamDatabase } from "../../database/IslaamDatabase";
-import { toJson } from "../../utils";
+import { toJson } from "../../utils/utils";
 import { CookieConfig, getIsAdminFromReq } from "../../utils/SessionUtils";
 interface Props extends SSProps {
     canCreate: boolean;
