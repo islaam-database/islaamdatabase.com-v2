@@ -8,7 +8,7 @@ export abstract class SelectableOption {
 
 export const toOptionLabel = (item?: SelectableOption) => (item ? `${item.id}. ${item.name}` : "");
 
-export const getHijriYearDisplayText = (year?: number) => {
+export const getHijriYearDisplayText = (year: number | undefined | null) => {
     if (year == null) return null;
     return `${year} AH`;
 };

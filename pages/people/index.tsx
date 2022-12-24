@@ -32,7 +32,7 @@ export default function (p: Props) {
 
     return (
         <>
-            {activePerson && (
+            {activePersonId && (
                 <PersonSideDrawer isLoading={activePersonId != null && activePerson == null} person={activePerson} />
             )}
             <ListPage
