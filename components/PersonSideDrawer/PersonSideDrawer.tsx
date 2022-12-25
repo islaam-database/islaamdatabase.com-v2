@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { People } from "../../database/entities/People";
 import { getHijriYearDisplayText } from "../../utils/utils";
 import { SideDrawer } from "../SideDrawer/SideDrawer";
@@ -15,7 +16,7 @@ export const PersonSideDrawer = ({ person, isLoading }: { person?: People; isLoa
                         <h2 className={styles.name}>{person.name}</h2>
                         <h3 className={styles.generation}>{person.generation?.name}</h3>
                     </div>
-                    {person.birthYear ? (
+                    {person.birthYear && (
                         <div className={styles.quickInfo}>
                             <div className={styles.left}>
                                 <label>Birth</label>
@@ -23,21 +24,23 @@ export const PersonSideDrawer = ({ person, isLoading }: { person?: People; isLoa
                             </div>
                             <div className={styles.right}></div>
                         </div>
-                    ) : (
-                        "(No birth year recorded)"
                     )}
                     <div>
                         <strong>Praised by ({person.praisesReceived.length})</strong>
                         <br />
                         {person.praisesReceived.map(p => (
-                            <div key={p.id}>{p.praiser.name}</div>
+                            <div key={p.id}>
+                                <Link href={`praises/${p.id}`}>{p.praiser.name}</Link>
+                            </div>
                         ))}
                     </div>
                     <div>
                         <strong>Praised ({person.praisesGiven.length})</strong>
                         <br />
                         {person.praisesGiven.map(p => (
-                            <div key={p.id}>{p.praisee.name}</div>
+                            <div key={p.id}>
+                                <Link href={`praises/${p.id}`}>{p.praisee.name}</Link>
+                            </div>
                         ))}
                     </div>
                     <div>
