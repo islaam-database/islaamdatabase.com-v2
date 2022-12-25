@@ -25,8 +25,7 @@ export const PersonSideDrawer = ({ person, isLoading }: Props) => {
                         {person.deathYear && (
                             <div className={styles.quickInfo}>
                                 <div className={styles.left}>
-                                    <strong>Death</strong>
-                                    <label>{getHijriYearDisplayText(person.deathYear)}</label>
+                                    <strong>Death</strong> <label>{getHijriYearDisplayText(person.deathYear)}</label>
                                 </div>
                                 <div className={styles.right}></div>
                             </div>
@@ -34,8 +33,7 @@ export const PersonSideDrawer = ({ person, isLoading }: Props) => {
                         {person.birthYear && (
                             <div className={styles.quickInfo}>
                                 <div className={styles.left}>
-                                    <strong>Birth</strong>
-                                    <label>{getHijriYearDisplayText(person.birthYear)}</label>
+                                    <strong>Birth</strong> <label>{getHijriYearDisplayText(person.birthYear)}</label>
                                 </div>
                                 <div className={styles.right}></div>
                             </div>
