@@ -38,7 +38,7 @@ export const PersonSideDrawer = ({ person, isLoading }: { person?: People; isLoa
                             <strong>Praised ({person.praisesGiven.length})</strong>
                             {person.praisesGiven.map(p => (
                                 <div key={p.id}>
-                                    <Link href={`praises/${p.id}`}>{p.praiser.name}</Link>
+                                    <Link href={`praises/${p.id}`}>{p.praisee.name}</Link>
                                 </div>
                             ))}
                         </div>
