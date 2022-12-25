@@ -39,7 +39,7 @@ export default function (p: Props) {
                     query={query}
                     canCreate={p.canCreate}
                     modelName={{ plural: "People", singular: "Person" }}
-                    columnNames={["Id", "Name", "Death", "Birth", "Generation"]}
+                    columnNames={["Death", "Name", "Birth", "Generation"]}
                     trs={p.people
                         .map(p => ({ ...p, key: p.id.toString() }))
                         .filter(person => {
@@ -54,10 +54,7 @@ export default function (p: Props) {
                                 className={highlight === person.id.toString() ? "active" : ""}
                                 onClick={() => setActivePersonId(person.id)}
                             >
-                                <td>
-                                    <Link href={`/people/${person.id}`}>{person.id.toString()}</Link>
-                                </td>
-                                <td>
+                                <td style={{ fontWeight: "bold" }}>
                                     {person.name}
                                     {person.nameArabic && (
                                         <>
@@ -66,8 +63,8 @@ export default function (p: Props) {
                                         </>
                                     )}
                                 </td>
-                                <td>{person.deathYear != null && `${person.deathYear} AH`}</td>
                                 <td>{person.birthYear != null && `${person.birthYear} AH`}</td>
+                                <td>{person.deathYear != null && `${person.deathYear} AH`}</td>
                                 <td>
                                     {person.generationId && (
                                         <Badge>
@@ -81,7 +78,9 @@ export default function (p: Props) {
                         ))}
                 />
             </div>
-            {activePersonId && <PersonSideDrawer isLoading={activePerson == null} person={activePerson} />}
+            {activePersonId && (
+                <PersonSideDrawer canEdit={p.canCreate} isLoading={activePerson == null} person={activePerson} />
+            )}
         </div>
     );
 }

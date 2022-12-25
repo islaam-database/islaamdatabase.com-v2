@@ -6,9 +6,10 @@ import styles from "./style.module.css";
 type Props = {
     person?: People;
     isLoading?: boolean;
+    canEdit?: boolean;
 };
 
-export const PersonSideDrawer = ({ person, isLoading }: Props) => {
+export const PersonSideDrawer = ({ person, isLoading, canEdit }: Props) => {
     if (!person)
         return (
             <SideDrawer>
@@ -16,6 +17,8 @@ export const PersonSideDrawer = ({ person, isLoading }: Props) => {
             </SideDrawer>
         );
     if (isLoading) return <SideDrawer>Loading..</SideDrawer>;
+    const praisesReceived = person.praisesReceived.sort((a, b) => sortByDeathYear(a.praiser, b.praiser));
+    const praisesGiven = person.praisesGiven.sort((a, b) => sortByDeathYear(a.praiser, b.praiser));
     return (
         <SideDrawer>
             <div className={styles.container}>
@@ -25,6 +28,7 @@ export const PersonSideDrawer = ({ person, isLoading }: Props) => {
                     <>
                         <div className={styles.heading}>
                             <h2 className={styles.name}>{person.name}</h2>
+                            <h2 className={styles.name}>{person.nameArabic}</h2>
                             <h3 className={styles.generation}>{person.generation?.name}</h3>
                         </div>
                         {person.deathYear && (
@@ -45,16 +49,16 @@ export const PersonSideDrawer = ({ person, isLoading }: Props) => {
                         )}
                         <hr className={styles.divider} />
                         <div className={styles.section}>
-                            <strong>Praised by ({person.praisesReceived.length})</strong>
-                            {person.praisesReceived.map(p => (
+                            <strong>Praised by ({praisesReceived.length})</strong>
+                            {praisesReceived.map(p => (
                                 <div key={p.id}>
                                     <Link href={`praises/${p.id}`}>{p.praiser.name}</Link>
                                 </div>
                             ))}
                         </div>
                         <div className={styles.section}>
-                            <strong>Praised ({person.praisesGiven.length})</strong>
-                            {person.praisesGiven.map(p => (
+                            <strong>Praised ({praisesGiven.length})</strong>
+                            {praisesGiven.map(p => (
                                 <div key={p.id}>
                                     <Link href={`praises/${p.id}`}>{p.praisee.name}</Link>
                                 </div>
@@ -74,7 +78,13 @@ export const PersonSideDrawer = ({ person, isLoading }: Props) => {
                         </div>
                     </>
                 )}
+                <div>{canEdit && <Link href={`/people/${person.id}`}>Edit</Link>}</div>
             </div>
         </SideDrawer>
     );
 };
+function sortByDeathYear(a: People, b: People) {
+    if (a.deathYear == null) return 1;
+    if (b.deathYear == null) return -1;
+    return a.deathYear - b.deathYear;
+}

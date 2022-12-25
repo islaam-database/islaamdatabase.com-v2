@@ -46,7 +46,7 @@ export const Layout = ({ children }: Props) => {
                         });
                     }}
                 />
-                {children}
+                <div style={{ flex: 1 }}>{children}</div>
             </div>
             <Footer />
         </UserContext.Provider>
