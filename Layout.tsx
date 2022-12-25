@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { AppUsers } from "./database/entities/AppUsers";
 import { Footer } from "./components/Footer";
 import { SideNav } from "./components/forms/SideNav/SideNav";
 import { UserContext } from "./utils/UserContext";
 
 interface Props {
-    children: JSX.Element;
+    children: ReactNode;
 }
 
 export const Layout = ({ children }: Props) => {
@@ -21,7 +21,7 @@ export const Layout = ({ children }: Props) => {
 
     return (
         <UserContext.Provider value={user}>
-            <div style={{ display: "flex", justifyContent: "flex-start", padding: "1rem" }}>
+            <div data-test="layout" style={{ display: "flex", justifyContent: "flex-start" }}>
                 <SideNav
                     onRegisterRequest={async userNameAndPassword => {
                         const res = await fetch("/api/register", {
@@ -46,7 +46,7 @@ export const Layout = ({ children }: Props) => {
                         });
                     }}
                 />
-                <div style={{ flex: "1" }}>{children}</div>
+                {children}
             </div>
             <Footer />
         </UserContext.Provider>

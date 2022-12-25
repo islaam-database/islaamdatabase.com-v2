@@ -9,8 +9,13 @@ type Props = {
 };
 
 export const PersonSideDrawer = ({ person, isLoading }: Props) => {
-    if (!person) return;
-    if (isLoading) return "Loading...";
+    if (!person)
+        return (
+            <SideDrawer>
+                <></>
+            </SideDrawer>
+        );
+    if (isLoading) return <SideDrawer>Loading..</SideDrawer>;
     return (
         <SideDrawer>
             <div className={styles.container}>

@@ -31,60 +31,58 @@ export default function (p: Props) {
     }, [activePersonId]);
 
     return (
-        <>
-            {activePersonId && (
-                <PersonSideDrawer isLoading={activePersonId != null && activePerson == null} person={activePerson} />
-            )}
-            <ListPage
-                onSearch={setQuery}
-                query={query}
-                canCreate={p.canCreate}
-                modelName={{ plural: "People", singular: "Person" }}
-                columnNames={["Id", "Name", "Death", "Birth", "Generation"]}
-                trs={p.people
-                    .map(p => ({ ...p, key: p.id.toString() }))
-                    .filter(person => {
-                        if (!query) return true;
-                        if (person.name.toLowerCase().includes(query)) return true;
-                        if (person.nameArabic?.toLowerCase().includes(query)) return true;
-                        return false;
-                    })
-                    .map(person => (
-                        <tr
-                            key={person.id}
-                            className={highlight === person.id.toString() ? "active" : ""}
-                            onClick={() => {
-                                setActivePersonId(person.id);
-                                setActivePerson(undefined);
-                            }}
-                        >
-                            <td>
-                                <Link href={`/people/${person.id}`}>{person.id.toString()}</Link>
-                            </td>
-                            <td>
-                                {person.name}
-                                {person.nameArabic && (
-                                    <>
-                                        <br />
-                                        {person.nameArabic}
-                                    </>
-                                )}
-                            </td>
-                            <td>{person.deathYear != null && `${person.deathYear} AH`}</td>
-                            <td>{person.birthYear != null && `${person.birthYear} AH`}</td>
-                            <td>
-                                {person.generationId && (
-                                    <Badge>
-                                        <Link href={`/generations/${person.generationId}`}>
-                                            {person.generation.name}
-                                        </Link>
-                                    </Badge>
-                                )}
-                            </td>
-                        </tr>
-                    ))}
-            />
-        </>
+        <div data-list="people-index" style={{ flex: 1, display: "flex" }}>
+            <div style={{ flex: 1 }} data-test="list-page-container">
+                <ListPage
+                    data-test="ListPage"
+                    onSearch={setQuery}
+                    query={query}
+                    canCreate={p.canCreate}
+                    modelName={{ plural: "People", singular: "Person" }}
+                    columnNames={["Id", "Name", "Death", "Birth", "Generation"]}
+                    trs={p.people
+                        .map(p => ({ ...p, key: p.id.toString() }))
+                        .filter(person => {
+                            if (!query) return true;
+                            if (person.name.toLowerCase().includes(query)) return true;
+                            if (person.nameArabic?.toLowerCase().includes(query)) return true;
+                            return false;
+                        })
+                        .map(person => (
+                            <tr
+                                key={person.id}
+                                className={highlight === person.id.toString() ? "active" : ""}
+                                onClick={() => setActivePersonId(person.id)}
+                            >
+                                <td>
+                                    <Link href={`/people/${person.id}`}>{person.id.toString()}</Link>
+                                </td>
+                                <td>
+                                    {person.name}
+                                    {person.nameArabic && (
+                                        <>
+                                            <br />
+                                            {person.nameArabic}
+                                        </>
+                                    )}
+                                </td>
+                                <td>{person.deathYear != null && `${person.deathYear} AH`}</td>
+                                <td>{person.birthYear != null && `${person.birthYear} AH`}</td>
+                                <td>
+                                    {person.generationId && (
+                                        <Badge>
+                                            <Link href={`/generations/${person.generationId}`}>
+                                                {person.generation.name}
+                                            </Link>
+                                        </Badge>
+                                    )}
+                                </td>
+                            </tr>
+                        ))}
+                />
+            </div>
+            {activePersonId && <PersonSideDrawer isLoading={activePerson == null} person={activePerson} />}
+        </div>
     );
 }
 

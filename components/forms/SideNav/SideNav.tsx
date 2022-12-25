@@ -19,7 +19,7 @@ export const SideNav = ({ onLoginRequest, onRegisterRequest, onLogoutRequest }: 
     const [authState, setAuthState] = useState<"logging-in" | "registering">();
     return (
         <div className={styles.sidenav}>
-            <NavLink href="/" text="Islaam Database" icon="🖥" />
+            <NavLink href="/" text="Islaam Database" />
             <NavLink href="/people" text="People" icon="👥" />
             <NavLink href="/praises" text="Praises" icon="👍" />
             <NavLink href="/students" text="Students" icon="🏫" />
