@@ -8,56 +8,55 @@ export const PersonSideDrawer = ({ person, isLoading }: { person?: People; isLoa
     if (isLoading) return "Loading...";
     return (
         <SideDrawer>
-            {isLoading ? (
-                <h1>Loading...</h1>
-            ) : (
-                <div>
-                    <div className={styles.heading}>
-                        <h2 className={styles.name}>{person.name}</h2>
-                        <h3 className={styles.generation}>{person.generation?.name}</h3>
-                    </div>
-                    {person.birthYear && (
-                        <div className={styles.quickInfo}>
-                            <div className={styles.left}>
-                                <label>Birth</label>
-                                <label>{getHijriYearDisplayText(person.birthYear)}</label>
-                            </div>
-                            <div className={styles.right}></div>
+            <div className={styles.container}>
+                {isLoading ? (
+                    <h1>Loading...</h1>
+                ) : (
+                    <>
+                        <div className={styles.heading}>
+                            <h2 className={styles.name}>{person.name}</h2>
+                            <h3 className={styles.generation}>{person.generation?.name}</h3>
                         </div>
-                    )}
-                    <div>
-                        <strong>Praised by ({person.praisesReceived.length})</strong>
-                        <br />
-                        {person.praisesReceived.map(p => (
-                            <div key={p.id}>
-                                <Link href={`praises/${p.id}`}>{p.praiser.name}</Link>
+                        {person.birthYear && (
+                            <div className={styles.quickInfo}>
+                                <div className={styles.left}>
+                                    <label>Birth</label> <label>{getHijriYearDisplayText(person.birthYear)}</label>
+                                </div>
+                                <div className={styles.right}></div>
                             </div>
-                        ))}
-                    </div>
-                    <div>
-                        <strong>Praised ({person.praisesGiven.length})</strong>
-                        <br />
-                        {person.praisesGiven.map(p => (
-                            <div key={p.id}>
-                                <Link href={`praises/${p.id}`}>{p.praisee.name}</Link>
-                            </div>
-                        ))}
-                    </div>
-                    <div>
-                        <strong>Teachers ({person.teachers.length})</strong>
-                        <br />
-                        {person.teachers.map(ts => (
-                            <div key={ts.id}>{ts.teacher.name}</div>
-                        ))}
-                    </div>
-                    <div>
-                        <strong>Students ({person.students.length})</strong>
-                        {person.students.map(ts => (
-                            <div key={ts.id}>{ts.student.name}</div>
-                        ))}
-                    </div>
-                </div>
-            )}
+                        )}
+                        <hr className={styles.divider} />
+                        <div className={styles.section}>
+                            <strong>Praised by ({person.praisesReceived.length})</strong>
+                            {person.praisesReceived.map(p => (
+                                <div key={p.id}>
+                                    <Link href={`praises/${p.id}`}>{p.praiser.name}</Link>
+                                </div>
+                            ))}
+                        </div>
+                        <div className={styles.section}>
+                            <strong>Praised ({person.praisesGiven.length})</strong>
+                            {person.praisesGiven.map(p => (
+                                <div key={p.id}>
+                                    <Link href={`praises/${p.id}`}>{p.praiser.name}</Link>
+                                </div>
+                            ))}
+                        </div>
+                        <div className={styles.section}>
+                            <strong>Teachers ({person.teachers.length})</strong>
+                            {person.teachers.map(ts => (
+                                <div key={ts.id}>{ts.teacher.name}</div>
+                            ))}
+                        </div>
+                        <div className={styles.section}>
+                            <strong>Students ({person.students.length})</strong>
+                            {person.students.map(ts => (
+                                <div key={ts.id}>{ts.student.name}</div>
+                            ))}
+                        </div>
+                    </>
+                )}
+            </div>
         </SideDrawer>
     );
 };
