@@ -3,7 +3,12 @@ import { People } from "../../database/entities/People";
 import { getHijriYearDisplayText } from "../../utils/utils";
 import { SideDrawer } from "../SideDrawer/SideDrawer";
 import styles from "./style.module.css";
-export const PersonSideDrawer = ({ person, isLoading }: { person?: People; isLoading?: boolean }) => {
+type Props = {
+    person?: People;
+    isLoading?: boolean;
+};
+
+export const PersonSideDrawer = ({ person, isLoading }: Props) => {
     if (!person) return;
     if (isLoading) return "Loading...";
     return (
@@ -17,10 +22,20 @@ export const PersonSideDrawer = ({ person, isLoading }: { person?: People; isLoa
                             <h2 className={styles.name}>{person.name}</h2>
                             <h3 className={styles.generation}>{person.generation?.name}</h3>
                         </div>
+                        {person.deathYear && (
+                            <div className={styles.quickInfo}>
+                                <div className={styles.left}>
+                                    <strong>Death</strong>
+                                    <label>{getHijriYearDisplayText(person.deathYear)}</label>
+                                </div>
+                                <div className={styles.right}></div>
+                            </div>
+                        )}
                         {person.birthYear && (
                             <div className={styles.quickInfo}>
                                 <div className={styles.left}>
-                                    <label>Birth</label> <label>{getHijriYearDisplayText(person.birthYear)}</label>
+                                    <strong>Birth</strong>
+                                    <label>{getHijriYearDisplayText(person.birthYear)}</label>
                                 </div>
                                 <div className={styles.right}></div>
                             </div>
