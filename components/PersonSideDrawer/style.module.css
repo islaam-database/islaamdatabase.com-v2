@@ -1,0 +1,27 @@
+.container {
+    margin: 3rem 1.5rem;
+}
+.heading {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+.heading .name {
+    margin: 0;
+}
+.heading .generation {
+    font-weight: unset;
+    margin: 0;
+}
+.divider {
+    margin: 1.5rem 0;
+    border: 0.5px solid #c6c6c6;
+}
+.section {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}

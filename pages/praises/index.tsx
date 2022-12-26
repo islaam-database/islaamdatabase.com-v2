@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { Praises } from "../../database/entities/Praises";
 import { IslaamDatabase } from "../../database/IslaamDatabase";
 import { CookieConfig, getIsAdminFromReq } from "../../utils/SessionUtils";
-import { toJson } from "../../utils";
+import { toJson } from "../../utils/utils";
 import { ListPage } from "../../components/ListPage/ListPage";
 interface Props {
     praises: Praises[];
@@ -18,9 +18,8 @@ export default function ({ praises, canCreate }: Props) {
             modelName={{ plural: "Praises", singular: "Praise" }}
             canCreate={canCreate}
             columnNames={["ID", "Praiser", "Praisee", "Title", "Topic"]}
-            items={praises.map((p, i) => ({ ...p, key: i.toString() }))}
-            itemToTr={praise => (
-                <tr>
+            trs={praises.map(praise => (
+                <tr key={praise.id}>
                     <td>
                         <Link href={`/praises/${praise.id}`}>{praise.id}</Link>
                     </td>
@@ -37,7 +36,7 @@ export default function ({ praises, canCreate }: Props) {
                         <Link href={`/topics/${praise.topic}`}>{praise.topic?.name}</Link>
                     </td>
                 </tr>
-            )}
+            ))}
         />
     );
 }

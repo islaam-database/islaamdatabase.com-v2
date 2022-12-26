@@ -1,15 +1,7 @@
-import {
-    Column,
-    Entity,
-    Index,
-    JoinColumn,
-    OneToMany,
-    OneToOne,
-    PrimaryGeneratedColumn,
-} from "typeorm";
+import { Column, Entity, Index, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Statuses } from "./Statuses";
 import { People } from "./People";
-import { SelectableOption } from "../../utils";
+import { SelectableOption } from "../../utils/utils";
 
 @Index("PK_Generations", ["id"], { unique: true })
 @Index("IX_Generations_StatusId", ["statusId"], { unique: true })

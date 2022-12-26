@@ -1,12 +1,5 @@
-import {
-    Column,
-    Entity,
-    Index,
-    JoinColumn,
-    ManyToOne,
-    PrimaryGeneratedColumn,
-} from "typeorm";
-import { SelectableOption } from "../../utils";
+import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { SelectableOption } from "../../utils/utils";
 import type { Relation } from "typeorm";
 import { People } from "./People";
 

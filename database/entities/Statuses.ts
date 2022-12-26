@@ -1,13 +1,6 @@
-import {
-    Column,
-    Entity,
-    Index,
-    OneToMany,
-    OneToOne,
-    PrimaryGeneratedColumn,
-} from "typeorm";
+import { Column, Entity, Index, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import type { Relation } from "typeorm";
-import { SelectableOption } from "../../utils";
+import { SelectableOption } from "../../utils/utils";
 import { Generations } from "./Generations";
 import { Titles } from "./Titles";
 

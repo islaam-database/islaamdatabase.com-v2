@@ -2,7 +2,7 @@ import { withIronSessionSsr } from "iron-session/next";
 import { GetServerSidePropsResult } from "next";
 import { Praises } from "../../../database/entities/Praises";
 import { IslaamDatabase } from "../../../database/IslaamDatabase";
-import { toJson } from "../../../utils";
+import { toJson } from "../../../utils/utils";
 import { CookieConfig, getIsAdminFromReq } from "../../../utils/SessionUtils";
 import PraiseFormFields from "../../../components/forms/PraiseFormFields";
 

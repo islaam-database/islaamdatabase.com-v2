@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { ListPage } from "../../components/ListPage/ListPage";
 import { TeacherStudents } from "../../database/entities/TeacherStudents";
 import { IslaamDatabase } from "../../database/IslaamDatabase";
-import { toJson } from "../../utils";
+import { toJson } from "../../utils/utils";
 import { CookieConfig, getIsAdminFromReq } from "../../utils/SessionUtils";
 interface Props extends SSProps {
     canCreate: boolean;
@@ -17,9 +17,8 @@ export default function (p: Props) {
             columnNames={["ID", "Student", "Teacher", "Source"]}
             modelName={{ plural: "Students", singular: "Student" }}
             canCreate={p.canCreate}
-            items={p.students}
-            itemToTr={s => (
-                <tr>
+            trs={p.students.map(s => (
+                <tr key={s.id}>
                     <td>
                         <Link href={`/students/${s.id}`}>{s.id}</Link>
                     </td>
@@ -31,7 +30,7 @@ export default function (p: Props) {
                     </td>
                     <td>{s.source}</td>
                 </tr>
-            )}
+            ))}
         />
     );
 }

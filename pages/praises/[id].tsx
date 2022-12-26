@@ -5,7 +5,7 @@ import { Titles } from "../../database/entities/Titles";
 import { Topics } from "../../database/entities/Topics";
 import { IslaamDatabase } from "../../database/IslaamDatabase";
 import { CookieConfig, SessionProps } from "../../utils/SessionUtils";
-import { toJson } from "../../utils";
+import { toJson } from "../../utils/utils";
 import PraiseFormFields from "../../components/forms/PraiseFormFields";
 import { parseBody } from "next/dist/server/api-utils/node";
 import { GetServerSidePropsResult } from "next";

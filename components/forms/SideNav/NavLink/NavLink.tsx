@@ -2,7 +2,7 @@ import Link from "next/link";
 import styles from "./style.module.css";
 
 interface Props {
-    icon: string;
+    icon?: string;
     text: string;
     href: string;
 }

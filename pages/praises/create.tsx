@@ -2,7 +2,7 @@ import { People } from "../../database/entities/People";
 import { Titles } from "../../database/entities/Titles";
 import { Topics } from "../../database/entities/Topics";
 import { IslaamDatabase } from "../../database/IslaamDatabase";
-import { toJson } from "../../utils";
+import { toJson } from "../../utils/utils";
 import { parseBody } from "next/dist/server/api-utils/node";
 import { withIronSessionSsr } from "iron-session/next";
 import { CookieConfig } from "../../utils/SessionUtils";

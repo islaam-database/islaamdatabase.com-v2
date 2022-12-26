@@ -3,7 +3,7 @@ import { StudentFormFields } from "../../../components/forms/StudentFormFields";
 import { withIronSessionSsr } from "iron-session/next";
 import { CookieConfig, getIsAdminFromReq } from "../../../utils/SessionUtils";
 import { IslaamDatabase } from "../../../database/IslaamDatabase";
-import { toJson } from "../../../utils";
+import { toJson } from "../../../utils/utils";
 import { GetServerSidePropsResult } from "next";
 import { DeletePage } from "../../../components/forms/DeletePage";
 

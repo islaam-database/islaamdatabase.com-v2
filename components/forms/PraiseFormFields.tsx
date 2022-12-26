@@ -3,7 +3,7 @@ import { People } from "../../database/entities/People";
 import { Praises } from "../../database/entities/Praises";
 import { Titles } from "../../database/entities/Titles";
 import { Topics } from "../../database/entities/Topics";
-import { toOptionLabel } from "../../utils";
+import { toOptionLabel } from "../../utils/utils";
 import { DataList } from "./DataList";
 import { LabelAndInput } from "./LabelAndInput";
 
@@ -31,7 +31,7 @@ export default function PraiseFormFields(p: Props) {
                 label="Praiser"
                 id="praiser"
                 value={praiser}
-                onChange={(e) => setPraiser(e.target.value)}
+                onChange={e => setPraiser(e.target.value)}
                 readOnly={p.disabled}
                 name="praiser"
                 required
@@ -41,7 +41,7 @@ export default function PraiseFormFields(p: Props) {
                 label="Praisee"
                 id="praisee"
                 value={praisee}
-                onChange={(e) => setPraisee(e.target.value)}
+                onChange={e => setPraisee(e.target.value)}
                 readOnly={p.disabled}
                 name="praisee"
                 required
@@ -51,7 +51,7 @@ export default function PraiseFormFields(p: Props) {
                 label="Title"
                 id="title"
                 value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                onChange={e => setTitle(e.target.value)}
                 readOnly={p.disabled}
                 name="title"
                 list="titles"
@@ -60,7 +60,7 @@ export default function PraiseFormFields(p: Props) {
                 label="Topic"
                 id="topic"
                 value={topic}
-                onChange={(e) => setTopic(e.target.value)}
+                onChange={e => setTopic(e.target.value)}
                 readOnly={p.disabled}
                 name="topic"
                 list="topics"
@@ -69,7 +69,7 @@ export default function PraiseFormFields(p: Props) {
                 label="Source"
                 id="source"
                 value={source}
-                onChange={(e) => setSource(e.target.value)}
+                onChange={e => setSource(e.target.value)}
                 readOnly={p.disabled}
                 name="source"
                 required
