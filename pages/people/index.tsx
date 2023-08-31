@@ -1,15 +1,14 @@
-import { withIronSessionSsr } from "iron-session/next";
-import { People } from "../../database/entities/People";
-import { IslaamDatabase } from "../../database/IslaamDatabase";
-import { CookieConfig, getIsAdminFromReq } from "../../utils/SessionUtils";
-import { toJson } from "../../utils/utils";
-import { useRouter } from "next/router";
+import { GetServerSideProps } from "next";
 import Link from "next/link";
-import { GetServerSidePropsResult } from "next";
-import { ListPage } from "../../components/ListPage/ListPage";
-import { Badge } from "../../components/Badge/Badge";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { Badge } from "../../components/Badge/Badge";
+import { ListPage } from "../../components/ListPage/ListPage";
 import { PersonSideDrawer } from "../../components/PersonSideDrawer/PersonSideDrawer";
+import { IslaamDatabase } from "../../database/IslaamDatabase";
+import { People } from "../../database/entities/People";
+import { getIsAdminFromReq } from "../../utils/SessionUtils";
+import { toJson } from "../../utils/utils";
 
 interface Props extends SSProps {
     people: People[];
@@ -85,7 +84,7 @@ export default function (p: Props) {
     );
 }
 
-export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
+export const getServerSideProps: GetServerSideProps<Props> = async ({ req }) => {
     const db = await IslaamDatabase.getInstance();
     const query = db
         .getRepository(People)
@@ -99,5 +98,5 @@ export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
             canCreate: getIsAdminFromReq(req),
             people,
         },
-    } as GetServerSidePropsResult<Props>;
-}, CookieConfig);
+    };
+};
